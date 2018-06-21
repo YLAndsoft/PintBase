@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#FFDEDDDD</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="white">#ffffff</color>
+    <color name="IndicatorColor">#3F51B5</color>
     <color name="colorActionBar">#80000000</color>
     <!-- 主色 按住蓝 -->
     <color name="maintab_topbar_bg_color">#18131A</color>
@@ -12,6 +14,9 @@
     <color name="black">#000000</color>
     <color name="gary">#EBEAE8</color>
     <color name="gary1">#b9b9b8</color>
+    <color name="gary2">#696969</color>
+    <color name="gary3">#2b2b2b</color>
+    <color name="gary4">#d2d2d2</color>
 
 
 </resources>

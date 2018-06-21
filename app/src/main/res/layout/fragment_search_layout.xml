@@ -26,7 +26,7 @@
             android:textColor="@color/maintab_topbar_bg_color"
             android:textSize="16.0dip"
             app:pstsDividerColor="@color/transparent"
-            app:pstsIndicatorColor="@color/colorPrimary"
+            app:pstsIndicatorColor="@color/IndicatorColor"
             app:pstsIndicatorHeight="3.0dip"
             app:pstsDividerPadding="0dp"
             app:pstsShouldExpand="true"

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:expanded="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMarginEnd="5dp"
+                app:expandedTitleMarginStart="5dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:id="@+id/userinfo_bgimage"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/bg_man" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/userinfo_head"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginRight="50dp"
+                            android:layout_marginTop="75dp"
+                            android:padding="5dp"
+                            android:scaleType="center"
+                            android:src="@mipmap/default_head_image"
+                            app:riv_border_color="@color/transparent"
+                            app:riv_border_width="0dip"
+                            app:riv_corner_radius="100dip"
+                            app:riv_mutate_background="true"
+                            app:riv_oval="true"
+                            app:riv_tile_mode="repeat" />
+
+                        <RelativeLayout
+                            android:id="@+id/userinfo_nx"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/userinfo_head"
+                            android:layout_centerHorizontal="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/userinfo_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:text="小酒窝长睫毛"
+                                android:textColor="@color/gary2"
+                                android:textSize="15dp" />
+
+                            <ImageView
+                                android:id="@+id/user_sex"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toRightOf="@+id/userinfo_name"
+                                android:src="@mipmap/male" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/userinfo_af"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/userinfo_nx"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:id="@+id/userinfo_attention"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0关注"
+                                android:textColor="@color/gary2" />
+
+                            <TextView
+                                android:id="@+id/userinfo_fans"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_toRightOf="@+id/userinfo_attention"
+                                android:text="0粉丝"
+                                android:textColor="@color/gary2" />
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/userinfo_bgimage"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="15dp">
+
+                        <ImageView
+                            android:id="@+id/user_edit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="35dp"
+                            android:src="@mipmap/edit_userinfo" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <android.support.v7.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:layout_collapseMode="pin">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent">
+
+                        <ImageView
+                            android:id="@+id/userinfo_titile_toback"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:padding="7dp"
+                            android:src="@mipmap/top_back" />
+
+                        <TextView
+                            android:id="@+id/userinfo_titile_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="小酒窝"
+                            android:textColor="@color/white"
+                            android:textSize="17dp" />
+                    </RelativeLayout>
+                </android.support.v7.widget.Toolbar>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+            <z.pint.view.PagerSlidingTabStrip
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/userinfo_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:textColor="@color/maintab_topbar_bg_color"
+                android:textSize="16.0dip"
+                app:pstsDividerColor="@color/transparent"
+                app:pstsDividerPadding="0dp"
+                app:pstsIndicatorColor="@color/IndicatorColor"
+                app:pstsIndicatorHeight="3.0dip"
+                app:pstsShouldExpand="true"
+                app:pstsTabPaddingLeftRight="12.0dip"
+                app:pstsUnderlineColor="@color/transparent"
+                app:pstsUnderlineHeight="50dp"
+                app:selectedTabTextColor="@color/maintab_topbar_bg_color" />
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/userinfo_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+    </android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

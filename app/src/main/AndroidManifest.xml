@@ -25,6 +25,12 @@
         <activity android:name = "z.pint.activity.WhiteBoardActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
+        <activity android:name = "z.pint.activity.UserInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity android:name = "z.pint.activity.EditInfoActtivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
 
 
     </application>

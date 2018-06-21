@@ -8,6 +8,6 @@ import java.util.List;
  */
 
 public class SearchData {
-    private List<String> classifyName;//分类集合
+    private List<Works> classifyName;//分类集合
     private List<Works> workses;//数据集合
 }
