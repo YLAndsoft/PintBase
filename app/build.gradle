@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "z.pint"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -30,9 +30,9 @@ dependencies {
     /*绘画依赖*/
     compile 'com.yinghe:whiteboardlib:1.1.1'
     /*主框架依赖*/
-    compile 'com.github.YLAndsoft:Base:1.0.07'
+    compile 'com.github.YLAndsoft:Base:1.0.08'
     /*圆角头像开源*/
-    compile 'com.makeramen:roundedimageview:2.3.0'
+    //compile 'com.makeramen:roundedimageview:2.3.0'
 
     compile 'com.android.support:design:26.0.0-alpha1'
 

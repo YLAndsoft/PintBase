@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -28,11 +29,13 @@
             android:text="我的资料"/>
 
         <TextView
+            android:id="@+id/edit_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
+            android:padding="5dp"
             android:textSize="15dp"
             android:text="保存"/>
     </RelativeLayout>
@@ -41,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/gary4">
+        android:background="@color/gary">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -58,23 +61,17 @@
                 android:textSize="16dp"
                 android:text="头像"/>
 
-            <com.makeramen.roundedimageview.RoundedImageView
+            <z.pint.view.CuttingImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/home_item_userHead"
+                android:id="@+id/edit_info_userHead"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:padding="3dp"
                 android:layout_marginRight="8dp"
                 android:layout_toLeftOf="@+id/edit_right1"
                 android:layout_centerVertical="true"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/ic_launcher"
-                app:riv_border_color="@color/transparent"
-                app:riv_border_width="0dip"
-                app:riv_corner_radius="100dip"
-                app:riv_mutate_background="true"
-                app:riv_oval="true"
-                app:riv_tile_mode="repeat" />
+                android:src="@mipmap/default_head_image"
+                app:border_width="0dp"
+                app:border_color="@color/transparent"/>
 
             <ImageView
                 android:id="@+id/edit_right1"
@@ -103,6 +100,7 @@
                 android:text="昵称"/>
 
             <TextView
+                android:id="@+id/edit_info_userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/edit_right2"
@@ -136,6 +134,7 @@
                 android:text="性别"/>
 
             <TextView
+                android:id="@+id/edit_info_userSex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/edit_right3"
@@ -169,6 +168,7 @@
                 android:text="地区"/>
 
             <TextView
+                android:id="@+id/edit_info_userAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/edit_right4"
@@ -202,6 +202,7 @@
                 android:text="签名"/>
 
             <TextView
+                android:id="@+id/edit_info_userSign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/edit_right5"

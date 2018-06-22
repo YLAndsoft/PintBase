@@ -15,6 +15,7 @@ import java.util.List;
 import f.base.BaseFragmentActivity;
 import z.pint.R;
 import z.pint.adapter.ClassifyViewPagerAdapter;
+import z.pint.bean.User;
 import z.pint.fragment.PersonalFragment;
 import z.pint.fragment.SearchItemFragment;
 import z.pint.fragment.UserWorksFragment;
@@ -37,6 +38,7 @@ public class UserInfoActivity extends BaseFragmentActivity {
     private List<Fragment> fragments = new ArrayList<>();
     private ClassifyViewPagerAdapter classViewPagerAdapter;
 
+    private User user;
 
     @Override
     public void initParms(Intent intent) {
@@ -85,7 +87,15 @@ public class UserInfoActivity extends BaseFragmentActivity {
                 finish();
                 break;
             case R.id.user_edit:
-                startActivity(new Intent(mContext,EditInfoActtivity.class));
+                user = new User();
+                user.setUserName("小酒窝长睫毛");
+                user.setUserAddress("湖北武汉");
+                user.setUserHead("");
+                user.setUserSex(0);
+                user.setUserSign("我是一只小小鸟");
+                Intent intent = new Intent(mContext, EditInfoActtivity.class);
+                intent.putExtra("user",user);
+                startActivity(intent);
                 break;
         }
     }

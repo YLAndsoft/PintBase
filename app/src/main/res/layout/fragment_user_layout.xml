@@ -15,21 +15,16 @@
         android:background="@color/white"
         android:paddingTop="15dp">
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <z.pint.view.CuttingImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/user_head"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="15dp"
             android:padding="5dp"
-            android:scaleType="center"
             android:src="@mipmap/default_head_image"
-            app:riv_border_color="@color/transparent"
-            app:riv_border_width="0dip"
-            app:riv_corner_radius="100dip"
-            app:riv_mutate_background="true"
-            app:riv_oval="true"
-            app:riv_tile_mode="repeat" />
+            app:border_width="0dp"
+            app:border_color="@color/transparent" />
 
         <RelativeLayout
             android:layout_width="wrap_content"

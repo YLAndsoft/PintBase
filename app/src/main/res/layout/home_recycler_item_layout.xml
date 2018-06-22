@@ -15,7 +15,7 @@
         android:paddingBottom="8dp"
         android:paddingTop="8dp">
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <z.pint.view.CuttingImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/home_item_userHead"
             android:layout_width="45dp"
@@ -23,14 +23,9 @@
             android:layout_marginLeft="8dp"
             android:padding="3dp"
             android:layout_centerVertical="true"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/ic_launcher"
-            app:riv_border_color="@color/transparent"
-            app:riv_border_width="0dip"
-            app:riv_corner_radius="100dip"
-            app:riv_mutate_background="true"
-            app:riv_oval="true"
-            app:riv_tile_mode="repeat" />
+            android:src="@mipmap/default_head_image"
+            app:border_width="0dp"
+            app:border_color="@color/transparent" />
 
         <RelativeLayout
             android:layout_width="wrap_content"

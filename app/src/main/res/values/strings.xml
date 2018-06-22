@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">画世界</string>
+
+    <string name="defult_userName">小酒窝</string>
+    <string name="defult_address">火星</string>
+    <string name="defult_sign">还没有签名</string>
+    <string name="man">男</string>
+    <string name="woman">女</string>
+
+    <string name="edit_info_nameTitle">编辑昵称</string>
+    <string name="edit_info_sexTitle">修改性别</string>
+    <string name="edit_info_signTitle">编辑签名</string>
+
 </resources>
