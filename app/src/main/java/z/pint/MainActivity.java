@@ -14,6 +14,7 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import f.base.MenuFragmentActivity;
+import f.base.bean.Params;
 import z.pint.activity.WhiteBoardActivity;
 import z.pint.fragment.HomeFragment;
 import z.pint.fragment.MessageFragment;
@@ -76,8 +77,9 @@ public class MainActivity extends MenuFragmentActivity {
         }
         switchFragment(flResId, homeFragment);
     }
+
     @Override
-    public void setListener() {
+    public void initListener() {
         iv_menu_2.setOnClickListener(this);
     }
     @Override
@@ -91,6 +93,17 @@ public class MainActivity extends MenuFragmentActivity {
                 break;
         }
     }
+
+    @Override
+    public Params getParams() {
+        return null;
+    }
+
+    @Override
+    protected void setData(String s) {
+
+    }
+
     @Override
     protected boolean onTabClick(int tabId) {
         iv_menu_0.setImageResource(imageNormals[0]);

@@ -2,6 +2,8 @@ package z.pint.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +24,11 @@ import f.base.utils.StringUtils;
 
 public class ViewUtils {
 
+    public static RecyclerView.LayoutManager getLayoutManager(Context mContext){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        return linearLayoutManager;
+    }
     /**
      * 设置文本
      * @param view

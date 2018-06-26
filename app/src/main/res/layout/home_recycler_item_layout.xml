@@ -10,6 +10,7 @@
         android:layout_height="8dp"
         android:background="@color/gary4"/>
     <RelativeLayout
+        android:id="@+id/home_item_userInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
@@ -43,10 +44,12 @@
                 android:text="迷人的小妖精"/>
 
             <TextView
+                android:id="@+id/home_item_releaseTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/home_item_userName"
                 android:textSize="13dp"
+                android:layout_marginTop="4dp"
                 android:text="2018-06-23-14:22:33"/>
         </RelativeLayout>
 
@@ -54,14 +57,15 @@
 
     <ImageView
         android:id="@+id/home_item_works_img"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ova"/>
+        android:adjustViewBounds="true"
+        android:src="@mipmap/bg_man"/>
 
     <TextView
+        android:id="@+id/home_item_des"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/gary3"
@@ -82,6 +86,7 @@
         android:layout_height="45dp"
         android:orientation="horizontal">
         <LinearLayout
+            android:id="@+id/home_item_ll_comment"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -91,11 +96,11 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/comment_count"/>
             <TextView
+                android:id="@+id/home_item_commentNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="8"/>
-
         </LinearLayout>
 
         <View
@@ -106,15 +111,18 @@
             android:layout_marginBottom="8dp"/>
 
         <LinearLayout
+            android:id="@+id/home_item_ll_likes"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_weight="1">
             <ImageView
+                android:id="@+id/home_item_likes_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/dynamic_love"/>
             <TextView
+                android:id="@+id/home_item_likesNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"

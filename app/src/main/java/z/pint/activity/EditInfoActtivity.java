@@ -1,11 +1,10 @@
 package z.pint.activity;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.view.Gravity;
@@ -20,16 +19,15 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.io.File;
-import java.util.List;
+import java.io.IOException;
 
 import f.base.BaseActivity;
 import f.base.BaseDialog;
 import f.base.BaseDialog.OnDialogClickListener;
-import f.base.utils.PerUtils;
+import f.base.bean.Params;
 import f.base.view.ProvincePopupWindow;
 import z.pint.R;
 import z.pint.bean.User;
-import z.pint.constant.Constant;
 import z.pint.utils.PhotoUtils;
 import z.pint.utils.ViewUtils;
 import z.pint.view.CuttingImageView;
@@ -159,6 +157,16 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
         }
     }
 
+    @Override
+    public Params getParams() {
+        return null;
+    }
+
+    @Override
+    protected void setData(String s) {
+
+    }
+
     /**
      * 地区回调
      * @param s
@@ -206,25 +214,19 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
      * 修改头像底部弹窗回调
      * @param position
      */
-    private final int READ_EXTERNAL_STORAGE_CODE = 22;
-    private final int CAMERA_PERMISSIONS_REQUEST_CODE = 33;
-    private final int CODE_RESULT_REQUEST=44;
-
+    private static final  int PER_CODE = 100;//权限回调
     @Override
     public void onSelectItemOnclick(int position) {
         if(position==1){
             //showToast("点击了相册");
-            PhotoUtils.autoObtainStoragePermission(mContext,READ_EXTERNAL_STORAGE_CODE);
+            /*PermissionGen.with(EditInfoActtivity.this)
+                    .addRequestCode(PER_CODE)
+                    .permissions(Constant.per)
+                    .request();*/
+            PhotoUtils.startGallery(EditInfoActtivity.this,GALLERY_OPEN_REQUEST_CODE);
         }else if(position==2){
             //showToast("点击了拍照");
-            List<String> permissionAll = PerUtils.isPermissionAll(mContext, Constant.per);
-            if(null==permissionAll){
-                //打开相机
-                PhotoUtils.autoCameraPermission(mContext,CAMERA_PERMISSIONS_REQUEST_CODE,fileCropUri);
-            }else{
-                //申请权限
-                PerUtils.requestPermission(mContext,Constant.per,READ_EXTERNAL_STORAGE_CODE);
-            }
+            PhotoUtils.startCamera(EditInfoActtivity.this,CAMERA_OPEN_REQUEST_CODE,generateCameraFilePath());
         }
         //关闭底部弹窗
         if(null!=photoPW){
@@ -243,21 +245,6 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==READ_EXTERNAL_STORAGE_CODE){  //读写权限回调码
-            boolean permission = PerUtils.isPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE);
-            if(permission){
-                PhotoUtils.openPic((Activity)mContext, READ_EXTERNAL_STORAGE_CODE);
-            }else{
-                showToast("请打开内存卡操作权限！");
-            }
-        }else if(requestCode==CAMERA_PERMISSIONS_REQUEST_CODE){ //申请相机权限回调
-            boolean permission = PerUtils.isPermission(mContext, Manifest.permission.CAMERA);
-            if(permission){//已经打开相机权限
-                PhotoUtils.autoCameraPermission(mContext,CAMERA_PERMISSIONS_REQUEST_CODE,fileCropUri);
-            }else{
-                showToast("请打相机操作权限！");
-            }
-        }
 
     }
     /**
@@ -266,30 +253,103 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
      * @param resultCode
      * @param data
      */
-    //相册-裁剪后的图片文件地址
-    private File fileAlbumUri = new File(Environment.getExternalStorageDirectory().getPath() + "/crop_photo.jpg");
-    private Uri cropAlbumUri;//保存裁剪后的图片URI
-    //相机-裁剪后的图片文件地址
-    private File fileCropUri = new File(Environment.getExternalStorageDirectory().getPath() + "/photo.jpg");
-    private Uri cropImageUri;//保存裁剪后的图片URI
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==READ_EXTERNAL_STORAGE_CODE){ //打开相册返回回调
-            cropAlbumUri = Uri.fromFile(fileAlbumUri);
-            PhotoUtils.cropImage(mContext,cropAlbumUri,data,CODE_RESULT_REQUEST);
-        }else if(requestCode==CAMERA_PERMISSIONS_REQUEST_CODE){ //拍照完成回调
-            cropImageUri = Uri.fromFile(fileCropUri);
-            PhotoUtils.cropImageUri(this, cropImageUri, cropImageUri, 1, 1, 480, 480, CODE_RESULT_REQUEST);
-        }else if(requestCode==CODE_RESULT_REQUEST){ //裁剪图片后的回调
-            try{
-                Glide.with(mContext).load(cropImageUri).centerCrop().error(R.mipmap.ic_launcher).into(edit_info_userHead);
-            }catch(Exception ex){
-                ex.printStackTrace();
+        if (resultCode == RESULT_OK) {
+            switch (requestCode){
+                case CAMERA_OPEN_REQUEST_CODE://拍照完成回调
+                    if(data == null || data.getExtras() == null){
+                        //mImg.setImageBitmap(BitmapFactory.decodeFile(mCameraFilePath));
+                        generateCropImgFilePath();
+                        PhotoUtils.startCropImage(
+                                EditInfoActtivity.this,
+                                mCameraFilePath,
+                                mCropImgFilePath,
+                                1,
+                                1,
+                                //mImg.getWidth(),
+                                //mImg.getHeight(),
+                                480,
+                                480,
+                                CROP_IMAGE_REQUEST_CODE);
+                    }else{
+                        Bundle mBundle = data.getExtras();
+                    }
+
+                    break;
+                case GALLERY_OPEN_REQUEST_CODE://访问相册完成回调
+                    if(data == null){
+                        //DebugUtils.d(TAG,"onActivityResult::GALLERY_OPEN_REQUEST_CODE::data null");
+                    }else{
+                       // DebugUtils.d(TAG,"onActivityResult::GALLERY_OPEN_REQUEST_CODE::data = " + data.getData());
+                        String mGalleryPath = PhotoUtils.getPath(mContext,data.getData());
+                        //DebugUtils.d(TAG,"onActivityResult::GALLERY_OPEN_REQUEST_CODE::mGalleryPath = " + mGalleryPath);
+                        /*
+                        mImg.setImageBitmap(BitmapFactory.decodeFile(mGalleryPath));
+                        */
+                        generateCropImgFilePath();
+                        PhotoUtils.startCropImage(
+                                EditInfoActtivity.this,
+                                mGalleryPath,
+                                mCropImgFilePath,
+                                1,
+                                1,
+                                //mImg.getWidth(),
+                                //mImg.getHeight(),
+                                480,480,
+                                CROP_IMAGE_REQUEST_CODE);
+                    }
+                    break;
+                case CROP_IMAGE_REQUEST_CODE://裁剪完成回调
+                    //DebugUtils.d(TAG,"onActivityResult::CROP_IMAGE_REQUEST_CODE::mCropImgFilePath = " + mCropImgFilePath);
+                    Bitmap bitmap = BitmapFactory.decodeFile(mCropImgFilePath);
+                    Glide.with(mContext).load("file://"+mCropImgFilePath).error(R.mipmap.default_head_image).into(edit_info_userHead);
+                    //edit_info_userHead.setImageBitmap(bitmap);
+                    break;
             }
         }
+
+
     }
 
+
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 1;
+    private static final int SDCARD_PERMISSION_REQUEST_CODE = 2;
+    private static final int CAMERA_OPEN_REQUEST_CODE = 3;
+    private static final int GALLERY_OPEN_REQUEST_CODE = 4;
+    private static final int CROP_IMAGE_REQUEST_CODE = 5;
+
+    private String mCameraFilePath = "";
+    private String mCropImgFilePath = "";
+
+
+    private String generateCameraFilePath(){
+        String mCameraFileDirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        mCameraFilePath = mCameraFileDirPath + File.separator  + "cropPhoto.jgp";
+        File mCameraFileDir = new File(mCameraFilePath);
+        try {
+            if(!mCameraFileDir.exists()){
+                mCameraFileDir.createNewFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return mCameraFilePath;
+    }
+    private String generateCropImgFilePath(){
+        String mCameraFileDirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        mCropImgFilePath = mCameraFileDirPath + File.separator  + "cropPhoto.jgp";
+        File mCameraFileDir = new File(mCropImgFilePath);
+        try {
+            if(!mCameraFileDir.exists()){
+                mCameraFileDir.createNewFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return mCropImgFilePath;
+    }
 
 
 }

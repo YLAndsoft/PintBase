@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import f.base.BaseFragment;
+import f.base.bean.Params;
 import z.pint.R;
 import z.pint.adapter.ClassifyViewPagerAdapter;
 import z.pint.view.PagerSlidingTabStrip;
@@ -43,6 +44,10 @@ public class SearchFragment extends BaseFragment {
         x.view().inject(this,mContextView);
         new_search.setOnClickListener(this);
     }
+    @Override
+    public Params getParams() {
+        return null;
+    }
 
     @Override
     protected void initData() {
@@ -63,6 +68,11 @@ public class SearchFragment extends BaseFragment {
     }
 
     @Override
+    protected void setData(String s) {
+
+    }
+
+    @Override
     public void widgetClick(View view) {
         switch (view.getId()){
             case R.id.new_search:
@@ -70,6 +80,8 @@ public class SearchFragment extends BaseFragment {
                 break;
         }
     }
+
+
 
 
 }

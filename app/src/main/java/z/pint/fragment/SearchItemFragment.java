@@ -8,6 +8,7 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import f.base.BaseFragment;
+import f.base.bean.Params;
 import z.pint.R;
 
 /**
@@ -37,6 +38,16 @@ public class SearchItemFragment extends BaseFragment {
 
     @Override
     public void widgetClick(View view) {
+
+    }
+
+    @Override
+    public Params getParams() {
+        return null;
+    }
+
+    @Override
+    protected void setData(String s) {
 
     }
 

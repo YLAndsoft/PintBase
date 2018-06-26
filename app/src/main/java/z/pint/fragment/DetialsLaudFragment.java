@@ -17,16 +17,16 @@ import f.base.bean.Params;
 import z.pint.R;
 
 /**
- * Created by DN on 2018/6/21.
+ * Created by DN on 2018/6/26.
  */
 
-public class UserWorksFragment extends BaseFragment {
+public class DetialsLaudFragment extends BaseFragment {
 
-    @ViewInject(value = R.id.userinfo_works_recycler)
-    private RecyclerView userinfo_works_recycler;
+    @ViewInject(value = R.id.details_laud_recycler)
+    RecyclerView details_laud_recycler;
     @Override
     public int bindLayout() {
-        return R.layout.fragment_userinfo_works;
+        return R.layout.details_laud_fragment;
     }
 
     @Override
@@ -38,18 +38,18 @@ public class UserWorksFragment extends BaseFragment {
     protected void initData() {
         List<String> list = new ArrayList<>();
         for(int i=0;i<10;i++){
-            list.add("第"+i+"条数据");
+            list.add("第"+i+"条点赞");
         }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        userinfo_works_recycler.setLayoutManager(linearLayoutManager);
+        details_laud_recycler.setLayoutManager(linearLayoutManager);
         BaseRecyclerAdapter<String> adapter = new BaseRecyclerAdapter<String>(mContext,list,R.layout.userinfo_works_item_layout) {
             @Override
             public void convert(BaseRecyclerHolder baseRecyclerHolder, String s, int i) {
                 baseRecyclerHolder.setText(R.id.userinfo_works,s+"");
             }
         };
-        userinfo_works_recycler.setAdapter(adapter);
+        details_laud_recycler.setAdapter(adapter);
     }
 
     @Override
@@ -58,13 +58,13 @@ public class UserWorksFragment extends BaseFragment {
     }
 
     @Override
-    public Params getParams() {
+    public Params getParams() { //设置网络请求参数及地址
         return null;
     }
 
     @Override
     protected void setData(String s) {
-
+        //绑定网络数据
     }
 
 }

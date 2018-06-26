@@ -1,12 +1,17 @@
 package z.pint.utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -14,12 +19,19 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
+import android.view.WindowManager;
+import android.widget.Toast;
+
+import org.xutils.common.util.LogUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import f.base.utils.PerUtils;
+import z.pint.activity.EditInfoActtivity;
 import z.pint.constant.Constant;
 
 import static android.R.attr.data;
@@ -34,152 +46,144 @@ public class PhotoUtils {
     }
 
     /**
-     * 打开相册
+     * 获取Uri
      * @param mContext
-     * @param code
+     * @param filePath
+     * @return
      */
-    public static void autoObtainStoragePermission(Context mContext, int code) {
-        List<String> permissionAll = PerUtils.isPermissionAll(mContext, Constant.per);
-        if(null==permissionAll){ //有权限，CODE_GALLERY_REQUEST
-            PhotoUtils.openPic((Activity) mContext, code);
+    public static Uri getFileUri(Context mContext,String filePath){
+        Uri mUri = null;
+        File mFile = new File(filePath);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            //mUri = FileProvider.getUriForFile(context,"com.zxl.test_picture_camera",mFile);
+            //通过FileProvider创建一个content类型的Uri
+            String packageName = mContext.getPackageName();
+            mUri = FileProvider.getUriForFile(mContext,packageName +".fileprovider", mFile);
         }else{
-            //获取权限 STORAGE_PERMISSIONS_REQUEST_CODE,
-            PerUtils.requestPermission(mContext,Constant.per,code);
+            mUri = Uri.fromFile(mFile);
         }
+        return mUri;
     }
 
     /**
-     * 打开相机,CODE_CAMERA_REQUEST
+     * 打开相机
+     * @param activity
+     * @param requestCode
+     * @param filePath
      */
-    public static void autoCameraPermission(Context mContext,int code,File fileUri){
-        try {
-            if (hasSdcard()) {
-                if(!fileUri.exists()){
-                    fileUri.createNewFile();
-                }
-                Uri imageUri = Uri.fromFile(fileUri);
-                String packageName = mContext.getPackageName();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-                    imageUri = FileProvider.getUriForFile(mContext,packageName +".fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
-                }
-                PhotoUtils.takePicture((Activity) mContext, imageUri, code);
+    public static void startCamera(Activity activity,int requestCode,String filePath){
+        if(hasSdcard()){
+            Intent mOpenCameraIntent = new Intent();
+            mOpenCameraIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            Uri desUri = getFileUri(activity,filePath);
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                //已申请camera权限
+                //mOpenCameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            mOpenCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,desUri);
+            activity.startActivityForResult(mOpenCameraIntent,requestCode);
         }
     }
 
     /**
-     * @param activity    当前activity
-     * @param imageUri    拍照后照片存储路径
-     * @param requestCode 调用系统相机请求码
+     * 打开相册
+     * @param activity
+     * @param requestCode
      */
-    public static void takePicture(Activity activity, Uri imageUri, int requestCode) {
-        boolean permission = PerUtils.isPermission(activity, Manifest.permission.CAMERA);
-        if(permission){
-            //调用系统相机
-            Intent intentCamera = new Intent();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                intentCamera.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
-            }
-            intentCamera.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-            //将拍照结果保存至photo_file的Uri中，不保留在相册中
-            intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            activity.startActivityForResult(intentCamera, requestCode);
-        }else{
-            PerUtils.requestPermission(activity,Manifest.permission.CAMERA,requestCode);
+    public static void startGallery(Activity activity,int requestCode){
+        if(hasSdcard()){
+            Intent mOpenGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            mOpenGalleryIntent.setType("image/*");
+            activity.startActivityForResult(mOpenGalleryIntent,requestCode);
         }
-
     }
-
-
-    /**
-     * @param activity    当前activity
-     * @param requestCode 打开相册的请求码
-     */
-    public static void openPic(Activity activity, int requestCode) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        photoPickerIntent.setType("image/*");
-        activity.startActivityForResult(photoPickerIntent, requestCode);
-    }
-
     /**
      * 裁剪图片
-     * @param mContext
-     * @param cropImageUri
-     * @param data
-     * @param code
      */
-    public static void cropImage(Context mContext, Uri cropImageUri, Intent data, int code){
-        if (hasSdcard()) {
-            String path = PhotoUtils.getPath(mContext, data.getData());
-            Uri newUri = Uri.fromFile(new File(path));
-            File file = new File(newUri.getPath());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                newUri = FileProvider.getUriForFile(mContext, mContext.getPackageName()+".fileprovider",file);
-            }
-            cropImageUri((Activity) mContext, newUri, cropImageUri, 1, 1, 480, 480, code);
-        }
+    public static void startCropImage(Activity activity, String originPath, String desPath, int aspectX, int aspectY, int outputX, int outputY, int requestCode){
+        startCropImage(activity,getFileUri(activity,originPath),getFileUri(activity,desPath),aspectX,aspectY,outputX,outputY,requestCode);
     }
+    /**
+     * 裁剪图片
+     * @param activity
+     * @param originUri
+     * @param desUri
+     * @param aspectX
+     * @param aspectY
+     * @param outputX
+     * @param outputY
+     * @param requestCode
+     */
+    public static void startCropImage(Activity activity, Uri originUri, Uri desUri, int aspectX, int aspectY, int outputX, int outputY, int requestCode){
+        Intent mIntent = new Intent();
+        mIntent.setAction("com.android.camera.action.CROP");
+        mIntent.setDataAndType(originUri,"image/*");
+        List resInfoList = queryActivityByIntent(activity,mIntent);
+        if (resInfoList.size() == 0) {
+            //showMsg(activity, "没有合适的应用程序");
+            return;
+        }
+        Iterator resInfoIterator = resInfoList.iterator();
+        while (resInfoIterator.hasNext()) {
+            ResolveInfo resolveInfo = (ResolveInfo) resInfoIterator.next();
+            String packageName = resolveInfo.activityInfo.packageName;
+            activity.grantUriPermission(packageName, desUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            mIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        mIntent.putExtra("crop","true");
+        mIntent.putExtra("aspectX",aspectX);
+        mIntent.putExtra("aspectY",aspectY);
+        mIntent.putExtra("outputX",outputX);
+        mIntent.putExtra("outputY",outputY);
+        mIntent.putExtra("scale",true);
+
+        mIntent.putExtra(MediaStore.EXTRA_OUTPUT, desUri);
+        mIntent.putExtra("return-data",false);
+        mIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        mIntent.putExtra("noFaceDetection",true);
+
+        activity.startActivityForResult(mIntent,requestCode);
+    }
+
+    private static List<ResolveInfo> queryActivityByIntent(Activity activity, Intent intent){
+        List resInfoList = activity.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        return resInfoList;
+    }
+
 
     /**
      * 检查设备是否存在SDCard的工具方法
      */
-    public static boolean hasSdcard() {
-        String state = Environment.getExternalStorageState();
-        return state.equals(Environment.MEDIA_MOUNTED);
+    public static boolean hasSdcard(){
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
-
-    /**
-     * @param activity    当前activity
-     * @param orgUri      剪裁原图的Uri
-     * @param desUri      剪裁后的图片的Uri
-     * @param aspectX     X方向的比例
-     * @param aspectY     Y方向的比例
-     * @param width       剪裁图片的宽度
-     * @param height      剪裁图片高度
-     * @param requestCode 剪裁图片的请求码
-     */
-    public static void cropImageUri(Activity activity, Uri orgUri, Uri desUri, int aspectX, int aspectY, int width, int height, int requestCode) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        if (Build.VERSION.SDK_INT >= 24) {
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        }
-        intent.setDataAndType(orgUri, "image/*");
-        intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", aspectX);
-        intent.putExtra("aspectY", aspectY);
-        intent.putExtra("outputX", width);
-        intent.putExtra("outputY", height);
-        intent.putExtra("scale", true);
-        //将剪切的图片保存到目标Uri中
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, desUri);
-        intent.putExtra("return-data", false);
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        intent.putExtra("noFaceDetection", true);
-        activity.startActivityForResult(intent, requestCode);
+    public static void showMsg(Context context, String msg){
+        Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * 读取uri所在的图片
-     *
-     * @param uri      图片对应的Uri
-     * @param mContext 上下文对象
-     * @return 获取图像的Bitmap
-     */
-    public static Bitmap getBitmapFromUri(Uri uri, Context mContext) {
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), uri);
-            return bitmap;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public static int getScreenWidth(Context context){
+        WindowManager mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Point mPoint = new Point();
+        mWindowManager.getDefaultDisplay().getSize(mPoint);
+        return mPoint.x;
+    }
+
+    public static int getScreenHeight(Context context){
+        WindowManager mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Point mPoint = new Point();
+        mWindowManager.getDefaultDisplay().getSize(mPoint);
+        return mPoint.y;
     }
 
     //以下是关键，原本uri返回的是file:///...，
     //android4.4返回的是content:///...
+    @SuppressLint("NewApi")
     public static String getPath(final Context context, final Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         // DocumentProvider

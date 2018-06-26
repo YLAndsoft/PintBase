@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:expanded="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMarginEnd="5dp"
+                app:expandedTitleMarginStart="5dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <include layout="@layout/details_bar_layout"/>
+
+                <android.support.v7.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:layout_collapseMode="pin">
+
+                    <!--返回，收藏-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/transparent">
+                        <ImageView
+                            android:id="@+id/details_back"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/detail_back"
+                            android:layout_centerVertical="true"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:textSize="16dp"
+                            android:textColor="@color/black"
+                            android:text="作品详情"/>
+                        <TextView
+                            android:id="@+id/details_Collection"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="收藏"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:padding="5dp"
+                            android:layout_marginRight="12dp"/>
+                    </RelativeLayout>
+                </android.support.v7.widget.Toolbar>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+            <z.pint.view.DetailsPagerSlidingTabStrip
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/details_works_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:textColor="@color/maintab_topbar_bg_color"
+                android:textSize="16.0dip"
+                app:pstsDividerColor="@color/transparent"
+                app:pstsDividerPadding="0dp"
+                app:pstsIndicatorColor="@color/IndicatorColor"
+                app:pstsIndicatorHeight="3.0dip"
+                app:pstsShouldExpand="false"
+                app:pstsTabPaddingLeftRight="12.0dip"
+                app:pstsUnderlineColor="@color/transparent"
+                app:pstsUnderlineHeight="50dp"
+                app:selectedTabTextColor="@color/maintab_topbar_bg_color" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gary4"
+                />
+        </android.support.design.widget.AppBarLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/details_works_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+    </android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

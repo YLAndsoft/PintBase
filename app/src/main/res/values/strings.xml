@@ -11,4 +11,12 @@
     <string name="edit_info_sexTitle">修改性别</string>
     <string name="edit_info_signTitle">编辑签名</string>
 
+    <string name="userinfo_tab_name1">个人</string>
+    <string name="userinfo_tab_name2">作品</string>
+
+    <string name="details_tabName1">评论</string>
+    <string name="details_tabName2">赞</string>
+
+
+
 </resources>

@@ -13,6 +13,7 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 import f.base.BaseFragmentActivity;
+import f.base.bean.Params;
 import z.pint.R;
 import z.pint.adapter.ClassifyViewPagerAdapter;
 import z.pint.bean.User;
@@ -34,10 +35,10 @@ public class UserInfoActivity extends BaseFragmentActivity {
     private ImageView userinfo_titile_toback;
     @ViewInject(value = R.id.user_edit)
     private ImageView user_edit;
-    String tabName []= {"个人","作品"};
-    private List<Fragment> fragments = new ArrayList<>();
-    private ClassifyViewPagerAdapter classViewPagerAdapter;
+    private PersonalFragment sif = null;
+    private UserWorksFragment uwf = null;
 
+    private ClassifyViewPagerAdapter classViewPagerAdapter;
     private User user;
 
     @Override
@@ -57,25 +58,27 @@ public class UserInfoActivity extends BaseFragmentActivity {
     public void initView(View view) {
         x.view().inject(this,mContextView);
     }
+    @Override
+    public Params getParams() {
+        return null;
+    }
 
     @Override
-    public void setListener() {
+    protected void setData(String s) {
+
+    }
+
+    @Override
+    public void initListener() {
         userinfo_titile_toback.setOnClickListener(this);
         user_edit.setOnClickListener(this);
     }
 
     @Override
     public void initData(Context context) {
-        List<String> list = new ArrayList<>();
-        list.add(tabName[0]);
-        list.add(tabName[1]);
-        PersonalFragment sif = new PersonalFragment();
-        UserWorksFragment uwf = new UserWorksFragment();
-        fragments.add(sif);
-        fragments.add(uwf);
-        classViewPagerAdapter = new ClassifyViewPagerAdapter(getSupportFragmentManager(), list, fragments);
+        classViewPagerAdapter = new ClassifyViewPagerAdapter(getSupportFragmentManager(), getTabName(), getFragments());
         userinfo_pager.setAdapter(classViewPagerAdapter);
-        userinfo_pager.setOffscreenPageLimit(tabName.length);//依据传过来的tab页的个数来设置缓存的页数
+        userinfo_pager.setOffscreenPageLimit(2);//依据传过来的tab页的个数来设置缓存的页数
         //tabs.setFollowTabColor(true);//设置标题是否跟随
         userinfo_tabs.setViewPager(userinfo_pager);
     }
@@ -99,4 +102,28 @@ public class UserInfoActivity extends BaseFragmentActivity {
                 break;
         }
     }
+
+
+
+    private Fragment getPersonalFragment(){
+        if(sif==null){sif = new PersonalFragment();}
+        return sif;
+    }
+    private Fragment getUserWorksFragment(){
+        if(uwf==null){uwf = new UserWorksFragment();}
+        return uwf;
+    }
+    private List<String> getTabName(){
+        List<String> list = new ArrayList<>();
+        list.add(getResources().getString(R.string.userinfo_tab_name1));
+        list.add(getResources().getString(R.string.userinfo_tab_name2));
+        return list;
+    }
+    private List<Fragment> getFragments(){
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(getPersonalFragment());
+        fragments.add(getUserWorksFragment());
+        return fragments;
+    }
+
 }

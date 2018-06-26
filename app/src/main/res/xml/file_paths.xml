@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <paths>
-         <external-path name="camera_photos" path="" />
+        <external-path name="camera_photos" path="" />
+        <files-path name="camera_photos" path="" />
+        <cache-path name="camera_photos" path="" />
+        <external-files-path name="camera_photos" path="" />
         <!--
     <files-path name="name" path="path/" />   等同于Context.getFilesDir()下面的path文件夹的所有文件
 	<cache-path name="name" path="path/" />  等同于Context.getCacheDir()下面的path文件夹

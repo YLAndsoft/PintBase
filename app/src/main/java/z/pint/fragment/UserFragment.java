@@ -9,6 +9,7 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import f.base.BaseFragment;
+import f.base.bean.Params;
 import z.pint.R;
 import z.pint.activity.UserInfoActivity;
 
@@ -82,4 +83,15 @@ public class UserFragment extends BaseFragment {
 
         }
     }
+
+    @Override
+    public Params getParams() {
+        return null;
+    }
+
+    @Override
+    protected void setData(String s) {
+
+    }
+
 }

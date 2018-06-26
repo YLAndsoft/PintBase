@@ -13,6 +13,7 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import f.base.BaseFragmentActivity;
+import f.base.bean.Params;
 import z.pint.R;
 
 /**
@@ -42,8 +43,9 @@ public class WhiteBoardActivity extends BaseFragmentActivity {
     public void initView(View view) {
         x.view().inject(this,mContextView);
     }
+
     @Override
-    public void setListener() {
+    public void initListener() {
         toBack.setOnClickListener(this);
     }
 
@@ -66,5 +68,15 @@ public class WhiteBoardActivity extends BaseFragmentActivity {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public Params getParams() {
+        return null;
+    }
+
+    @Override
+    protected void setData(String s) {
+
     }
 }

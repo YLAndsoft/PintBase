@@ -13,6 +13,7 @@ import java.util.List;
 import f.base.BaseFragment;
 import f.base.BaseRecyclerAdapter;
 import f.base.BaseRecyclerHolder;
+import f.base.bean.Params;
 import z.pint.R;
 
 /**
@@ -34,7 +35,15 @@ public class PersonalFragment extends BaseFragment{
     protected void initView() {
         x.view().inject(this,mContextView);
     }
+    @Override
+    public Params getParams() {
+        return null;
+    }
 
+    @Override
+    protected void setData(String s) {
+        //设置网络数据
+    }
     @Override
     protected void initData() {
         List<String> list = new ArrayList<>();
@@ -63,4 +72,6 @@ public class PersonalFragment extends BaseFragment{
     public void widgetClick(View view) {
 
     }
+
+
 }

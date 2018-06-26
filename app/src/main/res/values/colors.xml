@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFDEDDDD</color>
+    <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="white">#ffffff</color>
     <color name="IndicatorColor">#3F51B5</color>
     <color name="colorActionBar">#80000000</color>
-    <!-- 主色 按住蓝 -->
+    <!-- 主色 -->
     <color name="maintab_topbar_bg_color">#18131A</color>
+
+    <color name="details_bg_label_color">#2b6ff7</color>
 
     <color name="background_tab_pressed">#00000000</color>
     <color name="black">#000000</color>

@@ -3,6 +3,7 @@ package z.pint.fragment;
 import android.view.View;
 
 import f.base.BaseFragment;
+import f.base.bean.Params;
 import z.pint.R;
 
 /**
@@ -19,7 +20,10 @@ public class MessageFragment extends BaseFragment {
     protected void initView() {
 
     }
-
+    @Override
+    public Params getParams() {
+        return null;
+    }
     @Override
     protected void initData() {
 
@@ -27,6 +31,11 @@ public class MessageFragment extends BaseFragment {
 
     @Override
     public void widgetClick(View view) {
+
+    }
+
+    @Override
+    protected void setData(String s) {
 
     }
 }
