@@ -6,23 +6,21 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/photograph"
+        android:id="@+id/txt0"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
-        android:textSize="17dp"
-        android:text="拍照"/>
+        android:textSize="17dp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gary"/>
     <TextView
-        android:id="@+id/album"
+        android:id="@+id/txt1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
-        android:textSize="17dp"
-        android:text="相册"/>
+        android:textSize="17dp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -32,6 +30,5 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
-        android:textSize="17dp"
-        android:text="取消"/>
+        android:textSize="17dp"/>
 </LinearLayout>

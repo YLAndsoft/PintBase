@@ -13,4 +13,5 @@ public class Attention implements Serializable {
     private int converAttentionID;//被关注人ID
     private String userName;
     private String userHead;
+
 }

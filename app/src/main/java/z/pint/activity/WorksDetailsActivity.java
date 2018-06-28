@@ -1,40 +1,40 @@
 package z.pint.activity;
-
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import f.base.BaseFragmentActivity;
 import f.base.bean.Params;
 import z.pint.R;
 import z.pint.adapter.ClassifyViewPagerAdapter;
+import z.pint.bean.Works;
 import z.pint.fragment.DetailsCommentFragment;
 import z.pint.fragment.DetialsLaudFragment;
+import z.pint.utils.ViewUtils;
 import z.pint.view.CuttingImageView;
 import z.pint.view.DetailsPagerSlidingTabStrip;
 
-/**
+/**作品详情
  * Created by DN on 2018/6/26.
  */
 
 public class WorksDetailsActivity extends BaseFragmentActivity {
-
     private ClassifyViewPagerAdapter classViewPagerAdapter;
     private DetailsCommentFragment dcf;
     private DetialsLaudFragment dlf;
-
+    private Works works;
     @Override
     public void initParms(Intent intent) {
         setAllowFullScreen(true);
@@ -43,45 +43,57 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
         setSetActionBarColor(false, R.color.colorActionBar);
         //去掉状态栏
         getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,WindowManager.LayoutParams. FLAG_FULLSCREEN);
+        //获取首页传递过来的作品
+        works = (Works) intent.getSerializableExtra("works");
     }
-
     @Override
     public int bindLayout() {
         return R.layout.activity_works_details;
     }
-
     @Override
     public void initView(View view) {
         x.view().inject(this,mContextView);
-        details_works_imag.setImageResource(R.mipmap.ova);
     }
-
     @Override
     public Params getParams() {
         return null;
     }
-
     @Override
-    protected void setData(String s) {
-
+    protected void setData(String result) {
     }
 
     @Override
     public void initListener() {
         details_back.setOnClickListener(this);
         details_attention.setOnClickListener(this);
+        details_ll_comment.setOnClickListener(this);
+        details_ll_likes.setOnClickListener(this);
     }
 
     @Override
     public void initData(Context context) {
-        classViewPagerAdapter = new ClassifyViewPagerAdapter(getSupportFragmentManager(), getTabName(), getFragments());
-        details_works_pager.setAdapter(classViewPagerAdapter);
-        details_works_pager.setOffscreenPageLimit(2);//依据传过来的tab页的个数来设置缓存的页数
-        //tabs.setFollowTabColor(true);//设置标题是否跟随
-        details_works_tabs.setViewPager(details_works_pager,3,100);
+        if(works==null){return; }
+        Glide.with(context).load(works.getWorksImage()+"").placeholder(R.mipmap.img_placeholder).error(R.mipmap.bg_man).thumbnail(0.1f).into(details_works_imag);
+        ViewUtils.setImageUrl(mContext,details_userHead,works.getUserHead()+"",R.mipmap.default_head_image);
+        ViewUtils.setTextView(details_dex,works.getWorksDescribe(),"");
+        ViewUtils.setTextView(details_worksStrokes,works.getWorksStrokes()+"笔","0笔");
+        ViewUtils.setTextView(details_userName,works.getUserName(),"");
+        ViewUtils.setTextView(details_worksTims,works.getWorksReleaseTime(),"");
+        //设置标签
+        ViewUtils.setLabel(works.getWorksLabel(),details_label1,details_label2,details_label3);
+        ViewUtils.isAttention(works.isAttention(),details_attention);//是否关注
+        ViewUtils.isLikes(works.isLikes(),details_toLikes);//是否点赞
+        initPager();
     }
 
-    boolean isAttention = false;
+    private void initPager() {
+        classViewPagerAdapter = new ClassifyViewPagerAdapter(getSupportFragmentManager(), getTabName(), getFragments());
+        details_works_pager.setAdapter(classViewPagerAdapter);
+        details_works_pager.setOffscreenPageLimit(getTabName().size());//依据传过来的tab页的个数来设置缓存的页数
+        //tabs.setFollowTabColor(true);//设置标题是否跟随
+        details_works_tabs.setViewPager(details_works_pager,works.getWorksCommentNumber(),works.getWorksLikeNumber());
+    }
+
     @Override
     public void widgetClick(View view) {
         switch (view.getId()){
@@ -89,19 +101,18 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
                 finish();
                 break;
             case R.id.details_attention:
-                if(!isAttention){
-                    isAttention=true;
-                    details_attention.setImageResource(R.mipmap.unfollow);
-                }else{
-                    isAttention=false;
-                    details_attention.setImageResource(R.mipmap.follow);
-                }
+                showToast("点击关注");
                 break;
-
-
+            case R.id.details_ll_comment:
+                showToast("点击评论");
+                details_works_tabs.notifyNumberData(12,12);
+                break;
+            case R.id.details_ll_likes:
+                showToast("点赞");
+                details_works_tabs.notifyNumberData(11,11);
+                break;
         }
     }
-
 
     private Fragment getDetailsCommentFragment(){
         if(dcf==null)dcf = new DetailsCommentFragment();
@@ -152,5 +163,11 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
     private ImageView details_attention;//是否已经关注此作品用户
     @ViewInject(value = R.id.details_Collection)
     private TextView details_Collection;//收藏
+    @ViewInject(value = R.id.details_ll_comment)
+    private LinearLayout details_ll_comment;//评论按钮
+    @ViewInject(value = R.id.details_toLikes)
+    private ImageView details_toLikes;//点赞图标
+    @ViewInject(value = R.id.details_ll_likes)
+    private LinearLayout details_ll_likes;//点赞按钮
 
 }

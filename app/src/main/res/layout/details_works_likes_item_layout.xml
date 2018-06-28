@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="15dp"
+    android:paddingTop="15dp"
+    android:background="@color/white">
+
+    <z.pint.view.CuttingImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/details_likes_userHead"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/default_head_image"
+        app:border_color="@color/transparent"
+        app:border_width="0dp" />
+
+    <TextView
+        android:id="@+id/details_likes_userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="12dp"
+        android:textColor="@color/gary2"
+        android:layout_toRightOf="@+id/details_likes_userHead"
+        android:text="小酒窝长睫毛"/>
+
+    <ImageView
+        android:id="@+id/details_likes_attention"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/follow"/>
+
+</RelativeLayout>

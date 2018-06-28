@@ -7,10 +7,10 @@
 
     <ImageView
         android:id="@+id/details_works_imag"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:src="@mipmap/bg_woman"
-        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         />
 
     <!--描述，笔画-->
@@ -19,24 +19,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/details_works_imag"
-        android:layout_marginTop="8dp"
         android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="5dp"
         >
-        <TextView
-            android:id="@+id/details_dex"
+        <LinearLayout
+            android:id="@+id/ll_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="7dp"
-            android:textColor="@color/gary3"
-            android:text="这里述这里是描述这里是描述这里是描述"/>
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/details_dex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:enabled="true"
+                android:textColor="@color/gary3"
+                android:text="这里是描述"/>
+        </LinearLayout>
         <TextView
             android:id="@+id/details_worksStrokes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:padding="5dp"
+            android:layout_toRightOf="@+id/ll_des"
+            android:layout_alignParentRight="true"
             android:textColor="@color/gary3"
             android:text="1213笔"/>
     </LinearLayout>
@@ -55,13 +65,14 @@
             android:layout_marginLeft="7dp"
             android:textColor="@color/white"
             android:background="@drawable/details_label_bg_shape"
-            android:text="# 古风"/>
+            android:text="# 原创"/>
         <TextView
             android:id="@+id/details_label2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"
             android:textColor="@color/white"
+            android:visibility="gone"
             android:background="@drawable/details_label_bg_shape"
             android:text="# 板绘"/>
         <TextView
@@ -70,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"
             android:textColor="@color/white"
+            android:visibility="gone"
             android:background="@drawable/details_label_bg_shape"
             android:text="# 二创"/>
     </LinearLayout>
@@ -79,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/details_ll_lebel"
-        android:layout_marginTop="25dp">
+        android:layout_marginTop="20dp">
         <z.pint.view.CuttingImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/details_userHead"

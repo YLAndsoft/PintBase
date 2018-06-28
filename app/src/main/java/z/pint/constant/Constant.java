@@ -19,8 +19,6 @@ public class Constant {
 
     public static final String environment = Environment.getExternalStorageDirectory().getPath();
 
-    public static final String [] USERINFO_TAB_NAME = {};
-
 }
 
 

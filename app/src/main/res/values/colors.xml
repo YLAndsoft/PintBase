@@ -5,6 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="white">#ffffff</color>
+    <color name="transparent">#00000000</color>
+
     <color name="IndicatorColor">#3F51B5</color>
     <color name="colorActionBar">#80000000</color>
     <!-- 主色 -->
@@ -19,6 +21,8 @@
     <color name="gary2">#696969</color>
     <color name="gary3">#2b2b2b</color>
     <color name="gary4">#d2d2d2</color>
+    <color name="gary5">#f5f5f5</color>
+
 
 
 </resources>

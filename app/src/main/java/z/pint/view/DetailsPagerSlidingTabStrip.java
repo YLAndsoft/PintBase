@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -82,6 +83,7 @@ public class DetailsPagerSlidingTabStrip extends HorizontalScrollView {
 
     private boolean shouldExpand = false;
     private boolean textAllCaps = false;
+
 
     private int scrollOffset = 52;
     private int indicatorHeight = 8;
@@ -200,15 +202,15 @@ public class DetailsPagerSlidingTabStrip extends HorizontalScrollView {
     }
 
     public void notifyDataSetChanged() {
-        //tabsContainer.removeAllViews();
+        tabsContainer.removeAllViews();
         tabCount = pager.getAdapter().getCount();
-        for (int i = 0; i < tabCount; i++) {
-            if (pager.getAdapter() instanceof IconTabProvider) {
-                addIconTab(i,((IconTabProvider) pager.getAdapter()) .getPageIconResId(i));
-            } else {
-                addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
+            for (int i = 0; i < tabCount; i++) {
+                if (pager.getAdapter() instanceof IconTabProvider) {
+                    addIconTab(i,((IconTabProvider) pager.getAdapter()) .getPageIconResId(i));
+                } else {
+                    addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
+                }
             }
-        }
         updateTabStyles();
         getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -219,6 +221,14 @@ public class DetailsPagerSlidingTabStrip extends HorizontalScrollView {
                         scrollToChild(currentPosition, 0);
                     }
                 });
+    }
+
+    public void notifyNumberData(int giftNumber,int commentNumber){
+        this.giftNumber = giftNumber;
+        this.commentNumber= commentNumber;
+        updateTabStyles();
+
+        this.notifyDataSetChanged();
     }
 
     private void addTextTab(final int position, String title) {

@@ -9,26 +9,35 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import z.pint.R;
+import z.pint.utils.ViewUtils;
 
 /**
  * Created by DN on 2018/6/22.
  */
 
-public class PhotoPopupWindow extends PopupWindow implements View.OnClickListener{
+public class ButtonPopupWindow extends PopupWindow implements View.OnClickListener{
 
     private LayoutInflater inflater;
-
+    private String [] tabName={"拍照","相册","取消"};
     private OnSelectItemListener listener;
 
     public interface  OnSelectItemListener{
-        void onSelectItemOnclick(int position);
+        void onSelectItemOnclick(int position,String tabName);
     }
-    public PhotoPopupWindow(Context mContext,OnSelectItemListener listener){
+    public ButtonPopupWindow(Context mContext, OnSelectItemListener listener){
         super(mContext);
         this.listener = listener;
         inflater = LayoutInflater.from(mContext);
         initView();
     }
+    public ButtonPopupWindow(Context mContext, String [] tabName, OnSelectItemListener listener){
+        super(mContext);
+        this.listener = listener;
+        this.tabName = tabName;
+        inflater = LayoutInflater.from(mContext);
+        initView();
+    }
+
 
     private void initView() {
         View view = inflater.inflate(R.layout.photo_popupwindow_layout, null);
@@ -43,11 +52,14 @@ public class PhotoPopupWindow extends PopupWindow implements View.OnClickListene
         setAnimationStyle(f.base.R.style.anim_pw_button);
         //设置点击外边可以消失
         setOutsideTouchable(false);
-        TextView photograph = view.findViewById(R.id.photograph);
-        TextView album = view.findViewById(R.id.album);
+        TextView txt0 = view.findViewById(R.id.txt0);
+        TextView txt1 = view.findViewById(R.id.txt1);
         TextView pw_cancel = view.findViewById(R.id.pw_cancel);
-        photograph.setOnClickListener(this);
-        album.setOnClickListener(this);
+        ViewUtils.setTextView(txt0,tabName[0],"拍照");
+        ViewUtils.setTextView(txt1,tabName[1],"相册");
+        ViewUtils.setTextView(pw_cancel,tabName[2],"取消");
+        txt0.setOnClickListener(this);
+        txt1.setOnClickListener(this);
         pw_cancel.setOnClickListener(this);
     }
 
@@ -58,14 +70,14 @@ public class PhotoPopupWindow extends PopupWindow implements View.OnClickListene
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.photograph:
-                listener.onSelectItemOnclick(2);
+            case R.id.txt0:
+                listener.onSelectItemOnclick(2,tabName[0]);
                 break;
-            case R.id.album:
-                listener.onSelectItemOnclick(1);
+            case R.id.txt1:
+                listener.onSelectItemOnclick(1,tabName[1]);
                 break;
             case R.id.pw_cancel:
-                listener.onSelectItemOnclick(0);
+                listener.onSelectItemOnclick(0,tabName[2]);
                 break;
 
         }

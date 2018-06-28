@@ -46,7 +46,7 @@ public class UserWorksFragment extends BaseFragment {
         BaseRecyclerAdapter<String> adapter = new BaseRecyclerAdapter<String>(mContext,list,R.layout.userinfo_works_item_layout) {
             @Override
             public void convert(BaseRecyclerHolder baseRecyclerHolder, String s, int i) {
-                baseRecyclerHolder.setText(R.id.userinfo_works,s+"");
+                baseRecyclerHolder.setText(R.id.comment_content,s+"");
             }
         };
         userinfo_works_recycler.setAdapter(adapter);

@@ -31,14 +31,14 @@ import z.pint.bean.User;
 import z.pint.utils.PhotoUtils;
 import z.pint.utils.ViewUtils;
 import z.pint.view.CuttingImageView;
-import z.pint.view.PhotoPopupWindow;
+import z.pint.view.ButtonPopupWindow;
 
 /**
  * 编辑个人信息界面
  * Created by DN on 2018/6/21.
  */
 
-public class EditInfoActtivity extends BaseActivity implements ProvincePopupWindow.OnResultClickListener,OnDialogClickListener,PhotoPopupWindow.OnSelectItemListener{
+public class EditInfoActtivity extends BaseActivity implements ProvincePopupWindow.OnResultClickListener,OnDialogClickListener,ButtonPopupWindow.OnSelectItemListener{
     @ViewInject(value = R.id.edit_toBack)
     private ImageView edit_toBack;//返回
     @ViewInject(value = R.id.edit_submit)
@@ -61,7 +61,7 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
     private BaseDialog sexDialog;
     private BaseDialog signDialog;
     private ProvincePopupWindow ppw;
-    private PhotoPopupWindow photoPW;
+    private ButtonPopupWindow photoPW;
 
     @Override
     public void initParms(Intent intent) {
@@ -109,7 +109,7 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
                 break;
             case R.id.edit_info_userHead:
                 //showToast("编辑头像");
-                if(null==photoPW) photoPW = new PhotoPopupWindow(mContext,EditInfoActtivity.this);
+                if(null==photoPW) photoPW = new ButtonPopupWindow(mContext,EditInfoActtivity.this);
                 if(!photoPW.isShowing()){
                     photoPW.showPopupWindow(edit_rootView, Gravity.BOTTOM,0,0);
                     return;
@@ -216,7 +216,7 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
      */
     private static final  int PER_CODE = 100;//权限回调
     @Override
-    public void onSelectItemOnclick(int position) {
+    public void onSelectItemOnclick(int position,String tabName) {
         if(position==1){
             //showToast("点击了相册");
             /*PermissionGen.with(EditInfoActtivity.this)

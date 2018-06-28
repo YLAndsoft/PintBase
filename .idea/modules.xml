@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PintBase.iml" filepath="$PROJECT_DIR$/PintBase.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/newbase/newbase.iml" filepath="$PROJECT_DIR$/newbase/newbase.iml" />
     </modules>
   </component>
 </project>

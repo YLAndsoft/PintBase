@@ -2,13 +2,10 @@ package z.pint;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -18,7 +15,7 @@ import f.base.bean.Params;
 import z.pint.activity.WhiteBoardActivity;
 import z.pint.fragment.HomeFragment;
 import z.pint.fragment.MessageFragment;
-import z.pint.fragment.SearchFragment;
+import z.pint.fragment.RecommendFragment;
 import z.pint.fragment.UserFragment;
 
 public class MainActivity extends MenuFragmentActivity {
@@ -39,7 +36,7 @@ public class MainActivity extends MenuFragmentActivity {
             R.mipmap.ic_home_select4};
     private HomeFragment homeFragment;
     private MessageFragment messageFragment;
-    private SearchFragment searchFragment;
+    private RecommendFragment searchFragment;
     private UserFragment userFragment;
 
     @ViewInject(value = R.id.main_menu_table)
@@ -122,7 +119,7 @@ public class MainActivity extends MenuFragmentActivity {
             case R.id.iv_menu_1:
                 iv_menu_1.setImageResource(imgsHovers[1]);
                 if (searchFragment == null) {
-                    searchFragment = new SearchFragment();
+                    searchFragment = new RecommendFragment();
                 }
                 switchFragment(flResId, searchFragment);
                 break;

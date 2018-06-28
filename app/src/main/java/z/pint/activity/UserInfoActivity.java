@@ -2,7 +2,6 @@ package z.pint.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -18,7 +17,6 @@ import z.pint.R;
 import z.pint.adapter.ClassifyViewPagerAdapter;
 import z.pint.bean.User;
 import z.pint.fragment.PersonalFragment;
-import z.pint.fragment.SearchItemFragment;
 import z.pint.fragment.UserWorksFragment;
 import z.pint.view.PagerSlidingTabStrip;
 
