@@ -84,6 +84,7 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
         ViewUtils.setLabel(works.getWorksLabel(),details_label1,details_label2,details_label3);
         ViewUtils.isAttention(works.isAttention(),details_attention);//是否关注
         ViewUtils.isLikes(works.isLikes(),details_toLikes);//是否点赞
+        likesTxt.setTextColor(works.isLikes()?getResources().getColor(R.color.details_bg_label_color):getResources().getColor(R.color.gary2));
         initPager();
     }
 
@@ -92,7 +93,7 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
         details_works_pager.setAdapter(classViewPagerAdapter);
         details_works_pager.setOffscreenPageLimit(getTabName().size());//依据传过来的tab页的个数来设置缓存的页数
         //tabs.setFollowTabColor(true);//设置标题是否跟随
-        details_works_tabs.setViewPager(details_works_pager,works.getWorksCommentNumber(),works.getWorksLikeNumber());
+        details_works_tabs.setViewPager(details_works_pager,works.getWorksLikeNumber(),works.getWorksCommentNumber());
     }
 
     private long mkeyTime;

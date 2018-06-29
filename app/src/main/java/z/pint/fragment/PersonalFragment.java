@@ -1,5 +1,6 @@
 package z.pint.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,6 +16,8 @@ import f.base.BaseRecyclerAdapter;
 import f.base.BaseRecyclerHolder;
 import f.base.bean.Params;
 import z.pint.R;
+import z.pint.bean.User;
+import z.pint.utils.ViewUtils;
 
 /**
  * 用户信息里面个人页面
@@ -25,7 +28,8 @@ public class PersonalFragment extends BaseFragment{
 
     @ViewInject(value = R.id.userinfo_personalRecycler)
     private RecyclerView userinfo_personalRecycler;
-
+    private User userInfo;
+    private String [] name;
     @Override
     public int bindLayout() {
         return R.layout.fragment_personal;
@@ -42,30 +46,21 @@ public class PersonalFragment extends BaseFragment{
 
     @Override
     protected void setData(String s) {
-        //设置网络数据
     }
     @Override
     protected void initData() {
-        List<String> list = new ArrayList<>();
-        list.add("123456");
-        list.add("还没有签名");
-        list.add("湖北武汉");
-        list.add("2018-06-21 14:04:33");
-        final String ss [] = {"ID:","签名:","所在地:","注册时间:"};
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        userinfo_personalRecycler.setLayoutManager(linearLayoutManager);
-
-        BaseRecyclerAdapter<String> adapter = new BaseRecyclerAdapter<String>(mContext,list,R.layout.userinfo_personal_item_layout) {
+        Bundle bundle = getArguments();
+        userInfo = (User) bundle.get("userInfo");
+        name = getString();
+        userinfo_personalRecycler.setLayoutManager(ViewUtils.getLayoutManager(mContext));
+        BaseRecyclerAdapter<String> adapter = new BaseRecyclerAdapter<String>(mContext,getListInfo(userInfo),R.layout.userinfo_personal_item_layout) {
             @Override
             public void convert(BaseRecyclerHolder baseRecyclerHolder, String s, int i) {
-                baseRecyclerHolder.setText(R.id.personal_txt,ss[i]+"");
+                baseRecyclerHolder.setText(R.id.personal_txt,name[i]+"");
                 baseRecyclerHolder.setText(R.id.personal_content,s+"");
             }
         };
         userinfo_personalRecycler.setAdapter(adapter);
-
-
     }
 
     @Override
@@ -73,5 +68,20 @@ public class PersonalFragment extends BaseFragment{
 
     }
 
+    private String[] getString(){
+        String ss [] = {getResources().getString(R.string.ID),
+                getResources().getString(R.string.SIGN),
+                getResources().getString(R.string.ADDRESS),
+                getResources().getString(R.string.REGISTRTIME)};
+        return ss;
+    }
+    private List<String> getListInfo(User user){
+        List<String> list = new ArrayList<>();
+        list.add(userInfo.getUserID()+"");
+        list.add(userInfo.getUserSign());
+        list.add(userInfo.getUserAddress());
+        list.add(userInfo.getRegistrTime());
+        return list;
+    }
 
 }

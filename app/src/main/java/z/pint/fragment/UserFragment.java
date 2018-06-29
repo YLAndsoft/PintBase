@@ -2,16 +2,27 @@ package z.pint.fragment;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import f.base.BaseFragment;
 import f.base.bean.Params;
+import f.base.utils.GsonUtils;
 import z.pint.R;
 import z.pint.activity.UserInfoActivity;
+import z.pint.bean.User;
+import z.pint.constant.HttpConfig;
+import z.pint.utils.DBHelper;
+import z.pint.utils.SPUtils;
+import z.pint.utils.ViewUtils;
 
 /**
  * Created by DN on 2018/6/19.
@@ -32,7 +43,17 @@ public class UserFragment extends BaseFragment {
     private LinearLayout ll_advise;//帮助
     @ViewInject(value = R.id.ll_setting)
     private LinearLayout ll_setting;//设置
+    @ViewInject(value = R.id.user_head)
+    private ImageView user_head;
+    @ViewInject(value = R.id.user_name)
+    private TextView user_name;
+    @ViewInject(value = R.id.user_sex)
+    private ImageView user_sex;
+    @ViewInject(value = R.id.user_sign)
+    private TextView user_sign;
 
+    private User userInfo;
+    private int userID;
     @Override
     public int bindLayout() {
         return R.layout.fragment_user_layout;
@@ -48,11 +69,17 @@ public class UserFragment extends BaseFragment {
         ll_gz.setOnClickListener(this);
         ll_fs.setOnClickListener(this);
         ll_zp.setOnClickListener(this);
+        userID = (int) SPUtils.getInstance(mContext).getParam("userID", 0);
     }
 
     @Override
     protected void initData() {
-
+        if(userInfo!=null){
+            ViewUtils.setImageUrl(mContext,user_head,userInfo.getUserHead(),R.mipmap.default_head_image);
+            ViewUtils.setTextView(user_name,userInfo.getUserName(),getResources().getString(R.string.defult_userName));
+            ViewUtils.setTextView(user_sign,userInfo.getUserSign(),getResources().getString(R.string.defult_sign));
+            ViewUtils.setSex(user_sex,userInfo.getUserSex());
+        }
     }
 
     @Override
@@ -60,7 +87,9 @@ public class UserFragment extends BaseFragment {
         switch (view.getId()){
             case R.id.rl_user:
                 showToast("跳转到个人信息界面");
-                startActivity(new Intent(mContext,UserInfoActivity.class));
+                Intent intent = new Intent(mContext,UserInfoActivity.class);
+                intent.putExtra("userInfo",userInfo);
+                startActivity(intent);
                 break;
             case R.id.ll_gz:
                 showToast("跳转到关注界面");
@@ -86,12 +115,19 @@ public class UserFragment extends BaseFragment {
 
     @Override
     public Params getParams() {
-        return null;
+        Map<String,String> map = new HashMap<>();
+        map.put(HttpConfig.ACTION_STATE,HttpConfig.SELECT_STATE+"");
+        map.put(HttpConfig.USER_ID,userID+"");
+        return new Params(HttpConfig.getUserInfoData,map);
     }
 
     @Override
-    protected void setData(String s) {
-
+    protected void setData(String result) {
+        userInfo = GsonUtils.getGsonObject(result, User.class);
+        if(userInfo==null){
+            userInfo = DBHelper.getUser(userID + "");//查询数据库
+        }
+        initData();
     }
 
 }

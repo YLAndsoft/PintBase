@@ -13,7 +13,7 @@
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:background="@color/white"
-        android:paddingTop="15dp">
+        android:paddingTop="20dp">
 
         <z.pint.view.CuttingImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -48,6 +48,7 @@
                 android:scaleType="fitCenter"
                 android:src="@mipmap/male" />
             <TextView
+                android:id="@+id/user_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/user_name"

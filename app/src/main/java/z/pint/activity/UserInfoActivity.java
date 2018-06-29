@@ -2,13 +2,17 @@ package z.pint.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import f.base.BaseFragmentActivity;
@@ -18,6 +22,9 @@ import z.pint.adapter.ClassifyViewPagerAdapter;
 import z.pint.bean.User;
 import z.pint.fragment.PersonalFragment;
 import z.pint.fragment.UserWorksFragment;
+import z.pint.utils.DBHelper;
+import z.pint.utils.SPUtils;
+import z.pint.utils.ViewUtils;
 import z.pint.view.PagerSlidingTabStrip;
 
 /**
@@ -33,6 +40,18 @@ public class UserInfoActivity extends BaseFragmentActivity {
     private ImageView userinfo_titile_toback;
     @ViewInject(value = R.id.user_edit)
     private ImageView user_edit;
+
+    @ViewInject(value = R.id.userinfo_head)
+    private ImageView userinfo_head;
+    @ViewInject(value = R.id.userinfo_name)
+    private TextView userinfo_name;
+    @ViewInject(value = R.id.userinfo_attention)
+    private TextView userinfo_attention;
+    @ViewInject(value = R.id.userinfo_fans)
+    private TextView userinfo_fans;
+    @ViewInject(value = R.id.user_sex)
+    private ImageView user_sex;
+
     private PersonalFragment sif = null;
     private UserWorksFragment uwf = null;
 
@@ -45,6 +64,7 @@ public class UserInfoActivity extends BaseFragmentActivity {
         setScreenRoate(false);
         setSteepStatusBar(false);
         setSetActionBarColor(true, R.color.colorActionBar);
+        user = (User) intent.getSerializableExtra("userInfo");
     }
 
     @Override
@@ -74,9 +94,19 @@ public class UserInfoActivity extends BaseFragmentActivity {
 
     @Override
     public void initData(Context context) {
+        if(user==null){
+            int userID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
+            user = DBHelper.getUser(userID + "");
+        }
+        ViewUtils.setImageUrl(mContext,userinfo_head,user.getUserHead(),R.mipmap.default_head_image);
+        ViewUtils.setTextView(userinfo_name,user.getUserName(),getString(R.string.defult_userName));
+        ViewUtils.setTextView(userinfo_attention,user.getAttentionNumber()+"关注",0+"关注");
+        ViewUtils.setTextView(userinfo_fans,user.getFansNumber()+"粉丝",0+"粉丝");
+        ViewUtils.setSex(user_sex,user.getUserSex());
+
         classViewPagerAdapter = new ClassifyViewPagerAdapter(getSupportFragmentManager(), getTabName(), getFragments());
         userinfo_pager.setAdapter(classViewPagerAdapter);
-        userinfo_pager.setOffscreenPageLimit(2);//依据传过来的tab页的个数来设置缓存的页数
+        userinfo_pager.setOffscreenPageLimit(2);//依据传过来的tab页的个数来设置缓存的页数 喝喜酒
         //tabs.setFollowTabColor(true);//设置标题是否跟随
         userinfo_tabs.setViewPager(userinfo_pager);
     }
@@ -88,12 +118,6 @@ public class UserInfoActivity extends BaseFragmentActivity {
                 finish();
                 break;
             case R.id.user_edit:
-                user = new User();
-                user.setUserName("小酒窝长睫毛");
-                user.setUserAddress("湖北武汉");
-                user.setUserHead("");
-                user.setUserSex(0);
-                user.setUserSign("我是一只小小鸟");
                 Intent intent = new Intent(mContext, EditInfoActtivity.class);
                 intent.putExtra("user",user);
                 startActivity(intent);
@@ -104,7 +128,12 @@ public class UserInfoActivity extends BaseFragmentActivity {
 
 
     private Fragment getPersonalFragment(){
-        if(sif==null){sif = new PersonalFragment();}
+        if(sif==null){
+            sif = new PersonalFragment();
+        }
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("userInfo",user);
+        sif.setArguments(bundle);
         return sif;
     }
     private Fragment getUserWorksFragment(){

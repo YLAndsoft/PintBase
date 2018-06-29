@@ -2,17 +2,22 @@
     <string name="app_name">画世界</string>
     <string name="http_name">hsj</string>
 
-    <string name="defult_userName">游客</string>
-    <string name="defult_userHead">file:///android_asset/default_head_image.png</string>
-    <string name="defult_address">火星</string>
-    <string name="defult_sign">还没有签名</string>
+    <string name="defult_userName">小可爱</string>
+<!--    <string name="defult_userHead">file:///android_asset/default_head_image.png</string>-->
+    <string name="defult_userHead">https://pic.qqtn.com/up/2014-5/14012382176751173.jpg</string>
+    <string name="defult_address">重庆</string>
+    <string name="defult_sign">走丢一名小可爱</string>
+
     <string name="man">男</string>
     <string name="woman">女</string>
+    <string name="ID">ID:</string>
+    <string name="SIGN">签名:</string>
+    <string name="ADDRESS">所在地:</string>
+    <string name="REGISTRTIME">注册时间:</string>
 
     <string name="edit_info_nameTitle">编辑昵称</string>
     <string name="edit_info_sexTitle">修改性别</string>
     <string name="edit_info_signTitle">编辑签名</string>
-
     <string name="userinfo_tab_name1">个人</string>
     <string name="userinfo_tab_name2">作品</string>
 

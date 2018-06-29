@@ -11,7 +11,9 @@ import java.io.Serializable;
  */
 @Table(name = "USER")//表名
 public class User implements Serializable{
-    @Column(name = "userID", isId = true, autoGen = true)
+    @Column(name = "_id", isId = true, autoGen = true)
+    private int _id;
+    @Column(name = "userID")
     private int userID; //用户ID
     @Column(name = "userName",property = "NOT NULL")
     private String userName; //用户昵称
@@ -31,6 +33,14 @@ public class User implements Serializable{
     private int fansNumber;//粉丝数
     @Column(name = "isAttention")
     private boolean isAttention;//是否已关注
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
 
     public int getUserID() {
         return userID;

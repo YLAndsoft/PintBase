@@ -72,14 +72,14 @@ public class GuideActivity extends Activity {
                             Manifest.permission.READ_PHONE_STATE)
                     .request();
         }else{
-            //生成默认用户,判断是否注册过
-            boolean isRegister = (boolean) SPUtils.getInstance(mContext).getParam("isRegister", false);
-            if(isRegister){startMain();return;}
             initData(mContext);
         }
     }
 
     public void initData(Context mContext) {
+        //生成默认用户,判断是否注册过
+        boolean isRegister = (boolean) SPUtils.getInstance(mContext).getParam("isRegister", false);
+        if(isRegister){startMain();return;}
         register(UserUtils.getUser(mContext));
     }
 
@@ -101,10 +101,11 @@ public class GuideActivity extends Activity {
                 if(SVP.isShowing(mContext))SVP.dismiss(mContext);
                 Log.e("STATE注册成功：",result);
                 //成功，
-                SPUtils.getInstance(mContext).setParam("isRegister",true);
                 User gsonObject = GsonUtils.getGsonObject(result, User.class);
+                SPUtils.getInstance(mContext).setParam("userID",gsonObject.getUserID());
+                SPUtils.getInstance(mContext).setParam("userName",gsonObject.getUserName());
                 //存入数据库
-                DBHelper.saveUser(gsonObject);
+                boolean b = DBHelper.saveUser(gsonObject);
                 startMain();
             }
 
@@ -112,9 +113,13 @@ public class GuideActivity extends Activity {
             public void onFail(String result) {
                 //失败，直接存入数据库
                 if(SVP.isShowing(mContext))SVP.dismiss(mContext);
-                SPUtils.getInstance(mContext).setParam("isRegister",false);
+                //保存登录状态
+                SPUtils.getInstance(mContext).setParam("isRegister",true);
+                //保存用户ID
+                SPUtils.getInstance(mContext).setParam("userID",user.getUserID());
+                SPUtils.getInstance(mContext).setParam("userName",user.getUserName());
                 Log.e("STATE注册异常：",result);
-                DBHelper.saveUser(user);
+                boolean b = DBHelper.saveUser(user);
                 startMain();
             }
         });

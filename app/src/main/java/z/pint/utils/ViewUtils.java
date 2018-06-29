@@ -150,6 +150,13 @@ public class ViewUtils {
         }
     }
 
+    public static void setSex(ImageView imageView,int sex){
+        if(sex==0){
+            imageView.setImageResource(R.mipmap.male);
+            return;
+        }
+        imageView.setImageResource(R.mipmap.female);
+    }
     /**
      * 设置是否关注
      * @param isAttention

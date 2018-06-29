@@ -3,9 +3,6 @@ package z.pint.utils;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
-import java.text.ParseException;
-import java.util.Date;
-
 import f.base.utils.RandomUtils;
 import z.pint.R;
 import z.pint.bean.User;
@@ -26,9 +23,9 @@ public class UserUtils {
         User user = new User();
         user.setUserHead(mContext.getResources().getString(R.string.defult_userHead));//默认头像
         user.setUserName(mContext.getResources().getString(R.string.defult_userName));//默认昵称
-        user.setUserSex(0);//默认性别：男
         user.setUserSign(mContext.getResources().getString(R.string.defult_sign));//默认签名
         user.setUserAddress(mContext.getResources().getString(R.string.defult_address));//默认地区
+        user.setUserSex(1);//默认性别：0：男，1：女
         try{
             //String imei = getIMEI(mContext);
             //String imsi = getIMSI(mContext);
@@ -56,7 +53,8 @@ public class UserUtils {
         try{
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
             String imei = telephonyManager != null ? telephonyManager.getDeviceId() : RandomUtils.getRandomNumbers(10);
-            return Integer.parseInt(imei);
+            String random = RandomUtils.getRandom(imei, 6);
+            return Integer.parseInt(random);
         }catch (Exception ex){
             ex.printStackTrace();
             //考虑到没给权限的时候，获取IMEI失败，造成异常
