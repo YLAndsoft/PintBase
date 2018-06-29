@@ -12,7 +12,8 @@
     <!-- 主色 -->
     <color name="maintab_topbar_bg_color">#18131A</color>
 
-    <color name="details_bg_label_color">#2b6ff7</color>
+    <color name="details_bg_label_color">#428FEF</color>
+
 
     <color name="background_tab_pressed">#00000000</color>
     <color name="black">#000000</color>

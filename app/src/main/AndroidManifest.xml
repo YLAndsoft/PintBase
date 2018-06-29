@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
@@ -17,7 +18,7 @@
         android:supportsRtl="true"
         android:name="z.pint.activity.MApplication"
         android:theme="@style/AppTheme">
-        <activity android:name="z.pint.MainActivity">
+        <activity android:name="z.pint.activity.GuideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -33,15 +34,27 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <activity android:name = "com.ysq.album.activity.AlbumActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <!--主界面-->
+        <activity android:name = "z.pint.MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <!--画板界面-->
         <activity android:name = "z.pint.activity.WhiteBoardActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
+        <!--用户个人中心界面-->
         <activity android:name = "z.pint.activity.UserInfoActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
+        <!--编辑用户信息界面-->
         <activity android:name = "z.pint.activity.EditInfoActtivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
+        <!--作品详情界面-->
         <activity android:name = "z.pint.activity.WorksDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>

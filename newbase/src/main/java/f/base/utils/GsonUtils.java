@@ -1,24 +1,22 @@
-package z.pint.utils;
+package f.base.utils;
 
 import com.google.gson.Gson;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import f.base.utils.StringUtils;
-
 /**
- * Created by DN on 2018/6/26.
+ * Gson解析工具类
+ * Created by DN on 2018/5/4.
  */
 
 public class GsonUtils {
+
     private GsonUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
     public static <T> T getGsonObject(String data, Class<T> mClass) {
-        if(StringUtils.isBlank(data))return null;
         try{
             T result = new Gson().fromJson(data, mClass);
             return result;
@@ -28,7 +26,6 @@ public class GsonUtils {
     }
 
     public static <T> List<T> getGsonList(String data, Class<T> klass) {
-        if(StringUtils.isBlank(data))return null;
         try{
             return new Gson().fromJson(data, new ListOfSomething<T>(klass));
         }catch (Exception ex){
@@ -51,4 +48,5 @@ public class GsonUtils {
             return null;
         }
     }
+
 }

@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -12,7 +14,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +22,7 @@ import f.base.BaseFragment;
 import f.base.BaseRecyclerAdapter;
 import f.base.BaseRecyclerHolder;
 import f.base.bean.Params;
+import f.base.utils.GsonUtils;
 import f.base.utils.StringUtils;
 import f.base.utils.XutilsHttp;
 import z.pint.R;
@@ -27,7 +30,7 @@ import z.pint.activity.UserInfoActivity;
 import z.pint.activity.WorksDetailsActivity;
 import z.pint.bean.Works;
 import z.pint.constant.HttpConfig;
-import z.pint.utils.GsonUtils;
+import z.pint.utils.StatisticsUtils;
 import z.pint.utils.ViewUtils;
 
 /**
@@ -56,8 +59,6 @@ public class HomeFragment extends BaseFragment implements BaseRecyclerHolder.OnV
     protected void initView() {
         x.view().inject(this, mContextView);
     }
-
-    private boolean isLiskes = false;
 
     @Override
     protected void initData() {
@@ -149,7 +150,7 @@ public class HomeFragment extends BaseFragment implements BaseRecyclerHolder.OnV
         //new Params(HttpConfig.getHomeData,map);
         return new Params(HttpConfig.getHomeData, map);
     }
-
+    private long mkeyTime;
     @Override
     protected void setData(String result) { //绑定网络数据
         showLog("数据结果"+result);
@@ -163,32 +164,38 @@ public class HomeFragment extends BaseFragment implements BaseRecyclerHolder.OnV
         }
         adapter = new BaseRecyclerAdapter<Works>(mContext, worksList, R.layout.home_recycler_item_layout) {
             @Override
-            public void convert(final BaseRecyclerHolder baseRecyclerHolder, Works works, int position) {
-                ImageView home_item_works_img = baseRecyclerHolder.getView(R.id.home_item_works_img);
+            public void convert(final BaseRecyclerHolder holder, final Works works, int position) {
+                ImageView home_item_works_img = holder.getView(R.id.home_item_works_img);
                 Glide.with(mContext).load(works.getWorksImage()).placeholder(R.mipmap.img_placeholder).thumbnail(0.1f).into(home_item_works_img);
-                ImageView home_item_userHead = baseRecyclerHolder.getView(R.id.home_item_userHead);
+                ImageView home_item_userHead = holder.getView(R.id.home_item_userHead);
                 Glide.with(mContext).load(works.getUserHead()).centerCrop().into(home_item_userHead);
-                baseRecyclerHolder.setText(R.id.home_item_userName, works.getUserName() + "");
-                baseRecyclerHolder.setText(R.id.home_item_releaseTime, works.getWorksReleaseTime() + "");
-                baseRecyclerHolder.setText(R.id.home_item_des, works.getWorksDescribe() + "");
-                baseRecyclerHolder.setText(R.id.home_item_commentNumber, works.getWorksCommentNumber() + "");
-                baseRecyclerHolder.setText(R.id.home_item_likesNumber, works.getWorksLikeNumber() + "");
-                baseRecyclerHolder.setOnViewClick(R.id.home_item_userInfo,works,position, HomeFragment.this);
-                baseRecyclerHolder.setOnViewClick(R.id.home_item_works_img, works,position,HomeFragment.this);
-                baseRecyclerHolder.setOnViewClick(R.id.home_item_des, works,position,HomeFragment.this);
-                baseRecyclerHolder.setOnViewClick(R.id.home_item_ll_comment, works,position,HomeFragment.this);
-                baseRecyclerHolder.setOnViewClick(R.id.home_item_ll_likes,works,position, new BaseRecyclerHolder.OnViewClickListener() {
+                holder.setText(R.id.home_item_userName, works.getUserName() + "");
+                holder.setText(R.id.home_item_releaseTime, works.getWorksReleaseTime() + "");
+                holder.setText(R.id.home_item_des, works.getWorksDescribe() + "");
+                holder.setText(R.id.home_item_commentNumber, works.getWorksCommentNumber() + "");
+                final TextView home_item_likesNumber = holder.getView(R.id.home_item_likesNumber);
+                home_item_likesNumber.setText(works.getWorksLikeNumber() + "");//设置点赞数
+                final ImageView home_item_likes_img = holder.getView(R.id.home_item_likes_img);
+                ViewUtils.isLikes(works.isLikes(),home_item_likes_img);//设置是否点赞
+
+                holder.setOnViewClick(R.id.home_item_userInfo,works,position, HomeFragment.this);
+                holder.setOnViewClick(R.id.home_item_works_img, works,position,HomeFragment.this);
+                holder.setOnViewClick(R.id.home_item_des, works,position,HomeFragment.this);
+                holder.setOnViewClick(R.id.home_item_ll_comment, works,position,HomeFragment.this);
+                holder.setOnViewClick(R.id.home_item_ll_likes,works,position, new BaseRecyclerHolder.OnViewClickListener() {
                     @Override
                     public void onViewClick(View view, Object object,int position) {
-                        if (!isLiskes) {
-                            isLiskes = true;
-                            baseRecyclerHolder.setImageResource(R.id.home_item_likes_img, R.mipmap.dynamic_love_hl);
+                        if ((System.currentTimeMillis() - mkeyTime) > 3000) {
+                            mkeyTime = System.currentTimeMillis();
+                            //showToast("点赞成功");
+                            boolean likes = ViewUtils.isLikes(!works.isLikes(), home_item_likes_img);
+                            int likesNumber = ViewUtils.setLikesNumber(!works.isLikes(), home_item_likesNumber, works.getWorksLikeNumber());
+                            works.setLikes(likes);
+                            works.setWorksLikeNumber(likesNumber);
+                            StatisticsUtils.isLikes(works.isLikes(),works);//作品点赞/取消点赞
                         } else {
-                            isLiskes = false;
-                            baseRecyclerHolder.setImageResource(R.id.home_item_likes_img, R.mipmap.dynamic_love);
+                            showToast("点击不要这么快嘛~");
                         }
-                        showToast("点赞");
-                        //发送网络请求dynamic_love_hl
                     }
                 });
             }

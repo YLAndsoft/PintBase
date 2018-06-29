@@ -99,8 +99,7 @@
                 android:id="@+id/home_item_commentNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="8"/>
+                android:layout_marginLeft="5dp"/>
         </LinearLayout>
 
         <View
@@ -125,8 +124,7 @@
                 android:id="@+id/home_item_likesNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="0"/>
+                android:layout_marginLeft="5dp"/>
         </LinearLayout>
 
     </LinearLayout>

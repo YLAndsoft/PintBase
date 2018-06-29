@@ -19,11 +19,14 @@ public class HttpConfig {
 
     public static final String getHomeData =  URL_Web+"/getHomeData";//获取首页数据集合接口
     public static final String getRecommendData =  URL_Web+"/getRecommendData";//获取推荐页面集合接口
-    public static final String getCommentData =  URL_Web+"/getWorksComment";//获取作品评论接口
-    public static final String getLiksData =  URL_Web+"/getLiksData";//获取点赞接口
+    public static final String getCommentData =  URL_Web+"/getWorksComment";//作品评论接口
+    public static final String getLiksData =  URL_Web+"/getLiksData";//点赞接口
     public static final String getRecommendItemData =  URL_Web+"/getRecommendItemData";//获取分类对应的数据
     public static final String getClassifyNameData =  URL_Web+"/classifyname";//获取分类集合
+    public static final String getAttentionData = URL_Web+"/getAttentionData";//关注接口
+    public static final String getUserInfoData = URL_Web+"/getUserInfoData";//注册接口
 
+    //
     /**
      * 访问网络所需的参数名称
      */
@@ -32,14 +35,15 @@ public class HttpConfig {
     public static final String START ="start";
     public static final String NUM ="num";
     public static final String FLAG ="flag";
+    public static final String USER_INFO ="userInfo";
     public static final String WORKS_ID ="worksID";
     public static final String CLASSIFY_ID ="classifyID";
     public static final String CLASSIFY_NAME ="classifyname";
     public static final String CONVER_ATTENTION_ID ="converAttentionID";
-    public static final String ACTION_STATE = "actionState";//动作状态
+    public static final String ACTION_STATE = "actionState";//动作状态0-查询 1-添加 /*2-删除 3-修改*/
 
     public static final int SELECT_STATE = 0;//查询
-    public static final int APP_STATE = 1;//增加
+    public static final int ADD_STATE = 1;//增加
     public static final int DELETE_STATE = 2;//修改
     public static final int UP_STATE = 3;//删除
 

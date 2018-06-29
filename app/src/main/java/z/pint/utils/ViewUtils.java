@@ -150,13 +150,50 @@ public class ViewUtils {
         }
     }
 
-    public static void isAttention(boolean isAttention,ImageView imageview){
-        if(isAttention){ imageview.setImageResource(R.mipmap.unfollow);return;}
+    /**
+     * 设置是否关注
+     * @param isAttention
+     * @param imageview
+     */
+    public static boolean isAttention(boolean isAttention,ImageView imageview){
+        if(isAttention){
+            imageview.setImageResource(R.mipmap.unfollow);
+            return isAttention;
+        }
         imageview.setImageResource(R.mipmap.follow);
+        return isAttention;
     }
-    public static void isLikes(boolean isLikes,ImageView imageview){
-        if(isLikes){ imageview.setImageResource(R.mipmap.dynamic_love_hl);return;}
+
+    /**
+     * 设置是否点赞
+     * @param isLikes
+     * @param imageview
+     * @return
+     */
+    public static boolean isLikes(boolean isLikes,ImageView imageview){
+        if(isLikes){
+            imageview.setImageResource(R.mipmap.dynamic_love_hl);
+            return isLikes;
+        }
         imageview.setImageResource(R.mipmap.dynamic_love);
+        return isLikes;
+    }
+
+    /**
+     * 设置点赞数
+     * @param isLikes
+     * @param textView
+     * @param number
+     * @return
+     */
+    public static int setLikesNumber(boolean isLikes,TextView textView,int number){
+        if(isLikes){
+            if(null!=textView)textView.setText((number+1)+"");
+            return number+1;
+        }else{
+            if(null!=textView)textView.setText((number-1)<=0?0+"":(number-1)+"");
+            return (number-1)<=0?0:(number-1);
+        }
     }
 
 }

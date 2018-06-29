@@ -14,12 +14,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.ysq.album.activity.AlbumActivity;
+import com.ysq.album.bean.ImageBean;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import f.base.BaseActivity;
 import f.base.BaseDialog;
@@ -214,7 +217,7 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
      * 修改头像底部弹窗回调
      * @param position
      */
-    private static final  int PER_CODE = 100;//权限回调
+    private static final  int INTENT_CODE = 100;//相册选择回调
     @Override
     public void onSelectItemOnclick(int position,String tabName) {
         if(position==1){
@@ -223,10 +226,13 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
                     .addRequestCode(PER_CODE)
                     .permissions(Constant.per)
                     .request();*/
-            PhotoUtils.startGallery(EditInfoActtivity.this,GALLERY_OPEN_REQUEST_CODE);
+            //PhotoUtils.startGallery(EditInfoActtivity.this,GALLERY_OPEN_REQUEST_CODE);
+            Intent intent = new Intent(mContext, AlbumActivity.class);
+            intent.putExtra(AlbumActivity.ARG_MODE, AlbumActivity.MODE_SELECT);
+            startActivityForResult(intent, INTENT_CODE);
         }else if(position==2){
             //showToast("点击了拍照");
-            PhotoUtils.startCamera(EditInfoActtivity.this,CAMERA_OPEN_REQUEST_CODE,generateCameraFilePath());
+            //PhotoUtils.startCamera(EditInfoActtivity.this,CAMERA_OPEN_REQUEST_CODE,generateCameraFilePath());
         }
         //关闭底部弹窗
         if(null!=photoPW){
@@ -259,47 +265,12 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
         if (resultCode == RESULT_OK) {
             switch (requestCode){
                 case CAMERA_OPEN_REQUEST_CODE://拍照完成回调
-                    if(data == null || data.getExtras() == null){
-                        //mImg.setImageBitmap(BitmapFactory.decodeFile(mCameraFilePath));
-                        generateCropImgFilePath();
-                        PhotoUtils.startCropImage(
-                                EditInfoActtivity.this,
-                                mCameraFilePath,
-                                mCropImgFilePath,
-                                1,
-                                1,
-                                //mImg.getWidth(),
-                                //mImg.getHeight(),
-                                480,
-                                480,
-                                CROP_IMAGE_REQUEST_CODE);
-                    }else{
-                        Bundle mBundle = data.getExtras();
-                    }
 
                     break;
-                case GALLERY_OPEN_REQUEST_CODE://访问相册完成回调
-                    if(data == null){
-                        //DebugUtils.d(TAG,"onActivityResult::GALLERY_OPEN_REQUEST_CODE::data null");
-                    }else{
-                       // DebugUtils.d(TAG,"onActivityResult::GALLERY_OPEN_REQUEST_CODE::data = " + data.getData());
-                        String mGalleryPath = PhotoUtils.getPath(mContext,data.getData());
-                        //DebugUtils.d(TAG,"onActivityResult::GALLERY_OPEN_REQUEST_CODE::mGalleryPath = " + mGalleryPath);
-                        /*
-                        mImg.setImageBitmap(BitmapFactory.decodeFile(mGalleryPath));
-                        */
-                        generateCropImgFilePath();
-                        PhotoUtils.startCropImage(
-                                EditInfoActtivity.this,
-                                mGalleryPath,
-                                mCropImgFilePath,
-                                1,
-                                1,
-                                //mImg.getWidth(),
-                                //mImg.getHeight(),
-                                480,480,
-                                CROP_IMAGE_REQUEST_CODE);
-                    }
+                case INTENT_CODE://访问相册完成回调
+                    ArrayList<ImageBean> imageBeen = (ArrayList<ImageBean>) data.getSerializableExtra(AlbumActivity.ARG_DATA);
+                    ImageBean imageBean = imageBeen.get(0);
+                    Glide.with(mContext).load(imageBean.getImage_path()).error(R.mipmap.default_head_image).into(edit_info_userHead);
                     break;
                 case CROP_IMAGE_REQUEST_CODE://裁剪完成回调
                     //DebugUtils.d(TAG,"onActivityResult::CROP_IMAGE_REQUEST_CODE::mCropImgFilePath = " + mCropImgFilePath);

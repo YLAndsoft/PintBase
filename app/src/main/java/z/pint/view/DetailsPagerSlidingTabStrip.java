@@ -75,7 +75,7 @@ public class DetailsPagerSlidingTabStrip extends HorizontalScrollView {
     private Paint dividerPaint;
 
     private int commentNumber;//评论人数
-    private int giftNumber;//礼包数量
+    private int likesNumber;//礼包数量
 
     private int indicatorColor = 0xFF666666;
     private int underlineColor = 0x1A000000;
@@ -186,9 +186,9 @@ public class DetailsPagerSlidingTabStrip extends HorizontalScrollView {
         }
     }
 
-    public void setViewPager(ViewPager pager,int giftNumber,int commentNumber) {
+    public void setViewPager(ViewPager pager,int likesNumber,int commentNumber) {
         this.pager = pager;
-        this.giftNumber = giftNumber;
+        this.likesNumber = likesNumber;
         this.commentNumber= commentNumber;
         if (pager.getAdapter() == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
@@ -223,11 +223,10 @@ public class DetailsPagerSlidingTabStrip extends HorizontalScrollView {
                 });
     }
 
-    public void notifyNumberData(int giftNumber,int commentNumber){
-        this.giftNumber = giftNumber;
+    public void notifyNumberData(int commentNumber ,int likesNumber){
+        this.likesNumber = likesNumber;
         this.commentNumber= commentNumber;
         updateTabStyles();
-
         this.notifyDataSetChanged();
     }
 
@@ -278,14 +277,14 @@ public class DetailsPagerSlidingTabStrip extends HorizontalScrollView {
                 TextView txt = (TextView) text;
                 TextView num = (TextView) numberTxt;
                 if(i==0){
-                    if(giftNumber>0){
-                        num.setText(giftNumber+"");
+                    if(commentNumber>0){
+                        num.setText(commentNumber+"");
                     }else{
                         num.setVisibility(View.GONE);
                     }
                 }else if(i==1){
-                    if(commentNumber>0){
-                        num.setText(commentNumber+"");
+                    if(likesNumber>0){
+                        num.setText(likesNumber+"");
                     }else{
                         num.setVisibility(View.GONE);
                     }
@@ -451,8 +450,8 @@ public class DetailsPagerSlidingTabStrip extends HorizontalScrollView {
 
     }
 
-    public void setGiftNumber(int giftNumber){
-        this.giftNumber = giftNumber;
+    public void setLikesNumber(int likesNumber){
+        this.likesNumber = likesNumber;
     }
     public void setCommentNumber(int commentNumber){
         this.commentNumber = commentNumber;
