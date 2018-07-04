@@ -50,10 +50,9 @@ public class ViewUtils {
     }
     /**
      * 获取水平布局管理器
-     * @param mContext
      * @return
      */
-    public static RecyclerView.LayoutManager getStaggeredGridManager(Context mContext,int num){
+    public static RecyclerView.LayoutManager getStaggeredGridManager(int num){
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(num, StaggeredGridLayoutManager.VERTICAL);
         //RecyclerView滑动过程中不断请求layout的Request，不断调整item见的间隙，并且是在item尺寸显示前预处理，因此解决RecyclerView滑动到顶部时仍会出现移动问题
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
@@ -184,6 +183,20 @@ public class ViewUtils {
         }
         imageview.setImageResource(R.mipmap.dynamic_love);
         return isLikes;
+    }
+    /**
+     * 设置是否收藏
+     * @param isCollection
+     * @param textView
+     * @return
+     */
+    public static boolean isCollection(boolean isCollection,TextView textView){
+        if(isCollection){
+            textView.setText("取消收藏");
+            return isCollection;
+        }
+        textView.setText("收藏");
+        return isCollection;
     }
 
     /**

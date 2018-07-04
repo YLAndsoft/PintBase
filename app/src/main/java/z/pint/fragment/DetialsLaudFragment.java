@@ -136,7 +136,7 @@ public class DetialsLaudFragment extends BaseLazyLoadFragment {
             }
         };
         details_laud_recycler.setAdapter(adapter);
-        adapter.updateAll();
+        adapter.updateAll(likesList.size());
         details_laud_recycler.setVisibility(View.VISIBLE);
         data_error.setVisibility(View.GONE);
         details_likes_refreshLayout.setEnableLoadMore(true);//打开加载更多

@@ -161,7 +161,7 @@ public class SPUtils {
      * @param tag
      * @param datalist
      */
-    public  <T> boolean setList2(@NonNull String tag, @NonNull List<T> datalist) {
+    public  <T> boolean setList(@NonNull String tag, @NonNull List<T> datalist) {
         try{
             Gson gson = new Gson();
             //转换成json数据，再保存
@@ -171,7 +171,7 @@ public class SPUtils {
             editor.apply();
             return true;
         }catch (Exception ex ){
-            Log.i("保存pag异常信息>>>",ex.toString()+"");
+            Log.i("setList异常信息>>>",ex.toString()+"");
             ex.printStackTrace();
             return false;
         }
@@ -181,7 +181,7 @@ public class SPUtils {
      * @param tag
      * @return
      */
-    public  <T>List<T> getList2(@NonNull String tag,@NonNull Class<T> cls) {
+    public  <T>List<T> getList(@NonNull String tag,@NonNull Class<T> cls) {
         try{
             List<T> mList=new ArrayList<>();
             Gson mGson = new Gson();
@@ -192,57 +192,11 @@ public class SPUtils {
             }
             return mList;
         }catch (Exception ex){
-            Log.i("获取pag异常信息>>>",ex.toString()+"");
+            Log.i("getList异常信息>>>",ex.toString()+"");
             ex.printStackTrace();
             return null;
         }
     }
-
-    /**
-     * 保存List
-     * @param tag
-     * @param datalist
-     *//*
-    public  <T> boolean setDataList(String tag, List<T> datalist) {
-        try{
-            if (null == datalist || datalist.size() <= 0)
-                return false;
-            Gson gson = new Gson();
-            //转换成json数据，再保存
-            String strJson = gson.toJson(datalist);
-            //download_Editor.clear();
-            editor.putString(tag, strJson);
-            editor.commit();
-            return true;
-        }catch (Exception ex ){
-            Log.i("保存pag异常信息>>>",ex.toString()+"");
-            ex.printStackTrace();
-            return false;
-        }
-    }
-
-    *//**
-     * 获取List
-     * @param tag
-     * @return
-     *//*
-    public  <T>List<T> getDataList(String tag,Class<T> cls) {
-        try{
-            List<T> mList=new ArrayList<>();
-            Gson mGson = new Gson();
-            String strJson = sp.getString(tag, null);
-            JsonArray array = new JsonParser().parse(strJson).getAsJsonArray();
-            for(final JsonElement elem : array){
-                mList.add(mGson.fromJson(elem, cls));
-            }
-            return mList;
-        }catch (Exception ex){
-            Log.i("获取pag异常信息>>>",ex.toString()+"");
-            ex.printStackTrace();
-            return null;
-        }
-    }*/
-
     /**
      * 序列化对象
      *

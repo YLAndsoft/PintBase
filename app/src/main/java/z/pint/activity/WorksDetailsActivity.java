@@ -22,6 +22,7 @@ import z.pint.adapter.ClassifyViewPagerAdapter;
 import z.pint.bean.Works;
 import z.pint.fragment.DetailsCommentFragment;
 import z.pint.fragment.DetialsLaudFragment;
+import z.pint.utils.DBHelper;
 import z.pint.utils.StatisticsUtils;
 import z.pint.utils.ViewUtils;
 import z.pint.view.CuttingImageView;
@@ -69,6 +70,7 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
         details_attention.setOnClickListener(this);
         details_ll_comment.setOnClickListener(this);
         details_ll_likes.setOnClickListener(this);
+        details_Collection.setOnClickListener(this);
     }
 
     @Override
@@ -85,6 +87,8 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
         ViewUtils.isAttention(works.isAttention(),details_attention);//是否关注
         ViewUtils.isLikes(works.isLikes(),details_toLikes);//是否点赞
         likesTxt.setTextColor(works.isLikes()?getResources().getColor(R.color.details_bg_label_color):getResources().getColor(R.color.gary2));
+        boolean b = DBHelper.selectCollection(works.getWorksID());
+        ViewUtils.isCollection(b,details_Collection);//是否收藏
         initPager();
     }
 
@@ -96,20 +100,36 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
         details_works_tabs.setViewPager(details_works_pager,works.getWorksLikeNumber(),works.getWorksCommentNumber());
     }
 
-    private long mkeyTime;
+    private long collectionTime,attentionTime,likeTime;
     @Override
     public void widgetClick(View view) {
         switch (view.getId()){
             case R.id.details_back:
                 finish();
                 break;
+            case R.id.details_Collection:
+                //点击收藏
+                if ((System.currentTimeMillis() - collectionTime) > 3000) {
+                    collectionTime = System.currentTimeMillis();
+                    boolean b = DBHelper.selectCollection(works.getWorksID());
+                    if(b){
+                        DBHelper.deleteCollection(works.getWorksID());
+                        showToast("取消收藏");
+                    }else{
+                        DBHelper.saveCollection(works);
+                        showToast("收藏成功");
+                    }
+                }else{
+                    showToast("点击不要这么快嘛~");
+                }
+                break;
             case R.id.details_attention:
                 //showToast("点击关注");
-                if ((System.currentTimeMillis() - mkeyTime) > 3000) {
-                    mkeyTime = System.currentTimeMillis();
+                if ((System.currentTimeMillis() - attentionTime) > 3000) {
+                    attentionTime = System.currentTimeMillis();
                     boolean isAttention = ViewUtils.isAttention(!works.isAttention(), details_attention);
                     works.setAttention(isAttention);
-                    StatisticsUtils.isAttention(isAttention,works);
+                    StatisticsUtils.isAttention(mContext,isAttention,works);
                 }else{
                     showToast("点击不要这么快嘛~");
                 }
@@ -121,15 +141,15 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
             case R.id.details_ll_likes:
                 //showToast("点赞");
                 //details_works_tabs.notifyNumberData(11,11);
-                if ((System.currentTimeMillis() - mkeyTime) > 3000) {
-                    mkeyTime = System.currentTimeMillis();
+                if ((System.currentTimeMillis() - likeTime) > 3000) {
+                    likeTime = System.currentTimeMillis();
                     boolean likes = ViewUtils.isLikes(!works.isLikes(), details_toLikes);
                     likesTxt.setTextColor(likes?getResources().getColor(R.color.details_bg_label_color):getResources().getColor(R.color.gary2));
                     int likesNumber = ViewUtils.setLikesNumber(!works.isLikes(), null, works.getWorksLikeNumber());
                     works.setLikes(likes);
                     works.setWorksLikeNumber(likesNumber);
                     details_works_tabs.notifyNumberData(works.getWorksCommentNumber(),works.getWorksLikeNumber());
-                    StatisticsUtils.isLikes(works.isLikes(),works);//作品点赞/取消点赞
+                    StatisticsUtils.isLikes(mContext,works.isLikes(),works);//作品增加/取消点赞
                 }else{
                     showToast("点击不要这么快嘛~");
                 }

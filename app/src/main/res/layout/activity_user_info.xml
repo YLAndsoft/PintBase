@@ -67,7 +67,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:text="小酒窝长睫毛"
+                                android:text="————"
                                 android:textColor="@color/gary2"
                                 android:textSize="15dp" />
 
@@ -94,7 +94,7 @@
                                 android:id="@+id/userinfo_attention"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0关注"
+                                android:text="--关注"
                                 android:textColor="@color/gary2" />
 
                             <TextView
@@ -103,7 +103,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_toRightOf="@+id/userinfo_attention"
-                                android:text="0粉丝"
+                                android:text="--粉丝"
                                 android:textColor="@color/gary2" />
                         </RelativeLayout>
 

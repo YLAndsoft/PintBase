@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import f.base.bean.Params;
+import f.base.utils.GsonUtils;
 import f.base.utils.NetworkUtils;
+import f.base.utils.StringUtils;
 import f.base.utils.XutilsHttp;
 
 /**
@@ -100,9 +102,23 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      * [打印日志]
      * @param msg
      */
-    public static final String TAG1 = "BaseFragment";
-    protected void showLog(String msg){
-            Log.i(TAG1,msg);
+    public static final String TAG1 = "FragmentLog信息：";
+    protected void showLog(int level,String msg){
+        if(!BaseApplication.isLog){return;}
+        switch (level){
+            case Config.LEVEL_1:
+                Log.v(TAG1,msg);
+                break;
+            case Config.LEVEL_2:
+                Log.d(TAG1,msg);
+                break;
+            case Config.LEVEL_3:
+                Log.e(TAG1,msg);
+                break;
+            default:
+                Log.i(TAG1,msg);
+                break;
+        }
     }
 
 
@@ -112,27 +128,55 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      */
     public abstract Params getParams();
 
+    /**
+     * 显示网络数据
+     */
+    protected abstract void setData(Object object,boolean isRefresh);
 
     /**
-     * 展示网络数据
+     * 显示错误视图
      */
-    protected abstract void setData(String result);
+    protected abstract void showError(String result);
 
     /**
      * 获取网络数据
      * @param params
      */
-    private void getData(Params params) {
-        if(null==params){return;}
-        if(!NetworkUtils.isConnected(mContext)){return;}//网络未连接
+    protected void getData(final Params params) {
+        if(null==params){ //未配置参数
+            showError(Config.PARAMS_ERROR);
+            return;
+        }
+        if(!NetworkUtils.isConnected(mContext)){
+            showError(Config.NETWORK_ERROR);
+            return;
+        }//网络未连接
         XutilsHttp.xUtilsPost(params.getURL(), params.getMap(), new XutilsHttp.XUilsCallBack() {
             @Override
             public void onResponse(String result) {
-                setData(result);
+                if(StringUtils.isBlank(result)){
+                    showError(result);
+                    return;
+                }
+                if(params.getClazz()!=null){ //判断要解析的bean类是否存在
+                    Object object;
+                    if(params.isList()){  //得到解析数据是bean还是集合类型
+                        object = GsonUtils.getGsonList(result, params.getClazz());
+                    }else{
+                        object = GsonUtils.getGsonObject(result, params.getClazz());
+                    }
+                    if(null!=object){
+                        setData(object,params.isRefresh());
+                        return;
+                    }
+                    showError(result);
+                }else{ //不存在，让用户自己去解析
+                    setData(result,params.isRefresh());
+                }
             }
             @Override
             public void onFail(String result) {
-                setData(result);
+                showError(result);
             }
         });
     }

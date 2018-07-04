@@ -18,13 +18,16 @@ import f.base.BaseFragment;
 import f.base.bean.Params;
 import f.base.utils.GsonUtils;
 import f.base.utils.StringUtils;
+import f.base.utils.XutilsHttp;
 import z.pint.R;
 import z.pint.adapter.ClassifyViewPagerAdapter;
 import z.pint.bean.WorksClassify;
 import z.pint.constant.HttpConfig;
+import z.pint.utils.SPUtils;
 import z.pint.view.PagerSlidingTabStrip;
 
 /**
+ * 推荐页
  * Created by DN on 2018/6/19.
  */
 
@@ -35,11 +38,12 @@ public class RecommendFragment extends BaseFragment {
     private ViewPager recommend_pager;
     @ViewInject(value = R.id.new_search)
     private ImageView new_search;
+    @ViewInject(value = R.id.data_error)
+    private ImageView data_error;
 
     private ClassifyViewPagerAdapter classViewPagerAdapter;
-    private int start=0;
-    private int num = 10;
 
+    private List<WorksClassify> classifyName;//分类集合数据
     @Override
     public int bindLayout() {
         return R.layout.fragment_recommend_layout;
@@ -49,34 +53,32 @@ public class RecommendFragment extends BaseFragment {
     protected void initView() {
         x.view().inject(this,mContextView);
         new_search.setOnClickListener(this);
+        data_error.setOnClickListener(this);
     }
     @Override
     public Params getParams() {
-        Map<String, String> map = new HashMap<>();
-        map.put(HttpConfig.APPNAME, getResources().getString(R.string.http_name) + "");
-        //new Params(HttpConfig.getRecommendData,map);
-        return new Params(HttpConfig.getClassifyNameData, map);
+        return null;
     }
 
     @Override
     protected void initData() {
-
-    }
-
-    @Override
-    protected void setData(String result) {
-        if(StringUtils.isBlank(result)){return;}
-        List<WorksClassify> classifyName = GsonUtils.getGsonList(result, WorksClassify.class);
+        classifyName = SPUtils.getInstance(mContext).getList("classifyName", WorksClassify.class);
         if(null==classifyName||classifyName.size()<=0){
+            data_error.setVisibility(View.VISIBLE);
             return;
         }
-        List<String> listTabName = getListTabName(classifyName);
-        List<Fragment> listFragment = getListFragment(classifyName);
-        classViewPagerAdapter = new ClassifyViewPagerAdapter(getFragmentManager(), listTabName, listFragment);
+        classViewPagerAdapter = new ClassifyViewPagerAdapter(getFragmentManager(), getListTabName(classifyName), getListFragment(classifyName));
         recommend_pager.setAdapter(classViewPagerAdapter);
         recommend_pager.setOffscreenPageLimit(classifyName.size());//依据传过来的tab页的个数来设置缓存的页数
         //tabs.setFollowTabColor(true);//设置标题是否跟随
         new_search_tabs.setViewPager(recommend_pager);
+    }
+
+    @Override
+    protected void setData(Object result,boolean isRefresh) {
+    }
+    @Override
+    protected void showError(String result) {
     }
 
     @Override
@@ -85,7 +87,24 @@ public class RecommendFragment extends BaseFragment {
             case R.id.new_search:
                 showToast("点击了搜索");
                 break;
+            case R.id.data_error:
+                retryData(getParams());
+                break;
         }
+    }
+
+    private void retryData(Params params) {
+        /*XutilsHttp.xUtilsPost(params.getURL(), params.getMap(), new XutilsHttp.XUilsCallBack() {
+            @Override
+            public void onResponse(String result) {
+                setData(result);
+            }
+
+            @Override
+            public void onFail(String result) {
+                data_error.setVisibility(View.VISIBLE);
+            }
+        });*/
     }
 
     private List<Fragment> getListFragment(List<WorksClassify> classifyName){

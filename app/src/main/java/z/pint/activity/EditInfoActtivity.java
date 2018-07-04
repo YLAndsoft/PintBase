@@ -42,23 +42,6 @@ import z.pint.view.ButtonPopupWindow;
  */
 
 public class EditInfoActtivity extends BaseActivity implements ProvincePopupWindow.OnResultClickListener,OnDialogClickListener,ButtonPopupWindow.OnSelectItemListener{
-    @ViewInject(value = R.id.edit_toBack)
-    private ImageView edit_toBack;//返回
-    @ViewInject(value = R.id.edit_submit)
-    private TextView edit_submit;//保存
-    @ViewInject(value = R.id.edit_info_userHead)
-    private CuttingImageView edit_info_userHead;//用户头像
-    @ViewInject(value = R.id.edit_info_userName)
-    private TextView edit_info_userName;//用户昵称
-    @ViewInject(value = R.id.edit_info_userSex)
-    private TextView edit_info_userSex;//用户性别
-    @ViewInject(value = R.id.edit_info_userAddress)
-    private TextView edit_info_userAddress;//用户地区
-    @ViewInject(value = R.id.edit_info_userSign)
-    private TextView edit_info_userSign;//用户签名
-    @ViewInject(value = R.id.edit_rootView)
-    private LinearLayout edit_rootView;//父布局
-
     private User user;
     private BaseDialog nameDialog;
     private BaseDialog sexDialog;
@@ -72,7 +55,7 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
         setScreenRoate(false);
         setSteepStatusBar(false);
         setSetActionBarColor(true, R.color.colorActionBar);
-        user = (User) intent.getSerializableExtra("user");
+        user = (User) intent.getSerializableExtra("userInfo");
     }
 
     @Override
@@ -97,6 +80,14 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
 
     @Override
     public void initData(Context context) {
+        ViewUtils.setTextView(edit_submit,getResources().getString(R.string.edit_submit),"");
+        ViewUtils.setTextView(tv_userSign,getResources().getString(R.string.tv_userSign),"");
+        ViewUtils.setTextView(tv_userAddress,getResources().getString(R.string.tv_userAddress),"");
+        ViewUtils.setTextView(tv_userSex,getResources().getString(R.string.tv_userSex),"");
+        ViewUtils.setTextView(tv_userName,getResources().getString(R.string.tv_userName),"");
+        ViewUtils.setTextView(tv_userHead,getResources().getString(R.string.tv_userHead),"");
+        ViewUtils.setTextView(userInfo,getResources().getString(R.string.userInfo),"");
+        if(user==null)return;
         ViewUtils.setImageUrl(mContext,edit_info_userHead,user.getUserHead(),R.mipmap.default_head_image);
         ViewUtils.setTextView(edit_info_userName,user.getUserName(),getResources().getString(R.string.defult_userName));
         ViewUtils.setTextView(edit_info_userSex,user.getUserSex()==0?getResources().getString(R.string.man):getResources().getString(R.string.woman),getResources().getString(R.string.man));
@@ -121,7 +112,7 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
                 break;
             case R.id.edit_info_userName:
                 //showToast("编辑昵称");
-                if(null==nameDialog)nameDialog = new BaseDialog(mContext,BaseDialog.DIALOG_EDIT_STATE,getResources().getString(R.string.edit_info_nameTitle),"","否","是" ,false,EditInfoActtivity.this,1);
+                if(null==nameDialog)nameDialog = new BaseDialog(mContext,BaseDialog.DIALOG_EDIT_STATE,getResources().getString(R.string.edit_info_nameTitle),"","取消","完成" ,false,EditInfoActtivity.this,1);
                 if(!nameDialog.isShowing()){
                     nameDialog.show();
                     return;
@@ -150,7 +141,7 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
                 break;
             case R.id.edit_info_userSign:
                 //showToast("编辑签名");
-                if(null==signDialog)signDialog = new BaseDialog(mContext,BaseDialog.DIALOG_EDIT_STATE,getResources().getString(R.string.edit_info_signTitle),"","否","是" ,false,EditInfoActtivity.this,3);
+                if(null==signDialog)signDialog = new BaseDialog(mContext,BaseDialog.DIALOG_EDIT_STATE,getResources().getString(R.string.edit_info_signTitle),"","取消","完成" ,false,EditInfoActtivity.this,3);
                 if(!signDialog.isShowing()){
                     signDialog.show();
                     return;
@@ -217,22 +208,17 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
      * 修改头像底部弹窗回调
      * @param position
      */
-    private static final  int INTENT_CODE = 100;//相册选择回调
     @Override
     public void onSelectItemOnclick(int position,String tabName) {
         if(position==1){
-            //showToast("点击了相册");
+            showToast("点击了相册");
             /*PermissionGen.with(EditInfoActtivity.this)
                     .addRequestCode(PER_CODE)
                     .permissions(Constant.per)
                     .request();*/
             //PhotoUtils.startGallery(EditInfoActtivity.this,GALLERY_OPEN_REQUEST_CODE);
-            Intent intent = new Intent(mContext, AlbumActivity.class);
-            intent.putExtra(AlbumActivity.ARG_MODE, AlbumActivity.MODE_SELECT);
-            startActivityForResult(intent, INTENT_CODE);
         }else if(position==2){
-            //showToast("点击了拍照");
-            //PhotoUtils.startCamera(EditInfoActtivity.this,CAMERA_OPEN_REQUEST_CODE,generateCameraFilePath());
+            showToast("点击了拍照");
         }
         //关闭底部弹窗
         if(null!=photoPW){
@@ -264,20 +250,15 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode){
-                case CAMERA_OPEN_REQUEST_CODE://拍照完成回调
+                /*case CAMERA_OPEN_REQUEST_CODE://拍照完成回调
 
                     break;
                 case INTENT_CODE://访问相册完成回调
-                    ArrayList<ImageBean> imageBeen = (ArrayList<ImageBean>) data.getSerializableExtra(AlbumActivity.ARG_DATA);
-                    ImageBean imageBean = imageBeen.get(0);
-                    Glide.with(mContext).load(imageBean.getImage_path()).error(R.mipmap.default_head_image).into(edit_info_userHead);
+
                     break;
                 case CROP_IMAGE_REQUEST_CODE://裁剪完成回调
-                    //DebugUtils.d(TAG,"onActivityResult::CROP_IMAGE_REQUEST_CODE::mCropImgFilePath = " + mCropImgFilePath);
-                    Bitmap bitmap = BitmapFactory.decodeFile(mCropImgFilePath);
-                    Glide.with(mContext).load("file://"+mCropImgFilePath).error(R.mipmap.default_head_image).into(edit_info_userHead);
-                    //edit_info_userHead.setImageBitmap(bitmap);
-                    break;
+
+                    break;*/
             }
         }
 
@@ -285,42 +266,34 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
     }
 
 
-    private static final int CAMERA_PERMISSION_REQUEST_CODE = 1;
-    private static final int SDCARD_PERMISSION_REQUEST_CODE = 2;
-    private static final int CAMERA_OPEN_REQUEST_CODE = 3;
-    private static final int GALLERY_OPEN_REQUEST_CODE = 4;
-    private static final int CROP_IMAGE_REQUEST_CODE = 5;
 
-    private String mCameraFilePath = "";
-    private String mCropImgFilePath = "";
-
-
-    private String generateCameraFilePath(){
-        String mCameraFileDirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mCameraFilePath = mCameraFileDirPath + File.separator  + "cropPhoto.jgp";
-        File mCameraFileDir = new File(mCameraFilePath);
-        try {
-            if(!mCameraFileDir.exists()){
-                mCameraFileDir.createNewFile();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return mCameraFilePath;
-    }
-    private String generateCropImgFilePath(){
-        String mCameraFileDirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mCropImgFilePath = mCameraFileDirPath + File.separator  + "cropPhoto.jgp";
-        File mCameraFileDir = new File(mCropImgFilePath);
-        try {
-            if(!mCameraFileDir.exists()){
-                mCameraFileDir.createNewFile();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return mCropImgFilePath;
-    }
-
+    @ViewInject(value = R.id.edit_toBack)
+    private ImageView edit_toBack;//返回
+    @ViewInject(value = R.id.edit_submit)
+    private TextView edit_submit;//保存
+    @ViewInject(value = R.id.edit_info_userHead)
+    private CuttingImageView edit_info_userHead;//用户头像
+    @ViewInject(value = R.id.edit_info_userName)
+    private TextView edit_info_userName;//用户昵称
+    @ViewInject(value = R.id.edit_info_userSex)
+    private TextView edit_info_userSex;//用户性别
+    @ViewInject(value = R.id.edit_info_userAddress)
+    private TextView edit_info_userAddress;//用户地区
+    @ViewInject(value = R.id.edit_info_userSign)
+    private TextView edit_info_userSign;//用户签名
+    @ViewInject(value = R.id.edit_rootView)
+    private LinearLayout edit_rootView;//父布局
+    @ViewInject(value = R.id.tv_userSign)
+    private TextView tv_userSign;
+    @ViewInject(value = R.id.tv_userAddress)
+    private TextView tv_userAddress;
+    @ViewInject(value = R.id.tv_userSex)
+    private TextView tv_userSex;
+    @ViewInject(value = R.id.tv_userName)
+    private TextView tv_userName;
+    @ViewInject(value = R.id.tv_userHead)
+    private TextView tv_userHead;
+    @ViewInject(value = R.id.userInfo)
+    private TextView userInfo;
 
 }

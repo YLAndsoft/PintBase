@@ -1,5 +1,6 @@
 package z.pint.utils;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -22,31 +23,32 @@ public class StatisticsUtils {
      * @param works
      * @param isLikes
      */
-    public static void isLikes(boolean isLikes,Works works){
+    public static void isLikes(Context mContext,boolean isLikes,Works works){
         if(!isLikes){
-            likesStatistics(works,HttpConfig.ADD_STATE);
+            likesStatistics(mContext,works,HttpConfig.ADD_STATE);
         }else{
-            likesStatistics(works,HttpConfig.DELETE_STATE);
+            likesStatistics(mContext,works,HttpConfig.DELETE_STATE);
         }
     }
 
     /**
-     * 评论统计
+     * 关注统计
      * @param isAttention
      * @param works
      */
-    public static void isAttention(boolean isAttention,Works works){
+    public static void isAttention(Context mContext,boolean isAttention,Works works){
         if(!isAttention){
-            atStatistics(works,HttpConfig.ADD_STATE);
+            atStatistics(mContext,works,HttpConfig.ADD_STATE);
         }else{
-            atStatistics(works,HttpConfig.DELETE_STATE);
+            atStatistics(mContext,works,HttpConfig.DELETE_STATE);
         }
     }
 
-    private static void likesStatistics(Works works,int stateAction){
+    private static void likesStatistics(Context mContext,Works works, int stateAction){
         if(null==works){return;}
+        int userID = (int) SPUtils.getInstance(mContext).getParam("userID", 0);
         Map<String,String> map = new HashMap<>();
-        map.put(HttpConfig.USER_ID,works.getUserID()+"");
+        map.put(HttpConfig.USER_ID,userID+"");
         map.put(HttpConfig.WORKS_ID,works.getWorksID()+"");
         map.put(HttpConfig.ACTION_STATE,stateAction+"");
         XutilsHttp.xUtilsPost(HttpConfig.getLiksData, map, new XutilsHttp.XUilsCallBack() {
@@ -61,10 +63,11 @@ public class StatisticsUtils {
         });
     }
 
-    private static void atStatistics(Works works,int stateAction){
+    private static void atStatistics(Context mContext,Works works,int stateAction){
         if(null==works){return;}
+        int userID = (int) SPUtils.getInstance(mContext).getParam("userID", 0);
         Map<String,String> map = new HashMap<>();
-        map.put(HttpConfig.USER_ID,1+"");//用户ID
+        map.put(HttpConfig.USER_ID,userID+"");//用户ID
         map.put(HttpConfig.CONVER_ATTENTION_ID,works.getUserID()+"");//被关注人用户ID
         map.put(HttpConfig.ACTION_STATE,stateAction+"");
         XutilsHttp.xUtilsPost(HttpConfig.getAttentionData, map, new XutilsHttp.XUilsCallBack() {

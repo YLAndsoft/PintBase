@@ -112,7 +112,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRe
     public void insertAll(@NonNull List<T> list) {
         if(null==list||list.size()<=0)return;
         this.list.addAll(list);
-        updateAll();
+        updateAll(list.size());
     }
     /**
      * 刷新数据
@@ -124,7 +124,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRe
             this.list.clear();
         }
         this.list.addAll(list);
-        updateAll();
+        updateAll(list.size());
     }
 
 
@@ -154,8 +154,9 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRe
     /**
      * 更新所有
      */
-    public void updateAll() {
-        notifyDataSetChanged();
+    public void updateAll(int size) {
+        //notifyDataSetChanged();
+        notifyItemRangeChanged(this.list.size(),size);
     }
 
 

@@ -8,6 +8,7 @@ import org.xutils.x;
 
 public abstract class BaseApplication extends Application {
 
+    protected static boolean isLog;//是输出打印日志
     @Override
     public void onCreate() {
         super.onCreate();
@@ -17,6 +18,9 @@ public abstract class BaseApplication extends Application {
         initDB();
     }
 
+    public static void setIsLog(boolean islog) {
+        isLog = islog;
+    }
     /**
      * 初始化数据库
      */

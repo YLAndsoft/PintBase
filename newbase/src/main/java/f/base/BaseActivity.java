@@ -38,8 +38,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     private boolean isAllowScreenRoate = false;
     /** 当前Activity渲染的视图View **/
     protected View mContextView = null;
-    /** 日志输出标志 **/
-    protected final String TAG = this.getClass().getSimpleName();
+
     /**上文*/
     protected Context mContext;
     /**默认状态栏的颜色为透明*/
@@ -228,8 +227,23 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
      * [打印日志]
      * @param msg
      */
-    protected void showLog(String msg){
-            Log.i(TAG,msg);
+    protected final String TAG = "ActivityLog信息：";
+    protected void showLog(int level,String msg){
+        if(!BaseApplication.isLog){return;}
+        switch (level){
+            case Config.LEVEL_1:
+                Log.v(TAG,msg);
+                break;
+            case Config.LEVEL_2:
+                Log.d(TAG,msg);
+                break;
+            case Config.LEVEL_3:
+                Log.e(TAG,msg);
+                break;
+            default:
+                Log.i(TAG,msg);
+                break;
+        }
     }
 
 

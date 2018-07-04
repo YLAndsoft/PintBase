@@ -113,10 +113,23 @@ public abstract class BaseLazyLoadFragment extends Fragment implements View.OnCl
      * [打印日志]
      * @param msg
      */
-    public static final String TAG1 = "BaseLazyLoadFragment";
-
-    protected void showLog(String msg){
-            Log.i(TAG1,msg);
+    protected final String TAG = "LazyLoadFragmentLog信息：";
+    protected void showLog(int level,String msg){
+        if(!BaseApplication.isLog){return;}
+        switch (level){
+            case Config.LEVEL_1:
+                Log.v(TAG,msg);
+                break;
+            case Config.LEVEL_2:
+                Log.d(TAG,msg);
+                break;
+            case Config.LEVEL_3:
+                Log.e(TAG,msg);
+                break;
+            default:
+                Log.i(TAG,msg);
+                break;
+        }
     }
 
     /**

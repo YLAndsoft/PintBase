@@ -150,7 +150,8 @@ public class BaseDialog extends Dialog implements View.OnClickListener{
         switch (dialogState){
             case DIALOG_DEFAULT_STATE:
                 //默认
-                title_message.setVisibility(View.GONE);//隐藏标题
+                title_message.setVisibility(View.VISIBLE);//显示标题
+                title_message.setText(StringUtils.isBlank(title_text)?"":title_text);
                 message.setText(StringUtils.isBlank(msg_content)?"":msg_content);
                 message.setVisibility(View.VISIBLE);//显示消息内容
                 break;

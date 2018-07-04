@@ -45,12 +45,18 @@ public class PersonalFragment extends BaseFragment{
     }
 
     @Override
-    protected void setData(String s) {
+    protected void setData(Object object,boolean isRefresh) {
+
+    }
+
+    @Override
+    protected void showError(String result) {
+
     }
     @Override
     protected void initData() {
         Bundle bundle = getArguments();
-        userInfo = (User) bundle.get("userInfo");
+        userInfo = (User) bundle.getSerializable("userInfo");
         name = getString();
         userinfo_personalRecycler.setLayoutManager(ViewUtils.getLayoutManager(mContext));
         BaseRecyclerAdapter<String> adapter = new BaseRecyclerAdapter<String>(mContext,getListInfo(userInfo),R.layout.userinfo_personal_item_layout) {
@@ -76,11 +82,14 @@ public class PersonalFragment extends BaseFragment{
         return ss;
     }
     private List<String> getListInfo(User user){
+        if(user==null){
+            return null;
+        }
         List<String> list = new ArrayList<>();
-        list.add(userInfo.getUserID()+"");
-        list.add(userInfo.getUserSign());
-        list.add(userInfo.getUserAddress());
-        list.add(userInfo.getRegistrTime());
+        list.add(user.getUserID()+"");
+        list.add(user.getUserSign());
+        list.add(user.getUserAddress());
+        list.add(user.getRegistrTime());
         return list;
     }
 

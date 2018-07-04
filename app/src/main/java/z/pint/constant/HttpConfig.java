@@ -24,7 +24,10 @@ public class HttpConfig {
     public static final String getRecommendItemData =  URL_Web+"/getRecommendItemData";//获取分类对应的数据
     public static final String getClassifyNameData =  URL_Web+"/classifyname";//获取分类集合
     public static final String getAttentionData = URL_Web+"/getAttentionData";//关注接口
+    public static final String getFansData = URL_Web+"/getFansData";//关注接口
     public static final String getUserInfoData = URL_Web+"/getUserInfoData";//注册接口
+    public static final String getWorksAllData = URL_Web+"/getWorksAllData";//根据ID获取所有作品
+
 
     //
     /**

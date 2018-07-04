@@ -2,11 +2,10 @@
     <string name="app_name">画世界</string>
     <string name="http_name">hsj</string>
 
-    <string name="defult_userName">小可爱</string>
-<!--    <string name="defult_userHead">file:///android_asset/default_head_image.png</string>-->
-    <string name="defult_userHead">https://pic.qqtn.com/up/2014-5/14012382176751173.jpg</string>
-    <string name="defult_address">重庆</string>
-    <string name="defult_sign">走丢一名小可爱</string>
+    <string name="defult_userName">游客</string>
+    <string name="defult_userHead">file:///android_asset/default_head_image.png</string>
+    <string name="defult_address">火星</string>
+    <string name="defult_sign">还没有签名</string>
 
     <string name="man">男</string>
     <string name="woman">女</string>
@@ -27,6 +26,28 @@
     <string name="details_comment_tabName1">回复评论</string>
     <string name="details_comment_tabName2">复制评论</string>
     <string name="details_comment_tabName3">取消</string>
+
+    <string name="my_fans">我的粉丝</string>
+    <string name="my_attention">我的关注</string>
+    <!--SettingsActivity-->
+    <string name="settings_userInfo">个人资料</string>
+    <string name="settings_clearCache">清理缓存</string>
+    <string name="settings_developer">联系开发者</string>
+    <string name="setting_about">关于</string>
+    <string name="setting_titelName">设置</string>
+    <string name="developerQQ">2964966804</string>
+
+    <!--CollectionActivity-->
+    <string name="collection_titelName">收藏</string>
+
+    <!--EditInfoActivity-->
+    <string name="tv_userSign">签名</string>
+    <string name="tv_userAddress">地区</string>
+    <string name="tv_userSex">性别</string>
+    <string name="tv_userName">昵称</string>
+    <string name="tv_userHead">头像</string>
+    <string name="userInfo">我的资料</string>
+    <string name="edit_submit">保存</string>
 
 
 </resources>

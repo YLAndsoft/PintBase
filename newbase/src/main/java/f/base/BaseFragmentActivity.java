@@ -47,8 +47,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements V
     /** 当前Activity渲染的视图View **/
     protected View mContextView = null;
     private int mResColor = R.color.transparent;
-    /** 日志输出标志 **/
-    protected final String TAG = this.getClass().getSimpleName();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mContext = this;
@@ -256,8 +254,23 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements V
      * [打印日志]
      * @param msg
      */
-    protected void showLog(String msg){
-            Log.i(TAG,msg);
+    protected final String TAG = "FragmentActivityLog信息：";
+    protected void showLog(int level,String msg){
+        if(!BaseApplication.isLog){return;}
+        switch (level){
+            case Config.LEVEL_1:
+                Log.v(TAG,msg);
+                break;
+            case Config.LEVEL_2:
+                Log.d(TAG,msg);
+                break;
+            case Config.LEVEL_3:
+                Log.e(TAG,msg);
+                break;
+            default:
+                Log.i(TAG,msg);
+                break;
+        }
     }
     /**
      * [是否允许全屏]

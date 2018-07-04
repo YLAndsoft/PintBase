@@ -16,6 +16,13 @@ public class GsonUtils {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
+    /**
+     * String转gson
+     * @param data
+     * @param mClass
+     * @param <T>
+     * @return T
+     */
     public static <T> T getGsonObject(String data, Class<T> mClass) {
         try{
             T result = new Gson().fromJson(data, mClass);
@@ -25,6 +32,13 @@ public class GsonUtils {
         }
     }
 
+    /**
+     * String转gson
+     * @param data
+     * @param klass
+     * @param <T>
+     * @return List<T>
+     */
     public static <T> List<T> getGsonList(String data, Class<T> klass) {
         try{
             return new Gson().fromJson(data, new ListOfSomething<T>(klass));

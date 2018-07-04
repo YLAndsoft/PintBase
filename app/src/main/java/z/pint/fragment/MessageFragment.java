@@ -24,6 +24,17 @@ public class MessageFragment extends BaseFragment {
     public Params getParams() {
         return null;
     }
+
+    @Override
+    protected void setData(Object object,boolean isRefresh) {
+
+    }
+
+    @Override
+    protected void showError(String result) {
+
+    }
+
     @Override
     protected void initData() {
 
@@ -34,8 +45,4 @@ public class MessageFragment extends BaseFragment {
 
     }
 
-    @Override
-    protected void setData(String s) {
-
-    }
 }

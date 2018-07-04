@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class User implements Serializable{
     @Column(name = "_id", isId = true, autoGen = true)
     private int _id;
-    @Column(name = "userID")
+    @Column(name = "userID",property = "NOT NULL")
     private int userID; //用户ID
     @Column(name = "userName",property = "NOT NULL")
     private String userName; //用户昵称
@@ -33,6 +33,21 @@ public class User implements Serializable{
     private int fansNumber;//粉丝数
     @Column(name = "isAttention")
     private boolean isAttention;//是否已关注
+    @Column(name = "imei")
+    private String imei;//imei手机标识
+
+    public User(){}
+    public User(String userName,String userHead){
+        this.userName = userName;
+        this.userHead = userHead;
+    }
+    public String getImei() {
+        return imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
 
     public int get_id() {
         return _id;

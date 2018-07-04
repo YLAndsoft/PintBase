@@ -53,7 +53,6 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
     private ProgressBar recommend_loding;
     @ViewInject(value = R.id.data_error)
     private ImageView data_error;
-
     private String classifyID;
     private int start = 0;
     private int num=10;
@@ -62,6 +61,9 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
     private boolean isPrepared;
     /** 是否已被加载过一次，第二次就不再去请求数据了 */
     private boolean mHasLoadedOnce;
+
+    private List<Works> worksList;
+    private StaggeredGridLayoutManager layoutManager;
 
     @Override
     public int bindLayout() {
@@ -93,7 +95,7 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
         classifyID = bundle.getString("classifyID");
         isPrepared = true;//标识已经初始化完成
         //设置管理器
-        recommend_recycler.setLayoutManager(ViewUtils.getStaggeredGridManager(mContext, 2));
+        recommend_recycler.setLayoutManager(ViewUtils.getStaggeredGridManager(2));
         recommend_recycler.setHasFixedSize(true);
         recommend_recycler.setNestedScrollingEnabled(false);
         //添加分割线
@@ -106,7 +108,7 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
                 //layoutManager.invalidateSpanAssignments();
             }
         });
-        recommend_refreshLayout.setEnableLoadMore(false);
+        recommend_refreshLayout.setEnableLoadMore(false);//关闭加载更多
         recommend_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
@@ -147,13 +149,13 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
                     return;
                 }
                 adapter.insertAll(works);
+                //worksList.addAll(works);
                 start = start + works.size();
                 recommend_refreshLayout.finishLoadMore(true);//数据加载成功
                 recommend_refreshLayout.setEnableLoadMore(true);//打开加载更多
             }
             @Override
             public void onFail(String result) {
-                //setData(result);
                 recommend_refreshLayout.finishLoadMore(false);//数据加载失败
                 recommend_refreshLayout.setEnableLoadMore(false);//打开加载更多
             }
@@ -172,7 +174,7 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
             recommend_refreshLayout.setEnableLoadMore(false);//关闭加载更多
             return;
         }
-        List<Works> worksList = GsonUtils.getGsonList(result, Works.class);
+        worksList = GsonUtils.getGsonList(result, Works.class);
         if(null==worksList||worksList.size()<=0){
             data_error.setVisibility(View.VISIBLE);
             recommend_refreshLayout.setEnableLoadMore(false);//关闭加载更多
@@ -204,7 +206,7 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
         //绑定适配器
         data_error.setVisibility(View.GONE);
         recommend_recycler.setAdapter(adapter);
-        adapter.updateAll();
+        adapter.updateAll(worksList.size());
         recommend_refreshLayout.setEnableLoadMore(true);//打开加载更多
         start = start + worksList.size();
         recommend_recycler.setVisibility(View.VISIBLE);

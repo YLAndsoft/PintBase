@@ -15,12 +15,14 @@ import java.util.Map;
 
 import f.base.BaseFragment;
 import f.base.bean.Params;
-import f.base.utils.GsonUtils;
 import z.pint.R;
+import z.pint.activity.CollectionActivity;
+import z.pint.activity.SettingActivity;
+import z.pint.activity.UserFAActivity;
 import z.pint.activity.UserInfoActivity;
 import z.pint.bean.User;
+import z.pint.constant.Constant;
 import z.pint.constant.HttpConfig;
-import z.pint.utils.DBHelper;
 import z.pint.utils.SPUtils;
 import z.pint.utils.ViewUtils;
 
@@ -86,28 +88,43 @@ public class UserFragment extends BaseFragment {
     public void widgetClick(View view) {
         switch (view.getId()){
             case R.id.rl_user:
-                showToast("跳转到个人信息界面");
-                Intent intent = new Intent(mContext,UserInfoActivity.class);
-                intent.putExtra("userInfo",userInfo);
-                startActivity(intent);
+                //showToast("跳转到个人信息界面");
+                Intent userinfo = new Intent(mContext,UserInfoActivity.class);
+                if(userInfo!=null){
+                    userinfo.putExtra("userInfo",userInfo);
+                    userinfo.putExtra("userID",userInfo.getUserID());
+                }
+                startActivity(userinfo);
                 break;
             case R.id.ll_gz:
-                showToast("跳转到关注界面");
+                //showToast("跳转到关注界面");
+                Intent attention = new Intent(mContext, UserFAActivity.class);
+                attention.putExtra("VIEW_TAG",Constant.VIEW_ATTENTION);
+                attention.putExtra("userID",userID);
+                startActivity(attention);
                 break;
             case R.id.ll_fs:
-                showToast("跳转到粉丝界面");
+                //showToast("跳转到粉丝界面");
+                Intent fans = new Intent(mContext, UserFAActivity.class);
+                fans.putExtra("VIEW_TAG", Constant.VIEW_FANS);
+                fans.putExtra("userID",userID);
+                startActivity(fans);
                 break;
             case R.id.ll_zp:
                 showToast("跳转到作品界面");
                 break;
             case R.id.ll_collect:
-                showToast("跳转到收藏界面");
+                //showToast("跳转到收藏界面");
+                startActivity(new Intent(mContext,CollectionActivity.class));
                 break;
             case R.id.ll_advise:
                 showToast("跳转到帮助界面");
                 break;
             case R.id.ll_setting:
-                showToast("跳转到设置界面");
+                //showToast("跳转到设置界面");
+                Intent setting = new Intent(mContext,SettingActivity.class);
+                setting.putExtra("userInfo",userInfo);
+                startActivity(setting);
                 break;
 
         }
@@ -118,16 +135,23 @@ public class UserFragment extends BaseFragment {
         Map<String,String> map = new HashMap<>();
         map.put(HttpConfig.ACTION_STATE,HttpConfig.SELECT_STATE+"");
         map.put(HttpConfig.USER_ID,userID+"");
-        return new Params(HttpConfig.getUserInfoData,map);
+        //new Params(HttpConfig.getUserInfoData,map)
+        return null;
+    }
+
+
+    @Override
+    protected void showError(String result) {
+
     }
 
     @Override
-    protected void setData(String result) {
-        userInfo = GsonUtils.getGsonObject(result, User.class);
+    protected void setData(Object result,boolean isRefresh) {
+        /*userInfo = GsonUtils.getGsonObject(result, User.class);
         if(userInfo==null){
             userInfo = DBHelper.getUser(userID + "");//查询数据库
         }
-        initData();
+        initData();*/
     }
 
 }

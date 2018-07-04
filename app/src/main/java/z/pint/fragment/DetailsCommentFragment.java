@@ -68,8 +68,15 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
         map.put(HttpConfig.START,start+"");
         map.put(HttpConfig.NUM,num+"");
         //new Params(HttpConfig.getCommentData,map)
-        return new Params(HttpConfig.getCommentData,map);
+        return null;
     }
+
+
+    @Override
+    protected void showError(String result) {
+
+    }
+
     @Override
     protected void initData() {
         //List<Comment> commentList = DataUtils.getCommentData();
@@ -84,8 +91,8 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
     }
 
     @Override
-    protected void setData(String result) {//绑定网络数据
-        comment_loding.setVisibility(View.GONE);//关闭正在加载控件
+    protected void setData(Object result,boolean isRefresh) {//绑定网络数据
+       /* comment_loding.setVisibility(View.GONE);//关闭正在加载控件
         if(StringUtils.isBlank(result)){
             //服务器返回空数据
             data_error.setVisibility(View.VISIBLE);
@@ -113,7 +120,7 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
         details_comment_recycler.setVisibility(View.VISIBLE);
         data_error.setVisibility(View.GONE);
         comment_refreshLayout.setEnableLoadMore(true);//打开加载更多
-        start = start + commentList.size();
+        start = start + commentList.size();*/
     }
 
     /**

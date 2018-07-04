@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import f.base.utils.GsonUtils;
+import f.base.utils.RandomUtils;
 import f.base.utils.XutilsHttp;
 import f.base.widget.SVP;
 import kr.co.namee.permissiongen.PermissionFail;
@@ -92,14 +93,16 @@ public class GuideActivity extends Activity {
         Map<String,String> map = new HashMap<>();
         //actionState=0&userInfo=user
         map.put(HttpConfig.ACTION_STATE,HttpConfig.ADD_STATE+"");
-        String userJson=new Gson().toJson(user, User.class);
-        map.put(HttpConfig.USER_INFO,userJson+"");
+        String toJson = new Gson().toJson(user, User.class);
+        map.put(HttpConfig.USER_INFO,toJson+"");
+
         SVP.showWithStatus(mContext,"检测更新中....");
         XutilsHttp.xUtilsPost(HttpConfig.getUserInfoData, map, new XutilsHttp.XUilsCallBack() {
             @Override
             public void onResponse(String result) {
                 if(SVP.isShowing(mContext))SVP.dismiss(mContext);
                 Log.e("STATE注册成功：",result);
+                SPUtils.getInstance(mContext).setParam("isRegister",true);
                 //成功，
                 User gsonObject = GsonUtils.getGsonObject(result, User.class);
                 SPUtils.getInstance(mContext).setParam("userID",gsonObject.getUserID());
@@ -114,7 +117,7 @@ public class GuideActivity extends Activity {
                 //失败，直接存入数据库
                 if(SVP.isShowing(mContext))SVP.dismiss(mContext);
                 //保存登录状态
-                SPUtils.getInstance(mContext).setParam("isRegister",true);
+                SPUtils.getInstance(mContext).setParam("isRegister",false);
                 //保存用户ID
                 SPUtils.getInstance(mContext).setParam("userID",user.getUserID());
                 SPUtils.getInstance(mContext).setParam("userName",user.getUserName());

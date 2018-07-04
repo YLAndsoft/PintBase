@@ -58,6 +58,18 @@
         <activity android:name = "z.pint.activity.WorksDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
+        <!--用户粉丝-->
+        <activity android:name = "z.pint.activity.UserFAActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <!--设置界面-->
+        <activity android:name = "z.pint.activity.SettingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <!--收藏界面-->
+        <activity android:name = "z.pint.activity.CollectionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
 
 
     </application>

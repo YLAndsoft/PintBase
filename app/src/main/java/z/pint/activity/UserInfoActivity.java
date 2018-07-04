@@ -14,12 +14,19 @@ import org.xutils.x;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import f.base.BaseFragmentActivity;
 import f.base.bean.Params;
+import f.base.utils.GsonUtils;
+import f.base.utils.StringUtils;
 import z.pint.R;
 import z.pint.adapter.ClassifyViewPagerAdapter;
 import z.pint.bean.User;
+import z.pint.bean.Works;
+import z.pint.constant.HttpConfig;
 import z.pint.fragment.PersonalFragment;
 import z.pint.fragment.UserWorksFragment;
 import z.pint.utils.DBHelper;
@@ -38,9 +45,10 @@ public class UserInfoActivity extends BaseFragmentActivity {
     private ViewPager userinfo_pager;
     @ViewInject(value = R.id.userinfo_titile_toback)
     private ImageView userinfo_titile_toback;
+    @ViewInject(value = R.id.userinfo_titile_name)
+    private TextView userinfo_titile_name;
     @ViewInject(value = R.id.user_edit)
     private ImageView user_edit;
-
     @ViewInject(value = R.id.userinfo_head)
     private ImageView userinfo_head;
     @ViewInject(value = R.id.userinfo_name)
@@ -52,11 +60,11 @@ public class UserInfoActivity extends BaseFragmentActivity {
     @ViewInject(value = R.id.user_sex)
     private ImageView user_sex;
 
-    private PersonalFragment sif = null;
-    private UserWorksFragment uwf = null;
-
+    private PersonalFragment sif;
+    private UserWorksFragment uwf;
     private ClassifyViewPagerAdapter classViewPagerAdapter;
     private User user;
+    private int userID;
 
     @Override
     public void initParms(Intent intent) {
@@ -64,7 +72,8 @@ public class UserInfoActivity extends BaseFragmentActivity {
         setScreenRoate(false);
         setSteepStatusBar(false);
         setSetActionBarColor(true, R.color.colorActionBar);
-        user = (User) intent.getSerializableExtra("userInfo");
+        userID =  intent.getIntExtra("userID",0);
+
     }
 
     @Override
@@ -78,12 +87,36 @@ public class UserInfoActivity extends BaseFragmentActivity {
     }
     @Override
     public Params getParams() {
-        return null;
+        Map<String, String> map = new HashMap<>();
+        map.put(HttpConfig.ACTION_STATE,HttpConfig.SELECT_STATE+"");
+        if(userID==0){
+            return null;
+        }else{
+            map.put(HttpConfig.USER_ID,userID+"");
+        }
+        return new Params(HttpConfig.getUserInfoData, map);
     }
-
     @Override
-    protected void setData(String s) {
-
+    protected void setData(String result) {
+        if(StringUtils.isBlank(result)){
+            int dbuserID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
+            if(userID==dbuserID)user = DBHelper.getUser(userID + ""); //确定是否是自己用户ID，是的情况就去查询本地数据库
+            return;
+        }
+        user = GsonUtils.getGsonObject(result, User.class);
+        if(null!=user){
+            ViewUtils.setImageUrl(mContext,userinfo_head,user.getUserHead(),R.mipmap.default_head_image);
+            ViewUtils.setTextView(userinfo_name,user.getUserName(),getString(R.string.defult_userName));
+            ViewUtils.setTextView(userinfo_attention,user.getAttentionNumber()+"关注",0+"关注");
+            ViewUtils.setTextView(userinfo_fans,user.getFansNumber()+"粉丝",0+"粉丝");
+            ViewUtils.setSex(user_sex,user.getUserSex());
+            ViewUtils.setTextView(userinfo_titile_name,user.getUserName(),"");
+            classViewPagerAdapter = new ClassifyViewPagerAdapter(getSupportFragmentManager(), getTabName(), getFragments());
+            userinfo_pager.setAdapter(classViewPagerAdapter);
+            userinfo_pager.setOffscreenPageLimit(2);//依据传过来的tab页的个数来设置缓存的页数
+            //tabs.setFollowTabColor(true);//设置标题是否跟随
+            userinfo_tabs.setViewPager(userinfo_pager);
+        }
     }
 
     @Override
@@ -94,21 +127,7 @@ public class UserInfoActivity extends BaseFragmentActivity {
 
     @Override
     public void initData(Context context) {
-        if(user==null){
-            int userID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
-            user = DBHelper.getUser(userID + "");
-        }
-        ViewUtils.setImageUrl(mContext,userinfo_head,user.getUserHead(),R.mipmap.default_head_image);
-        ViewUtils.setTextView(userinfo_name,user.getUserName(),getString(R.string.defult_userName));
-        ViewUtils.setTextView(userinfo_attention,user.getAttentionNumber()+"关注",0+"关注");
-        ViewUtils.setTextView(userinfo_fans,user.getFansNumber()+"粉丝",0+"粉丝");
-        ViewUtils.setSex(user_sex,user.getUserSex());
 
-        classViewPagerAdapter = new ClassifyViewPagerAdapter(getSupportFragmentManager(), getTabName(), getFragments());
-        userinfo_pager.setAdapter(classViewPagerAdapter);
-        userinfo_pager.setOffscreenPageLimit(2);//依据传过来的tab页的个数来设置缓存的页数 喝喜酒
-        //tabs.setFollowTabColor(true);//设置标题是否跟随
-        userinfo_tabs.setViewPager(userinfo_pager);
     }
 
     @Override
@@ -119,7 +138,7 @@ public class UserInfoActivity extends BaseFragmentActivity {
                 break;
             case R.id.user_edit:
                 Intent intent = new Intent(mContext, EditInfoActtivity.class);
-                intent.putExtra("user",user);
+                intent.putExtra("userInfo",user);
                 startActivity(intent);
                 break;
         }
@@ -137,7 +156,12 @@ public class UserInfoActivity extends BaseFragmentActivity {
         return sif;
     }
     private Fragment getUserWorksFragment(){
-        if(uwf==null){uwf = new UserWorksFragment();}
+        if(uwf==null){
+            uwf = new UserWorksFragment();
+        }
+        Bundle bundle = new Bundle();
+        bundle.putString("userID",user.getUserID()+"");
+        uwf.setArguments(bundle);
         return uwf;
     }
     private List<String> getTabName(){

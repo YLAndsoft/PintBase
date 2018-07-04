@@ -13,6 +13,7 @@ public class MApplication extends BaseApplication {
     public void initDB() {
         //创建数据库
         DBManager.initDB();
+        setIsLog(true);//是否打印日志
     }
 
 }
