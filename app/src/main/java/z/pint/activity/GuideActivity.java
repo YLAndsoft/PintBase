@@ -16,7 +16,6 @@ import android.widget.ImageView;
 
 import com.google.gson.Gson;
 
-import org.xutils.common.util.LogUtil;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -24,13 +23,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import f.base.utils.GsonUtils;
-import f.base.utils.RandomUtils;
 import f.base.utils.XutilsHttp;
 import f.base.widget.SVP;
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
 import kr.co.namee.permissiongen.PermissionSuccess;
-import z.pint.MainActivity;
 import z.pint.R;
 import z.pint.bean.User;
 import z.pint.constant.HttpConfig;
@@ -107,11 +104,11 @@ public class GuideActivity extends Activity {
                 User gsonObject = GsonUtils.getGsonObject(result, User.class);
                 SPUtils.getInstance(mContext).setParam("userID",gsonObject.getUserID());
                 SPUtils.getInstance(mContext).setParam("userName",gsonObject.getUserName());
+                SPUtils.getInstance(mContext).setParam("userHead",gsonObject.getUserHead());
                 //存入数据库
                 boolean b = DBHelper.saveUser(gsonObject);
                 startMain();
             }
-
             @Override
             public void onFail(String result) {
                 //失败，直接存入数据库
@@ -121,6 +118,7 @@ public class GuideActivity extends Activity {
                 //保存用户ID
                 SPUtils.getInstance(mContext).setParam("userID",user.getUserID());
                 SPUtils.getInstance(mContext).setParam("userName",user.getUserName());
+                SPUtils.getInstance(mContext).setParam("userHead",user.getUserHead());
                 Log.e("STATE注册异常：",result);
                 boolean b = DBHelper.saveUser(user);
                 startMain();

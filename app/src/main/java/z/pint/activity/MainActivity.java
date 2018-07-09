@@ -1,4 +1,4 @@
-package z.pint;
+package z.pint.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import org.xutils.x;
 
 import f.base.MenuFragmentActivity;
 import f.base.bean.Params;
+import z.pint.R;
 import z.pint.activity.WhiteBoardActivity;
 import z.pint.fragment.HomeFragment;
 import z.pint.fragment.MessageFragment;

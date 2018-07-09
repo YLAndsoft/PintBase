@@ -39,7 +39,7 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <!--主界面-->
-        <activity android:name = "z.pint.MainActivity"
+        <activity android:name = "z.pint.activity.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <!--画板界面-->
@@ -68,6 +68,17 @@
             android:screenOrientation="portrait"/>
         <!--收藏界面-->
         <activity android:name = "z.pint.activity.CollectionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <!--发布作品界面-->
+        <activity android:name = "z.pint.activity.ReleaseWorksActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <!--选择标签-->
+        <activity android:name = "z.pint.activity.SelectTagActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity android:name = "z.pint.activity.SearchActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
 

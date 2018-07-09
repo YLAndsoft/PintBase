@@ -1,5 +1,7 @@
 package z.pint.bean;
 
+import com.google.gson.annotations.Expose;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
@@ -11,9 +13,9 @@ import java.io.Serializable;
  */
 @Table(name = "USER")//表名
 public class User implements Serializable{
-    @Column(name = "_id", isId = true, autoGen = true)
-    private int _id;
-    @Column(name = "userID",property = "NOT NULL")
+   /* @Column(name = "_id", isId = true, autoGen = true)
+    private int _id;*/
+    @Column(name = "userID",isId = true,autoGen = false,property = "NOT NULL")
     private int userID; //用户ID
     @Column(name = "userName",property = "NOT NULL")
     private String userName; //用户昵称
@@ -36,6 +38,9 @@ public class User implements Serializable{
     @Column(name = "imei")
     private String imei;//imei手机标识
 
+    @Expose //注解：解析的时候不需要转换，否则会报错,被声明为transient的属性不会被序列化
+    private transient OnUpdateValueListener listener;
+
     public User(){}
     public User(String userName,String userHead){
         this.userName = userName;
@@ -49,13 +54,13 @@ public class User implements Serializable{
         this.imei = imei;
     }
 
-    public int get_id() {
+/*    public int get_id() {
         return _id;
     }
 
     public void set_id(int _id) {
         this._id = _id;
-    }
+    }*/
 
     public int getUserID() {
         return userID;
@@ -70,6 +75,9 @@ public class User implements Serializable{
     }
 
     public void setUserName(String userName) {
+        if(listener!=null){
+            listener.onSuccess(userName);
+        }
         this.userName = userName;
     }
 
@@ -78,6 +86,9 @@ public class User implements Serializable{
     }
 
     public void setUserSex(int userSex) {
+        if(listener!=null){
+            listener.onSuccess(userSex+"");
+        }
         this.userSex = userSex;
     }
 
@@ -86,6 +97,9 @@ public class User implements Serializable{
     }
 
     public void setUserHead(String userHead) {
+        if(listener!=null){
+            listener.onSuccess(userHead);
+        }
         this.userHead = userHead;
     }
 
@@ -102,6 +116,9 @@ public class User implements Serializable{
     }
 
     public void setUserSign(String userSign) {
+        if(listener!=null){
+            listener.onSuccess(userSign);
+        }
         this.userSign = userSign;
     }
 
@@ -136,4 +153,17 @@ public class User implements Serializable{
     public void setAttention(boolean attention) {
         isAttention = attention;
     }
+
+
+    public void setUpdateValueListener(OnUpdateValueListener listener){
+        this.listener  =listener;
+    }
+
+    /**
+     * 监听值发生变化的接口
+     */
+    public interface  OnUpdateValueListener{
+        void onSuccess(String content);
+    }
+
 }

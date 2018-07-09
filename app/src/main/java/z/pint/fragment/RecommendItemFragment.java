@@ -62,9 +62,6 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
     /** 是否已被加载过一次，第二次就不再去请求数据了 */
     private boolean mHasLoadedOnce;
 
-    private List<Works> worksList;
-    private StaggeredGridLayoutManager layoutManager;
-
     @Override
     public int bindLayout() {
         return R.layout.fragment_recommend_item_layout;
@@ -80,10 +77,44 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
         Map<String, String> map = new HashMap<>();
         map.put(HttpConfig.START, start + "");
         map.put(HttpConfig.NUM, num + "");
+        map.put(HttpConfig.ACTION_STATE,HttpConfig.SELECT_STATE+"");
         map.put(HttpConfig.CLASSIFY_ID, classifyID + "");
         //new Params(HttpConfig.getRecommendItemData, map)
-        return new Params(HttpConfig.getRecommendItemData, map);
+        return new Params(HttpConfig.getRecommendItemData, map,Works.class,true);
     }
+
+    @Override
+    protected void showError(String result) {
+        recommend_loding.setVisibility(View.GONE);
+        data_error.setVisibility(View.VISIBLE);
+        recommend_refreshLayout.setEnableLoadMore(false);//关闭加载更多
+    }
+
+    @Override
+    protected void showLoadError(String result) {
+        recommend_refreshLayout.finishLoadMore(false);//数据加载失败
+        recommend_refreshLayout.setEnableLoadMore(false);//打开加载更多
+    }
+
+    @Override
+    protected void setLoadData(Object result) {
+        if(adapter==null){
+            setData(result,false);
+            return;
+        }
+        List<Works> works = (List<Works>) result;
+        if (null == works || works.size() <= 0) {
+            recommend_refreshLayout.finishLoadMore(false);//数据加载失败
+            recommend_refreshLayout.setEnableLoadMore(false);//打开加载更多
+            return;
+        }
+        adapter.insertAll(works);
+        setEnableLoadData(works.size()<num);
+        start = start + works.size();
+        recommend_refreshLayout.finishLoadMore(true);//数据加载成功
+        recommend_refreshLayout.setEnableLoadMore(true);//打开加载更多
+    }
+
     @Override
     protected void initData() {
         if(!isVisible || !isPrepared || mHasLoadedOnce){
@@ -112,69 +143,28 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
         recommend_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
-                loadData();
+                Params params = getParams();
+                loadData(params);
             }
         });
         Params params = getParams();
-        XutilsHttp.xUtilsPost(params.getURL(), params.getMap(), new XutilsHttp.XUilsCallBack() {
-            @Override
-            public void onResponse(String result) {
-                setData( result);
-            }
-            @Override
-            public void onFail(String result) {
-                setData( result);
-            }
-        });
-        //List<Works> worksList = DataUtils.getListData();
+        getData(params);
     }
 
-    /**
-     * 加载更多数据
-     */
-    private void loadData() {
-        Params params = getParams();
-        XutilsHttp.xUtilsPost(params.getURL(), params.getMap(), new XutilsHttp.XUilsCallBack() {
-            @Override
-            public void onResponse(String result) {
-                if (StringUtils.isBlank(result)) return;
-                if(adapter==null){
-                    setData(result);
-                    return;
-                }
-                List<Works> works = GsonUtils.getGsonList(result, Works.class);
-                if (null == works || works.size() <= 0) {
-                    recommend_refreshLayout.finishLoadMore(false);//数据加载失败
-                    recommend_refreshLayout.setEnableLoadMore(false);//打开加载更多
-                    return;
-                }
-                adapter.insertAll(works);
-                //worksList.addAll(works);
-                start = start + works.size();
-                recommend_refreshLayout.finishLoadMore(true);//数据加载成功
-                recommend_refreshLayout.setEnableLoadMore(true);//打开加载更多
-            }
-            @Override
-            public void onFail(String result) {
-                recommend_refreshLayout.finishLoadMore(false);//数据加载失败
-                recommend_refreshLayout.setEnableLoadMore(false);//打开加载更多
-            }
-        });
-    }
 
     @Override
     public void widgetClick(View view) {
     }
 
     @Override
-    protected void setData(String result) {
+    protected void setData( Object result, boolean isRefresh) {
         recommend_loding.setVisibility(View.GONE);
-        if(StringUtils.isBlank(result)){
+        if(null==result){
             data_error.setVisibility(View.VISIBLE);
             recommend_refreshLayout.setEnableLoadMore(false);//关闭加载更多
             return;
         }
-        worksList = GsonUtils.getGsonList(result, Works.class);
+        List<Works> worksList = (List<Works>) result;
         if(null==worksList||worksList.size()<=0){
             data_error.setVisibility(View.VISIBLE);
             recommend_refreshLayout.setEnableLoadMore(false);//关闭加载更多

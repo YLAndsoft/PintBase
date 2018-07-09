@@ -138,6 +138,16 @@ public class UserWorksFragment extends BaseFragment {
     }
 
     @Override
+    protected void showLoadError(String result) {
+
+    }
+
+    @Override
+    protected void setLoadData(Object result) {
+
+    }
+
+    @Override
     protected void setData(Object result,boolean isRefresh) {
         /*userWoorks_loding.setVisibility(View.GONE);
         if(StringUtils.isBlank(result)){data_error.setVisibility(View.VISIBLE);return;}

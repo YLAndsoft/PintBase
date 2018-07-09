@@ -36,14 +36,24 @@
                         android:visibility="invisible"
                         android:nestedScrollingEnabled="false"
                         />
-                    <ImageView
+                    <LinearLayout
                         android:id="@+id/data_error"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/no_comment"
-                        android:layout_marginTop="50dp"
-                        android:visibility="gone"
-                        android:layout_centerHorizontal="true"/>
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_centerHorizontal="true">
+                         <ImageView
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:src="@mipmap/data_error"
+                             android:layout_marginTop="50dp"/>
+                         <TextView
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginTop="5dp"
+                             android:text="暂无任何评论"/>
+                    </LinearLayout>
                     <ProgressBar
                         android:id="@+id/comment_loding"
                         android:layout_width="wrap_content"

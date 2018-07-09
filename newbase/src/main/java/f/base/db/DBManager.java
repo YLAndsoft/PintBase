@@ -85,7 +85,7 @@ public class DBManager {
             //db.save(app);//保存成功之后【不会】对user的主键进行赋值绑定
             //db.saveOrUpdate(user);//保存成功之后【会】对user的主键进行赋值绑定
             //db.saveBindingId(user);//保存成功之后【会】对user的主键进行赋值绑定,并返回保存是否成功
-            if(null!=data)db.saveBindingId(data);//对user的主键进行赋值绑定,并返回保存是否成功
+            if(null!=data)db.saveOrUpdate(data);//对user的主键进行赋值绑定,并返回保存是否成功
             lists = queryAll(clazz);
         } catch (DbException e) {
             e.printStackTrace();
@@ -160,10 +160,33 @@ public class DBManager {
      * 根据key，values查询
      * @param clazz 查询的实体类类型
      * @param key 查询的key
-     * @param values 查询的id
+     * @param values 查询的value
      * @return
      */
     public static <T>List<T> queryClazzKeyValue(Class<T> clazz,@NonNull String key,@NonNull String values){
+        try {
+            //MyApplication.db.selector(clazz).where("id","=",appId).and("id","<",4).findAll();
+            List<T> apps= db.selector(clazz).where(key, "=", values).findAll();
+            if(null==apps||apps.size()<=0){
+                return null;
+            }
+            return apps;
+        } catch (DbException e) {
+            e.printStackTrace();
+        }catch (Exception ex){
+            LogUtils.e("根据ID查询queryClazzID异常:"+ex);
+
+        }
+        return null;
+    }
+    /**
+     * 根据key，values查询
+     * @param clazz 查询的实体类类型
+     * @param key 查询的key
+     * @param values 查询的id
+     * @return
+     */
+    public static <T>List<T> queryClazzKeyValue(Class<T> clazz,@NonNull String key,@NonNull int values){
         try {
             //MyApplication.db.selector(clazz).where("id","=",appId).and("id","<",4).findAll();
             List<T> apps= db.selector(clazz).where(key, "=", values).findAll();
@@ -297,7 +320,26 @@ public class DBManager {
         }
         return ts;
     }
-
+    /**
+     * 替换单个对象
+     * @param data 修改的数据
+     * @param clazz 修改数据的类型
+     * @return 返回所有数据column
+     */
+    public static <T>List<T> replace(T data,Class<T> clazz){
+        List<T> ts;
+        try {
+            if(null!=data)db.replace(data);
+            ts = queryAll(clazz);
+        } catch (DbException e) {
+            e.printStackTrace();
+            return null;
+        }catch (Exception ex){
+            LogUtils.e("修改单个对象update()异常:"+ex);
+            return null;
+        }
+        return ts;
+    }
 
     /**
      * 修改单个对象的指定列

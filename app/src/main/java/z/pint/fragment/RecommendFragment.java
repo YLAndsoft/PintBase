@@ -1,5 +1,6 @@
 package z.pint.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -20,6 +21,7 @@ import f.base.utils.GsonUtils;
 import f.base.utils.StringUtils;
 import f.base.utils.XutilsHttp;
 import z.pint.R;
+import z.pint.activity.SearchActivity;
 import z.pint.adapter.ClassifyViewPagerAdapter;
 import z.pint.bean.WorksClassify;
 import z.pint.constant.HttpConfig;
@@ -82,10 +84,22 @@ public class RecommendFragment extends BaseFragment {
     }
 
     @Override
+    protected void showLoadError(String result) {
+
+    }
+
+    @Override
+    protected void setLoadData(Object result) {
+
+    }
+
+    @Override
     public void widgetClick(View view) {
         switch (view.getId()){
             case R.id.new_search:
                 showToast("点击了搜索");
+                startActivity(new Intent(mContext,SearchActivity.class));
+
                 break;
             case R.id.data_error:
                 retryData(getParams());
@@ -94,17 +108,6 @@ public class RecommendFragment extends BaseFragment {
     }
 
     private void retryData(Params params) {
-        /*XutilsHttp.xUtilsPost(params.getURL(), params.getMap(), new XutilsHttp.XUilsCallBack() {
-            @Override
-            public void onResponse(String result) {
-                setData(result);
-            }
-
-            @Override
-            public void onFail(String result) {
-                data_error.setVisibility(View.VISIBLE);
-            }
-        });*/
     }
 
     private List<Fragment> getListFragment(List<WorksClassify> classifyName){

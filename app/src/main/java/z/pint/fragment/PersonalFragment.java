@@ -30,6 +30,7 @@ public class PersonalFragment extends BaseFragment{
     private RecyclerView userinfo_personalRecycler;
     private User userInfo;
     private String [] name;
+    private BaseRecyclerAdapter<String> adapter;
     @Override
     public int bindLayout() {
         return R.layout.fragment_personal;
@@ -43,23 +44,27 @@ public class PersonalFragment extends BaseFragment{
     public Params getParams() {
         return null;
     }
-
     @Override
     protected void setData(Object object,boolean isRefresh) {
-
     }
-
     @Override
     protected void showError(String result) {
-
     }
+    @Override
+    protected void showLoadError(String result) {
+    }
+    @Override
+    protected void setLoadData(Object result) {
+    }
+
     @Override
     protected void initData() {
         Bundle bundle = getArguments();
         userInfo = (User) bundle.getSerializable("userInfo");
+        if(userInfo==null){return;}
         name = getString();
         userinfo_personalRecycler.setLayoutManager(ViewUtils.getLayoutManager(mContext));
-        BaseRecyclerAdapter<String> adapter = new BaseRecyclerAdapter<String>(mContext,getListInfo(userInfo),R.layout.userinfo_personal_item_layout) {
+        adapter = new BaseRecyclerAdapter<String>(mContext,getListInfo(userInfo),R.layout.userinfo_personal_item_layout) {
             @Override
             public void convert(BaseRecyclerHolder baseRecyclerHolder, String s, int i) {
                 baseRecyclerHolder.setText(R.id.personal_txt,name[i]+"");
@@ -72,6 +77,15 @@ public class PersonalFragment extends BaseFragment{
     @Override
     public void widgetClick(View view) {
 
+    }
+
+    public void setUserInfo(User userInfo){
+        this.userInfo = userInfo;
+        List<String> listInfo = getListInfo(userInfo);
+        if(adapter!=null){
+            adapter.refreshAll(listInfo);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private String[] getString(){

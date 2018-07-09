@@ -23,6 +23,7 @@ import f.base.utils.XutilsHttp;
 public abstract class BaseFragment extends Fragment implements View.OnClickListener{
     protected View mContextView = null;
     protected Context mContext;
+    protected  boolean isLoadData;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +45,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         initData_();//加载数据
         return mContextView;
     }
-
-
-
 
     /**
      * [绑定布局]
@@ -121,7 +119,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         }
     }
 
-
     /**
      * 获取参数
      * @return
@@ -137,6 +134,15 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      * 显示错误视图
      */
     protected abstract void showError(String result);
+    /**
+     * 加载更多错误视图
+     */
+    protected abstract void showLoadError(String result);
+    /**
+     * 展示更多数据
+     */
+    protected abstract void setLoadData(Object result );
+
 
     /**
      * 获取网络数据
@@ -180,4 +186,48 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             }
         });
     }
+    /**
+     * 获取网络数据
+     * @param params
+     */
+    public void loadData(final Params params) {
+        if(!isLoadData)return; //没有更多数据，直接返回
+        if(null==params){ //未配置参数
+            showLoadError(Config.PARAMS_ERROR);
+            return;
+        }
+        if(!NetworkUtils.isConnected(mContext)){
+            showLoadError(Config.NETWORK_ERROR);
+            return;
+        }//网络未连接
+        XutilsHttp.xUtilsPost(params.getURL(), params.getMap(), new XutilsHttp.XUilsCallBack() {
+            @Override
+            public void onResponse(String result) {
+                if(StringUtils.isBlank(result)){
+                    showLoadError(result);
+                    return;
+                }
+                if(params.getClazz()!=null){ //判断要解析的bean类是否存在
+                    Object object;
+                    if(params.isList()){  //得到解析数据是bean还是集合类型
+                        object = GsonUtils.getGsonList(result, params.getClazz());
+                    }else{
+                        object = GsonUtils.getGsonObject(result, params.getClazz());
+                    }
+                    if(null!=object){
+                        setLoadData(object);
+                        return;
+                    }
+                    showLoadError(result);
+                }else{ //不存在，让用户自己去解析
+                    setLoadData(result);
+                }
+            }
+            @Override
+            public void onFail(String result) {
+                showLoadError(result);
+            }
+        });
+    }
+
 }

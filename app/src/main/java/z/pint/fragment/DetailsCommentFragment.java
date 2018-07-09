@@ -42,7 +42,7 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
     @ViewInject(value = R.id.comment_refreshLayout)
     private SmartRefreshLayout comment_refreshLayout;
     @ViewInject(value = R.id.data_error)
-    private ImageView data_error;
+    private LinearLayout data_error;
     @ViewInject(value = R.id.comment_loding)
     private ProgressBar comment_loding;
 
@@ -50,6 +50,7 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
     private ButtonPopupWindow buttonPopupWindow;
     private int start = 0;
     private int num = 10;
+    private String worksID;
     @Override
     public int bindLayout() {
         return R.layout.details_comment_fragment;
@@ -58,106 +59,126 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
     @Override
     protected void initView() {
         x.view().inject(this,mContextView);
+        worksID = getArguments().getString("worksID");
     }
 
+    /**
+     * 配置参数
+     * @return
+     */
     @Override
     public Params getParams() { //设置网络请求参数及地址
         Map<String,String> map = new HashMap<>();
-        map.put(HttpConfig.WORKS_ID,1+"");
-        map.put(HttpConfig.ACTION_STATE,0+"");
+        map.put(HttpConfig.WORKS_ID,worksID+"");
+        map.put(HttpConfig.ACTION_STATE,HttpConfig.SELECT_STATE+"");
         map.put(HttpConfig.START,start+"");
         map.put(HttpConfig.NUM,num+"");
-        //new Params(HttpConfig.getCommentData,map)
-        return null;
+        return new Params(HttpConfig.getCommentData,map,Comment.class,true);
     }
 
-
-    @Override
-    protected void showError(String result) {
-
-    }
 
     @Override
     protected void initData() {
-        //List<Comment> commentList = DataUtils.getCommentData();
+        //List<Comment> commentList = DataUtils.getCommentData();//假数据
         details_comment_recycler.setLayoutManager(ViewUtils.getLayoutManager(mContext));
         details_comment_recycler.addItemDecoration(new RecyclerViewDivider(mContext,LinearLayoutManager.HORIZONTAL,1,R.color.gary));
         comment_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
-                loadData();//加载更多
+                loadData(getParams());//加载更多
             }
         });
     }
 
+    /**
+     * 绑定网络数据
+     * @param result
+     * @param isRefresh
+     */
     @Override
-    protected void setData(Object result,boolean isRefresh) {//绑定网络数据
-       /* comment_loding.setVisibility(View.GONE);//关闭正在加载控件
-        if(StringUtils.isBlank(result)){
-            //服务器返回空数据
-            data_error.setVisibility(View.VISIBLE);
-            return;
-        }
-        List<Comment> commentList = GsonUtils.getGsonList(result,Comment.class);
+    protected void setData(Object result,boolean isRefresh) {
+        comment_loding.setVisibility(View.GONE);//关闭正在加载控件
+        List<Comment> commentList = (List<Comment>) result;
         if(null==commentList||commentList.size()<=0){
             comment_refreshLayout.setEnableLoadMore(false);//没有数据了，禁止上拉
             data_error.setVisibility(View.VISIBLE);
             return;
         }
+        setCommentAdapter(commentList);
+    }
+
+    /**
+     * 绑定适配器
+     * @param commentList
+     */
+    private void setCommentAdapter(List<Comment> commentList) {
         adapter = new BaseRecyclerAdapter<Comment>(mContext,commentList,R.layout.details_works_comment_item_layout) {
             @Override
             public void convert(BaseRecyclerHolder baseRecyclerHolder, Comment comment, int position) {
                 baseRecyclerHolder.setText(R.id.comment_userName,comment.getUserName()+"");
                 baseRecyclerHolder.setText(R.id.comment_content,comment.getCommentContent()+"");
-                baseRecyclerHolder.setText(R.id.comment_tims,"2018-06-23 13:23:17");
+                baseRecyclerHolder.setText(R.id.comment_tims,comment.getCommentTime()+"");
                 ImageView comment_userhead = baseRecyclerHolder.getView(R.id.comment_userhead);
                 ViewUtils.setImageUrl(mContext,comment_userhead,comment.getUserHead(),R.mipmap.default_head_image);
                 baseRecyclerHolder.setOnViewClick(R.id.comment_info,comment,position,DetailsCommentFragment.this);
             }
         };
         details_comment_recycler.setAdapter(adapter);
-        adapter.updateAll();
+        adapter.updateAll(commentList.size());
         details_comment_recycler.setVisibility(View.VISIBLE);
         data_error.setVisibility(View.GONE);
-        comment_refreshLayout.setEnableLoadMore(true);//打开加载更多
-        start = start + commentList.size();*/
+        comment_refreshLayout.setEnableLoadMore(commentList.size()>=num);//打开加载更多
+        start = start + commentList.size();
+    }
+    /**
+     * 显示网络错误布局
+     * @param result
+     */
+    @Override
+    protected void showError(String result) {
+        //服务器返回空数据
+        data_error.setVisibility(View.VISIBLE);
     }
 
     /**
-     * 加载更多
+     * 加载更多错误回调
+     * @param result
      */
-    private void loadData() {
-        Params params = getParams();
-        XutilsHttp.xUtilsPost(params.getURL(), params.getMap(), new XutilsHttp.XUilsCallBack() {
-            @Override
-            public void onResponse(String result) {
-                if (StringUtils.isBlank(result)) {
-                    comment_refreshLayout.finishLoadMore(false);//数据加载失败
-                    comment_refreshLayout.setEnableLoadMore(false);//关闭加载更多
-                    return;
-                }
-                List<Comment> commentList = GsonUtils.getGsonList(result, Comment.class);
-                if (null == commentList || commentList.size() <= 0) {
-                    comment_refreshLayout.finishLoadMore(false);//数据加载失败
-                    comment_refreshLayout.setEnableLoadMore(false);//关闭加载更多
-                    return;
-                }
-                adapter.insertAll(commentList);
-                start = start + commentList.size();
-                comment_refreshLayout.finishLoadMore(true);//数据加载成功
-                comment_refreshLayout.setEnableLoadMore(true);//打开加载更多
-            }
-            @Override
-            public void onFail(String result) {
-                comment_refreshLayout.finishLoadMore(false);//数据加载失败
-            }
-        });
+    @Override
+    protected void showLoadError(String result) {
+        comment_refreshLayout.finishLoadMore(false);//数据加载失败
+        comment_refreshLayout.setEnableLoadMore(false);//关闭加载更多
     }
+
+    /**
+     * 加载更多回调
+     * @param result
+     */
+    @Override
+    protected void setLoadData(Object result) {
+        List<Comment> commentList = (List<Comment>) result;
+        if (null == commentList || commentList.size() <= 0) {
+            comment_refreshLayout.finishLoadMore(false);//数据加载失败
+            comment_refreshLayout.setEnableLoadMore(false);//关闭加载更多
+            return;
+        }
+        adapter.insertAll(commentList);
+        start = start + commentList.size();
+        comment_refreshLayout.finishLoadMore(true);//数据加载成功
+        comment_refreshLayout.setEnableLoadMore(commentList.size()>=num);//打开加载更多
+    }
+
+
     @Override
     public void widgetClick(View view) {
     }
 
-
+    /**
+     * recyclerView item点击事件
+     * @param view
+     * @param object
+     * @param position
+     */
     @Override
     public void onViewClick(View view, Object object, int position) {
         switch (view.getId()){
@@ -187,4 +208,5 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
                 getResources().getString(R.string.details_comment_tabName3)};
         return bpw;
     }
+
 }

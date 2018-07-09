@@ -1,27 +1,43 @@
 package z.pint.bean;
 
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
+
 import java.io.Serializable;
 
 /**
  * 作品类
  * Created by DN on 2018/6/19.
  */
+@Table(name = "WORKS")//表名
 public class Works implements Serializable{
+    @Column(name = "worksID", isId = true, autoGen = true)
     private int worksID;//作品ID
+    @Column(name = "userID",property = "NOT NULL")
     private int userID;//用户ID
+    @Column(name = "userName",property = "NOT NULL")
     private String userName;//用户昵称
+    @Column(name = "userHead",property = "NOT NULL")
     private String userHead;//用户头像
+    @Column(name = "worksImage",property = "NOT NULL")
     private String worksImage;//作品展示图
+    @Column(name = "worksLabel")
     private String worksLabel;//作品标签
+    @Column(name = "worksDescribe",property = "NOT NULL")
     private String worksDescribe;//作品描述
+    @Column(name = "worksReleaseTime")
     private String worksReleaseTime;//作品发布时间
+    @Column(name = "worksLikeNumber")
     private int worksLikeNumber;//作品点赞数
+    @Column(name = "worksCommentNumber")
     private int worksCommentNumber;	//作品评论数
+    @Column(name = "worksStrokes")
     private int worksStrokes;//作品笔画
+    @Column(name = "isLikes")
     private boolean isLikes;//是否已点赞
-    private boolean isAttention;//是否已关注
+    @Column(name = "classifyID")
     private int classifyID;//
-
+    private boolean isAttention;
     public int getWorksID() {
         return worksID;
     }

@@ -17,6 +17,8 @@ public class Collection implements Serializable{
     private int worksID;//作品ID
     @Column(name = "userID",property = "NOT NULL")
     private int userID;//作品用户ID
+    @Column(name = "collectionUserID",property = "NOT NULL")
+    private int collectionUserID;//收藏作品用户
     @Column(name = "userHead",property = "NOT NULL")
     private String userHead;//作品用户头像
     @Column(name = "userName",property = "NOT NULL")
@@ -34,6 +36,13 @@ public class Collection implements Serializable{
     @Column(name = "collectionTime")
     private String collectionTime;//收藏时间
 
+    public int getCollectionUserID() {
+        return collectionUserID;
+    }
+
+    public void setCollectionUserID(int collectionUserID) {
+        this.collectionUserID = collectionUserID;
+    }
 
     public String getWorksImag() {
         return worksImag;

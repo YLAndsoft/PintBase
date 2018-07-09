@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -20,9 +22,11 @@ import z.pint.activity.CollectionActivity;
 import z.pint.activity.SettingActivity;
 import z.pint.activity.UserFAActivity;
 import z.pint.activity.UserInfoActivity;
+import z.pint.bean.EventBusEvent;
 import z.pint.bean.User;
 import z.pint.constant.Constant;
 import z.pint.constant.HttpConfig;
+import z.pint.utils.DBHelper;
 import z.pint.utils.SPUtils;
 import z.pint.utils.ViewUtils;
 
@@ -76,14 +80,31 @@ public class UserFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        if(userInfo!=null){
-            ViewUtils.setImageUrl(mContext,user_head,userInfo.getUserHead(),R.mipmap.default_head_image);
-            ViewUtils.setTextView(user_name,userInfo.getUserName(),getResources().getString(R.string.defult_userName));
-            ViewUtils.setTextView(user_sign,userInfo.getUserSign(),getResources().getString(R.string.defult_sign));
-            ViewUtils.setSex(user_sex,userInfo.getUserSex());
+        if(userInfo==null){
+            userInfo = DBHelper.getUser(userID);//查询数据库
+        }
+        ViewUtils.setImageUrl(mContext,user_head,userInfo.getUserHead(),R.mipmap.default_head_image);
+        ViewUtils.setTextView(user_name,userInfo.getUserName(),getResources().getString(R.string.defult_userName));
+        ViewUtils.setTextView(user_sign,userInfo.getUserSign(),getResources().getString(R.string.defult_sign));
+        ViewUtils.setSex(user_sex,userInfo.getUserSex());
+    }
+    /**
+     * 接收用户修改之后的信息
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.POSTING,priority = 99)
+    public void upUnserInfo(EventBusEvent event) {
+        //Log.e("TAG", "PostThread: " + Thread.currentThread().getName());
+        if(event!=null){
+            User data = (User) event.getData();
+            if(data!=null){
+                ViewUtils.setImageUrl(mContext,user_head,data.getUserHead(),R.mipmap.default_head_image);
+                ViewUtils.setTextView(user_name,data.getUserName(),getResources().getString(R.string.defult_userName));
+                ViewUtils.setTextView(user_sign,data.getUserSign(),getResources().getString(R.string.defult_sign));
+                ViewUtils.setSex(user_sex,data.getUserSex());
+            }
         }
     }
-
     @Override
     public void widgetClick(View view) {
         switch (view.getId()){
@@ -91,8 +112,8 @@ public class UserFragment extends BaseFragment {
                 //showToast("跳转到个人信息界面");
                 Intent userinfo = new Intent(mContext,UserInfoActivity.class);
                 if(userInfo!=null){
-                    userinfo.putExtra("userInfo",userInfo);
-                    userinfo.putExtra("userID",userInfo.getUserID());
+                    userinfo.putExtra("viewTag",Constant.VIEW_ME);
+                    userinfo.putExtra("userID",userInfo.getUserID()+"");
                 }
                 startActivity(userinfo);
                 break;
@@ -135,23 +156,29 @@ public class UserFragment extends BaseFragment {
         Map<String,String> map = new HashMap<>();
         map.put(HttpConfig.ACTION_STATE,HttpConfig.SELECT_STATE+"");
         map.put(HttpConfig.USER_ID,userID+"");
-        //new Params(HttpConfig.getUserInfoData,map)
-        return null;
+        return new Params(HttpConfig.getUserInfoData,map);
     }
 
 
     @Override
     protected void showError(String result) {
+        if(userInfo==null){
+            userInfo = DBHelper.getUser(userID);//查询数据库
+        }
+    }
 
+    @Override
+    protected void showLoadError(String result) {
+    }
+
+    @Override
+    protected void setLoadData(Object result) {
     }
 
     @Override
     protected void setData(Object result,boolean isRefresh) {
-        /*userInfo = GsonUtils.getGsonObject(result, User.class);
-        if(userInfo==null){
-            userInfo = DBHelper.getUser(userID + "");//查询数据库
-        }
-        initData();*/
+        userInfo = (User) result;
+        initData();
     }
 
 }

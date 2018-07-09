@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/top_back"
+            android:layout_marginLeft="15dp"
+            android:onClick="toBack"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:layout_centerInParent="true"
+            android:text="选择标签"/>
+        <TextView
+            android:id="@+id/submit_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="完成"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gary5"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="分类标签"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:textColor="@color/black"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_tag"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="12dp"
+        android:scrollbars="none"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/gary5"/>
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="自定义标签"
+    android:layout_marginTop="12dp"
+    android:layout_marginLeft="12dp"
+    android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:id="@+id/custom_tag"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        />
+    <EditText
+        android:id="@+id/create_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="点击新建标签，多个标签用“,”或者空格分开"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textSize="13dp"
+        android:background="@color/transparent"
+        android:textColor="@color/gary2"/>
+
+
+</LinearLayout>

@@ -36,7 +36,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:text="喜悦的大雁"
+                android:text="-----"
+                android:singleLine="true"
+                android:maxEms="5"
+                android:ellipsize="end"
                 android:textColor="@color/black"
                 android:textSize="18dp" />
             <ImageView
@@ -53,6 +56,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/user_name"
                 android:layout_marginLeft="15dp"
+                android:singleLine="true"
+                android:maxEms="10"
+                android:ellipsize="end"
                 android:layout_marginTop="25dp"
                 android:text="还没有签名" />
         </RelativeLayout>
@@ -84,7 +90,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="7"/>
+                android:text="0"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -128,7 +134,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"/>
+                android:text="0"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

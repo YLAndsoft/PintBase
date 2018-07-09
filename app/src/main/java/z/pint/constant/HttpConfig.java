@@ -27,6 +27,7 @@ public class HttpConfig {
     public static final String getFansData = URL_Web+"/getFansData";//关注接口
     public static final String getUserInfoData = URL_Web+"/getUserInfoData";//注册接口
     public static final String getWorksAllData = URL_Web+"/getWorksAllData";//根据ID获取所有作品
+    public static final String getSearchData = URL_Web+"/getSearchData";//搜索接口
 
 
     //
@@ -44,6 +45,9 @@ public class HttpConfig {
     public static final String CLASSIFY_NAME ="classifyname";
     public static final String CONVER_ATTENTION_ID ="converAttentionID";
     public static final String ACTION_STATE = "actionState";//动作状态0-查询 1-添加 /*2-删除 3-修改*/
+    public static final String SEARCH_CONTENT ="searchContent";
+
+
 
     public static final int SELECT_STATE = 0;//查询
     public static final int ADD_STATE = 1;//增加

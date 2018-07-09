@@ -86,11 +86,16 @@ public class TimeUtils {
      * @return
      * @throws ParseException
      */
-    public static Date stringToDate(String strTime, String formatType)throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat(formatType);
-        Date date = null;
-        date = formatter.parse(strTime);
-        return date;
+    public static Date stringToDate(String strTime, String formatType){
+        try{
+            SimpleDateFormat formatter = new SimpleDateFormat(formatType);
+            Date date = null;
+            return formatter.parse(strTime);
+        }catch ( ParseException pe){
+            return new Date();
+        }catch (Exception ex){
+            return null;
+        }
     }
 
 }

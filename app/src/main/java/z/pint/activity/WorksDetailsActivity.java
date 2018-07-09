@@ -1,6 +1,7 @@
 package z.pint.activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -17,12 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 import f.base.BaseFragmentActivity;
 import f.base.bean.Params;
+import f.base.utils.StringUtils;
 import z.pint.R;
 import z.pint.adapter.ClassifyViewPagerAdapter;
 import z.pint.bean.Works;
 import z.pint.fragment.DetailsCommentFragment;
 import z.pint.fragment.DetialsLaudFragment;
 import z.pint.utils.DBHelper;
+import z.pint.utils.SPUtils;
 import z.pint.utils.StatisticsUtils;
 import z.pint.utils.ViewUtils;
 import z.pint.view.CuttingImageView;
@@ -76,7 +79,15 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
     @Override
     public void initData(Context context) {
         if(works==null){return; }
-        Glide.with(context).load(works.getWorksImage()+"").placeholder(R.mipmap.img_placeholder).error(R.mipmap.bg_man).thumbnail(0.1f).into(details_works_imag);
+        if(StringUtils.isBlank(works.getWorksImage())){
+            details_works_imag.setVisibility(View.GONE);
+            view_image.setVisibility(View.VISIBLE);
+            details_worksStrokes.setVisibility(View.GONE);
+        }else{
+            details_works_imag.setVisibility(View.VISIBLE);
+            view_image.setVisibility(View.GONE);
+            Glide.with(context).load(works.getWorksImage()+"").placeholder(R.mipmap.img_placeholder).error(R.mipmap.bg_man).thumbnail(0.1f).into(details_works_imag);
+        }
         ViewUtils.setImageUrl(mContext,details_userHead,works.getUserHead()+"",R.mipmap.default_head_image);
         ViewUtils.setTextView(details_dex,works.getWorksDescribe(),"");
         ViewUtils.setTextView(details_worksStrokes,works.getWorksStrokes()+"笔","0笔");
@@ -116,7 +127,8 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
                         DBHelper.deleteCollection(works.getWorksID());
                         showToast("取消收藏");
                     }else{
-                        DBHelper.saveCollection(works);
+                        int collectionUserID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
+                        DBHelper.saveCollection(works,collectionUserID);
                         showToast("收藏成功");
                     }
                 }else{
@@ -159,10 +171,16 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
 
     private Fragment getDetailsCommentFragment(){
         if(dcf==null)dcf = new DetailsCommentFragment();
+        Bundle b = new Bundle();
+        b.putString("worksID",works.getWorksID()+"");
+        dcf.setArguments(b);
         return dcf;
     }
     private Fragment getDetialsLaudFragment(){
         if(dlf==null)dlf= new DetialsLaudFragment();
+        Bundle b = new Bundle();
+        b.putString("worksID",works.getWorksID()+"");
+        dlf.setArguments(b);
         return dlf;
     }
     private List<Fragment> getFragments(){
@@ -214,5 +232,7 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
     private TextView likesTxt;//点赞
     @ViewInject(value = R.id.details_ll_likes)
     private LinearLayout details_ll_likes;//点赞按钮
+    @ViewInject(value = R.id.view_image)
+    private View view_image;
 
 }

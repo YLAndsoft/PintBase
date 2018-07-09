@@ -21,6 +21,30 @@ public class Constant {
 
     public static final String DEVELOPER = "mqqwpa://im/chat?chat_type=wpa&uin=";
     public static final String TENCENT_PAKEG = "com.tencent.mobileqq";
+
+    public static final  String RELASER_WORKS_ACTION = "relase_works_action";//发布作品Action
+
+    /**
+     * 显示关注数据标识
+     */
+    public static final int VIEW_ATTENTION = 1;
+    /**
+     * 显示粉丝数据标识
+     */
+    public static final int VIEW_FANS = 2;
+
+    /**
+     * 显示网络数据用户
+     */
+    public static final int VIEW_OTHER = 1;
+    /**
+     * 显示本地数据用户
+     */
+    public static final int VIEW_ME = 2;
+
+
+
+
     /**
      * 随机用户头像
      */
@@ -57,14 +81,6 @@ public class Constant {
             "https://img2.woyaogexing.com/2018/03/30/30b07428c19919b3!400x400_big.jpg",
     };
 
-    /**
-     * 显示关注数据标识
-     */
-    public static final int VIEW_ATTENTION = 1;
-    /**
-     * 显示粉丝数据标识
-     */
-    public static final int VIEW_FANS = 2;
 
 }
 

@@ -10,6 +10,10 @@ import z.pint.bean.Works;
 
 /**
  * 对数据库操作辅助类
+ * 在建表的时候你的主键设置成自增长，那么你在插入数据的时候直接调replace方法就可以了，
+ * 但是saveOrUpdate只能达到插入的效果，达不到更新原有数据的效果
+ * 如果在建表的时候你的主键设置成不是自增长，replace方法当然可以插入，
+ * saveOrUpdate方法既可以插入也可以达到更新的效果，要注意的是在你更新的时候你的主键要对应的上
  * Created by DN on 2018/6/29.
  */
 
@@ -34,15 +38,9 @@ public class DBHelper {
      */
     public static boolean saveUser(User user){
         if(null==user){return false;}
-        if(isUserExist(user.getUserID()+"")){
-            //直接替换
-            List<User> update = DBManager.update(user, User.class);
-            return null!=update&&update.size()>0?true:false;
-        }else{
-            //添加
-            List<User> userList = DBManager.insert(user, User.class);
-            return null!=userList&&userList.size()>0?true:false;
-        }
+        //添加/更新
+        List<User> userList = DBManager.insert(user, User.class);
+        return null!=userList&&userList.size()>0?true:false;
     }
 
     /**
@@ -50,11 +48,11 @@ public class DBHelper {
      * @param works
      * @return
      */
-    public static boolean saveCollection(Works works){
+    public static boolean saveCollection(Works works,int collectionUserID){
         if(works==null)return false;
         boolean isExits = selectCollection(works.getWorksID());//查询作品是否已经收藏
         if(isExits)return false;//已经存在，直接返回
-        Collection collection = getCollection(works);//生成收藏类
+        Collection collection = getCollection(works,collectionUserID);//生成收藏类
         if(null==collection)return false;
         List<Collection> userList = DBManager.insert(collection, Collection.class);//保存收藏
         return null!=userList&&userList.size()>0?true:false;
@@ -109,7 +107,7 @@ public class DBHelper {
      * @param userID
      * @return
      */
-    public static User getUser(String userID){
+    public static User getUser(int userID){
         List<User> userList = DBManager.queryClazzKeyValue(User.class, "userID", userID);
         return null==userList||userList.size()<=0?null:userList.get(0);
     }
@@ -119,9 +117,10 @@ public class DBHelper {
     }
 
 
-    private static Collection getCollection(Works works){
+    private static Collection getCollection(Works works,int collectionUserID){
         try{
             Collection collection = new Collection();
+            collection.setCollectionUserID(collectionUserID);
             collection.setUserHead(works.getUserHead());
             collection.setUserName(works.getUserName());
             collection.setCollectionTime(TimeUtils.dateToString(new Date(),"yyyy-MM-dd HH:mm:ss"));

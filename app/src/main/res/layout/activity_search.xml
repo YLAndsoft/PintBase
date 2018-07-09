@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="55dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:onClick="toBack"
+            android:src="@mipmap/top_back"/>
+        <EditText
+            android:id="@+id/search_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
+            android:background="@color/transparent"
+            />
+        <ImageView
+            android:id="@+id/submit_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/found_hl"/>
+    </LinearLayout>
+    <z.pint.view.PagerSlidingTabStrip
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/search_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white"
+        android:textColor="@color/maintab_topbar_bg_color"
+        android:textSize="16.0dip"
+        app:pstsDividerColor="@color/transparent"
+        app:pstsDividerPadding="0dp"
+        app:pstsIndicatorColor="@color/IndicatorColor"
+        app:pstsIndicatorHeight="3.0dip"
+        app:pstsShouldExpand="true"
+        app:pstsTabPaddingLeftRight="12.0dip"
+        app:pstsUnderlineColor="@color/transparent"
+        app:pstsUnderlineHeight="50dp"
+        app:selectedTabTextColor="@color/maintab_topbar_bg_color" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/search_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+
+
+
+</LinearLayout>

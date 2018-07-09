@@ -21,6 +21,7 @@ import f.base.bean.Params;
 import z.pint.R;
 import z.pint.bean.Collection;
 import z.pint.utils.DBHelper;
+import z.pint.utils.SPUtils;
 import z.pint.utils.ViewUtils;
 
 /**
@@ -41,7 +42,6 @@ public class CollectionActivity extends BaseActivity {
         setScreenRoate(false);
         setSteepStatusBar(false);
         setSetActionBarColor(true, R.color.colorActionBar);
-        userID = intent.getIntExtra("userID",0);
     }
     @Override
     public int bindLayout() {
@@ -59,6 +59,7 @@ public class CollectionActivity extends BaseActivity {
     public void initData(final Context mContext) {
         ViewUtils.setTextView(default_titleName,getResources().getString(R.string.collection_titelName),"");
         collection_recycler.setLayoutManager(ViewUtils.getLayoutManager(mContext));
+       userID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
         //查询数据库，得到收藏作品数据
         collections = DBHelper.selectCollectionAll(userID);
         if(null==collections||collections.size()<0){return;}
