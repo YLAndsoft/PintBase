@@ -7,7 +7,7 @@
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/home_refreshLayout"
+        android:id="@+id/search_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#444444"
@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:background="@color/white">
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/home_recycler"
+                android:id="@+id/search_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone"

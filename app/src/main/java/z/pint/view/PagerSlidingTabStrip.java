@@ -168,7 +168,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
         defaultTabLayoutParams = new LinearLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-        expandedTabLayoutParams = new LinearLayout.LayoutParams(0,
+        expandedTabLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.MATCH_PARENT, 1.0f);
 
         if (locale == null) {

@@ -90,7 +90,7 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
         recommend_refreshLayout.setEnableLoadMore(false);//关闭加载更多
     }
 
-    @Override
+    /*@Override
     protected void showLoadError(String result) {
         recommend_refreshLayout.finishLoadMore(false);//数据加载失败
         recommend_refreshLayout.setEnableLoadMore(false);//打开加载更多
@@ -113,7 +113,7 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
         start = start + works.size();
         recommend_refreshLayout.finishLoadMore(true);//数据加载成功
         recommend_refreshLayout.setEnableLoadMore(true);//打开加载更多
-    }
+    }*/
 
     @Override
     protected void initData() {
@@ -132,19 +132,19 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
         //添加分割线
         recommend_recycler.addItemDecoration(new RecyclerViewItemDecoration(32));
         //List<Works> worksList = getListData();
-        recommend_recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        /*recommend_recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 //layoutManager.invalidateSpanAssignments();
             }
-        });
+        });*/
         recommend_refreshLayout.setEnableLoadMore(false);//关闭加载更多
         recommend_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
                 Params params = getParams();
-                loadData(params);
+                getData(params);
             }
         });
         Params params = getParams();

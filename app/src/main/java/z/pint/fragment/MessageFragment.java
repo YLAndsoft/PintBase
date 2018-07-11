@@ -35,15 +35,7 @@ public class MessageFragment extends BaseFragment {
 
     }
 
-    @Override
-    protected void showLoadError(String result) {
 
-    }
-
-    @Override
-    protected void setLoadData(Object result) {
-
-    }
 
     @Override
     protected void initData() {

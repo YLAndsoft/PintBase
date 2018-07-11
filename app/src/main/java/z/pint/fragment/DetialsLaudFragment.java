@@ -101,7 +101,7 @@ public class DetialsLaudFragment extends BaseLazyLoadFragment {
             public void onLoadMore(RefreshLayout refreshLayout) {
                 //loadData();//加载更多
                 Params params = getParams();
-                loadData(params);
+                //loadData(params);
             }
         });
         getData(getParams());
@@ -155,11 +155,11 @@ public class DetialsLaudFragment extends BaseLazyLoadFragment {
      * 加载更多错误或者没有更多数据回调
      * @param result
      */
-    @Override
+    /*@Override
     protected void showLoadError(String result) {
         details_likes_refreshLayout.finishLoadMore(false);//数据加载失败
         details_likes_refreshLayout.setEnableLoadMore(false);//关闭加载更多
-    }
+    }*/
     @Override
     protected void showError(String result) {
         //服务器返回空数据
@@ -170,7 +170,7 @@ public class DetialsLaudFragment extends BaseLazyLoadFragment {
      * 加载更多数据回调
      * @param result
      */
-    @Override
+    /*@Override
     protected void setLoadData(Object result) {
         if(null==adapter){
             setData(result,false);
@@ -186,7 +186,7 @@ public class DetialsLaudFragment extends BaseLazyLoadFragment {
         start = start + likesList.size();
         details_likes_refreshLayout.finishLoadMore(true);//数据加载成功
         details_likes_refreshLayout.setEnableLoadMore(likesList.size()>=num);//打开加载更多
-    }
+    }*/
 
 
 }

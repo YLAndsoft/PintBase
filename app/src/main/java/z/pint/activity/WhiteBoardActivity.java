@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import com.yinghe.whiteboardlib.Utils.TimeUtils;
 import com.yinghe.whiteboardlib.fragment.WhiteBoardFragment;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -23,8 +25,11 @@ import java.io.File;
 import f.base.BaseFragmentActivity;
 import f.base.bean.Params;
 import z.pint.R;
+import z.pint.bean.EventBusEvent;
+import z.pint.bean.Works;
 import z.pint.constant.Constant;
 import z.pint.fragment.HomeFragment;
+import z.pint.utils.EventBusUtils;
 
 /**
  * Created by DN on 2018/6/19.
@@ -40,7 +45,6 @@ public class WhiteBoardActivity extends BaseFragmentActivity implements  WhiteBo
 
     private WhiteBoardFragment whiteBoardFragment;
     private static  final  int SEND_CODE=1;
-    private BroadcastReceiverWork mBroadcastReceiver;
     @Override
     public void initParms(Intent intent) {
         setAllowFullScreen(true);
@@ -56,12 +60,7 @@ public class WhiteBoardActivity extends BaseFragmentActivity implements  WhiteBo
     @Override
     public void initView(View view) {
         x.view().inject(this,mContextView);
-        mBroadcastReceiver = new BroadcastReceiverWork();
-        //注册发布作品广播,用于关闭界面
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Constant.RELASER_WORKS_ACTION);
-        intentFilter.setPriority(99);//设置接收级别为100
-        mContext.registerReceiver(mBroadcastReceiver, intentFilter);
+        EventBusUtils.register(this);
     }
 
     @Override
@@ -80,17 +79,12 @@ public class WhiteBoardActivity extends BaseFragmentActivity implements  WhiteBo
         }
         //添加到界面中
         ts.add(R.id.whiteboard, whiteBoardFragment, "wb").commit();
-
-
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mBroadcastReceiver!=null){
-            unregisterReceiver(mBroadcastReceiver);
-        }
+        EventBusUtils.unregister(this);
     }
 
     @Override
@@ -137,15 +131,21 @@ public class WhiteBoardActivity extends BaseFragmentActivity implements  WhiteBo
         //保存成功后，返回图片文件路径
     }
 
-    class BroadcastReceiverWork extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("works",intent.getSerializableExtra("works"));
-            setResult(0, "", bundle);
-            //广播通知关闭
-            finish();
+    /**
+     * 接收用户发布作品的信息
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.POSTING,priority = 98)
+    public void upWorks(EventBusEvent event) {
+        if(event.getCode()== EventBusUtils.EventCode.B){
+            if(event!=null){
+                Works works = (Works) event.getData();
+                if(works!=null){
+                    finish();
+                }
+            }
         }
+
     }
 
 }

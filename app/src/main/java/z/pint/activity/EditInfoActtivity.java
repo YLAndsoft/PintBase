@@ -36,6 +36,7 @@ import f.base.view.ProvincePopupWindow;
 import z.pint.R;
 import z.pint.bean.EventBusEvent;
 import z.pint.bean.User;
+import z.pint.bean.Works;
 import z.pint.constant.HttpConfig;
 import z.pint.utils.DBHelper;
 import z.pint.utils.EventBusUtils;
@@ -285,12 +286,29 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
                 break;
             case 4:
                 //保存数据
-                SPUtils.getInstance(mContext).setParam("userHead",user.getUserHead());
-                SPUtils.getInstance(mContext).setParam("userName",user.getUserName());
+                SPUtils.saveUserHead(mContext,user.getUserHead());
+                SPUtils.saveUserName(mContext,user.getUserName());
                 boolean b = DBHelper.saveUser(user);
                 if(b){
                     //通知个人信息界面更改信息
                     EventBusUtils.sendEvent(new EventBusEvent(EventBusUtils.EventCode.A,user));
+                    //修改相关数据库里面的值
+                    DBHelper.updateUser(user);
+                    final List<Works> worksList = DBHelper.selectWorksAll();
+                    if(worksList!=null&&worksList.size()>0){
+                        //考虑到作品多的情况，会产生耗时。
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                for(Works work:worksList){
+                                    work.setUserName(user.getUserName());
+                                    work.setUserHead(user.getUserHead());
+                                    DBHelper.updateWorksHead(work);
+                                    DBHelper.updateWorksUserName(work);
+                                }
+                            }
+                        }.start();
+                    }
                     //修改服务器上面的数据
                     upUserInfo(user);
                     finish();
@@ -409,9 +427,10 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if(isUpdate){
                 showUpdateDialog();
+            }else{
                 return true;
             }
-            return false;
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }

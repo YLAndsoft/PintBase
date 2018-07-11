@@ -32,7 +32,7 @@ public class ViewUtils {
      * @param mContext
      * @return
      */
-    public static RecyclerView.LayoutManager getLayoutManager(Context mContext){
+    public static LinearLayoutManager getLayoutManager(Context mContext){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         return linearLayoutManager;

@@ -24,10 +24,11 @@ public class HttpConfig {
     public static final String getRecommendItemData =  URL_Web+"/getRecommendItemData";//获取分类对应的数据
     public static final String getClassifyNameData =  URL_Web+"/classifyname";//获取分类集合
     public static final String getAttentionData = URL_Web+"/getAttentionData";//关注接口
-    public static final String getFansData = URL_Web+"/getFansData";//关注接口
+    public static final String getFansData = URL_Web+"/getFansData";//粉丝接口
     public static final String getUserInfoData = URL_Web+"/getUserInfoData";//注册接口
     public static final String getWorksAllData = URL_Web+"/getWorksAllData";//根据ID获取所有作品
     public static final String getSearchData = URL_Web+"/getSearchData";//搜索接口
+    public static final String getWorksDetailsData = URL_Web+"/getWorksDetailsData";//作品详情接口
 
 
     //
@@ -46,6 +47,7 @@ public class HttpConfig {
     public static final String CONVER_ATTENTION_ID ="converAttentionID";
     public static final String ACTION_STATE = "actionState";//动作状态0-查询 1-添加 /*2-删除 3-修改*/
     public static final String SEARCH_CONTENT ="searchContent";
+    public static final String COMMENT_CONTENT ="commentContent";
 
 
 

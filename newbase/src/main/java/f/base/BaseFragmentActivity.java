@@ -327,42 +327,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements V
         }
     }
 
-    /**
-     * 点击软键盘之外的空白处，隐藏软件盘
-     * @param ev
-     * @return
-     */
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (isShouldHideKeyboard(v, ev)) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-            return super.dispatchTouchEvent(ev);
-        }
-        // 必不可少，否则所有的组件都不会有TouchEvent了
-        if (getWindow().superDispatchTouchEvent(ev)) return true;
-        return onTouchEvent(ev);
-    }
-    /**
-     * Return whether touch the view.判断点击是否是EditText区域
-     * @param v
-     * @param event
-     * @return
-     */
-    private boolean isShouldHideKeyboard(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {
-            int[] l = {0, 0};
-            v.getLocationInWindow(l);
-            int left = l[0],top = l[1],bottom = top + v.getHeight(),right = left + v.getWidth();
-            return !(event.getX() > left && event.getX() < right&& event.getY() > top && event.getY() < bottom);
-        }
-        return false;
-    }
+
     /**
      * 获取参数
      * @return

@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -59,6 +62,7 @@ public class SearchActivity extends BaseFragmentActivity {
     @Override
     public void initView(View view) {
         x.view().inject(this);
+        search_edit.setHint("输入搜索的作品或者用户");
     }
     @Override
     public void initListener() {
@@ -79,6 +83,23 @@ public class SearchActivity extends BaseFragmentActivity {
                 return false;
             }
         });
+        search_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
     }
 
     private void search(String content) {
@@ -100,8 +121,8 @@ public class SearchActivity extends BaseFragmentActivity {
         search_pager.setOffscreenPageLimit(getTabName().size());//依据传过来的tab页的个数来设置缓存的页数
         //tabs.setFollowTabColor(true);//设置标题是否跟随
         search_tabs.setViewPager(search_pager);
-        search_pager.setVisibility(View.GONE);
-        search_tabs.setVisibility(View.GONE);
+       // search_pager.setVisibility(View.GONE);
+       // search_tabs.setVisibility(View.GONE);
     }
 
     @Override
@@ -145,6 +166,42 @@ public class SearchActivity extends BaseFragmentActivity {
             suf = new SearchUserFragment();
         }
         return suf;
+    }
+    /**
+     * 点击软键盘之外的空白处，隐藏软件盘
+     * @param ev
+     * @return
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideKeyboard(v, ev)) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            return super.dispatchTouchEvent(ev);
+        }
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+        if (getWindow().superDispatchTouchEvent(ev)) return true;
+        return onTouchEvent(ev);
+    }
+    /**
+     * Return whether touch the view.判断点击是否是EditText区域
+     * @param v
+     * @param event
+     * @return
+     */
+    private boolean isShouldHideKeyboard(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] l = {0, 0};
+            v.getLocationInWindow(l);
+            int left = l[0],top = l[1],bottom = top + v.getHeight(),right = left + v.getWidth();
+            return !(event.getX() > left && event.getX() < right&& event.getY() > top && event.getY() < bottom);
+        }
+        return false;
     }
 
 }

@@ -109,10 +109,10 @@ public class SelectTagActivity extends BaseActivity {
             String substring="";
             if(t.contains(",")){
                 substring = t.substring(0, (t.length() - 1));
-                tmpTag = tmpTag+t;
+                tmpTag = tmpTag+substring+"|";
             }else if(t.contains(" ")){
                 substring = t.trim();
-                tmpTag = tmpTag+t+",";
+                tmpTag = tmpTag+substring+"|";
             }
             View inflate = View.inflate(mContext, R.layout.custom_tag_item_layout, null);
             TextView txt = inflate.findViewById(R.id.custom_tag_txt);
@@ -149,7 +149,7 @@ public class SelectTagActivity extends BaseActivity {
                             selectMap.put(tags.get(i),false);
                         }
                         selectMap.put(item,true);
-                        tag = item+",";
+                        tag = item+"|";
                         notifyDataSetChanged();
                     }
                 });
@@ -163,6 +163,9 @@ public class SelectTagActivity extends BaseActivity {
         switch (v.getId()){
             case  R.id.submit_tag:
                 tag = tag+tmpTag;
+                if(tag.contains("|")){
+                    tag.substring(0, (tag.length() - 1));
+                }
                 //showToast("提交的标签是>>>"+tag);
                 //数据是使用Intent返回
                 Intent intent = new Intent();

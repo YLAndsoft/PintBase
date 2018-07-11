@@ -50,12 +50,7 @@ public class PersonalFragment extends BaseFragment{
     @Override
     protected void showError(String result) {
     }
-    @Override
-    protected void showLoadError(String result) {
-    }
-    @Override
-    protected void setLoadData(Object result) {
-    }
+
 
     @Override
     protected void initData() {

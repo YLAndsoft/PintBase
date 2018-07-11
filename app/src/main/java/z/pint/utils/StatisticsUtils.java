@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.HashMap;
 import java.util.Map;
 
+import f.base.utils.StringUtils;
 import f.base.utils.XutilsHttp;
 import z.pint.bean.Works;
 import z.pint.constant.HttpConfig;
@@ -80,7 +81,33 @@ public class StatisticsUtils {
                 Log.e("Statistics关注异常：",result.toString());
             }
         });
-
     }
+
+    /**
+     * 增加评论
+     * @param mContext
+     * @param worksID
+     * @param content
+     */
+    public static void addComment(Context mContext,String worksID,String content){
+        if(StringUtils.isBlank(worksID)){return;}
+        int userID = (int) SPUtils.getInstance(mContext).getParam("userID", 0);
+        Map<String,String> map = new HashMap<>();
+        map.put(HttpConfig.USER_ID,userID+"");//用户ID
+        map.put(HttpConfig.WORKS_ID,worksID+"");//作品ID
+        map.put(HttpConfig.ACTION_STATE,HttpConfig.ADD_STATE+"");
+        map.put(HttpConfig.COMMENT_CONTENT,content+"");//评论内容
+        XutilsHttp.xUtilsPost(HttpConfig.getCommentData, map, new XutilsHttp.XUilsCallBack() {
+            @Override
+            public void onResponse(String result) {
+                Log.e("Statistics评论结果：",result+"");
+            }
+            @Override
+            public void onFail(String result) {
+                Log.e("Statistics评论异常：",result.toString());
+            }
+        });
+    }
+
 
 }

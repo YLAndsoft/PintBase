@@ -7,6 +7,7 @@ package z.pint.bean;
 public class EventBusEvent<T> {
     private int code;
     private T data;
+    private int position;
 
     public EventBusEvent(int code) {
         this.code = code;
@@ -14,6 +15,11 @@ public class EventBusEvent<T> {
 
     public EventBusEvent(int code, T data) {
         this.code = code;
+        this.data = data;
+    }
+    public EventBusEvent(int code,int position, T data) {
+        this.code = code;
+        this.position = position;
         this.data = data;
     }
 
@@ -31,5 +37,13 @@ public class EventBusEvent<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

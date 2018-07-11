@@ -12,6 +12,11 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +29,11 @@ import f.base.utils.StringUtils;
 import f.base.utils.XutilsHttp;
 import z.pint.R;
 import z.pint.bean.Comment;
+import z.pint.bean.Works;
 import z.pint.constant.HttpConfig;
+import z.pint.utils.DBHelper;
+import z.pint.utils.SPUtils;
+import z.pint.utils.TimeUtils;
 import z.pint.utils.ViewUtils;
 import z.pint.view.ButtonPopupWindow;
 import z.pint.view.RecyclerViewDivider;
@@ -50,7 +59,10 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
     private ButtonPopupWindow buttonPopupWindow;
     private int start = 0;
     private int num = 10;
-    private String worksID;
+    private Works works;
+    private int dbUserID;
+    private List<Comment> commentList = new ArrayList<>();
+
     @Override
     public int bindLayout() {
         return R.layout.details_comment_fragment;
@@ -59,7 +71,8 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
     @Override
     protected void initView() {
         x.view().inject(this,mContextView);
-        worksID = getArguments().getString("worksID");
+        works = (Works) getArguments().getSerializable("works");
+        dbUserID = SPUtils.getUserID(mContext);
     }
 
     /**
@@ -68,14 +81,20 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
      */
     @Override
     public Params getParams() { //设置网络请求参数及地址
+        if(works.getUserID()==dbUserID){
+            //拿本地评论
+            List<Comment> comments = DBHelper.queryComment(works.getWorksID());
+            if(null==comments||comments.size()<=0){return null;}
+            setData(comments,false);
+            return null;
+        }
         Map<String,String> map = new HashMap<>();
-        map.put(HttpConfig.WORKS_ID,worksID+"");
+        map.put(HttpConfig.WORKS_ID,works.getWorksID()+"");
         map.put(HttpConfig.ACTION_STATE,HttpConfig.SELECT_STATE+"");
         map.put(HttpConfig.START,start+"");
         map.put(HttpConfig.NUM,num+"");
         return new Params(HttpConfig.getCommentData,map,Comment.class,true);
     }
-
 
     @Override
     protected void initData() {
@@ -85,7 +104,7 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
         comment_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
-                loadData(getParams());//加载更多
+                //loadData(getParams());//加载更多
             }
         });
     }
@@ -98,20 +117,34 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
     @Override
     protected void setData(Object result,boolean isRefresh) {
         comment_loding.setVisibility(View.GONE);//关闭正在加载控件
-        List<Comment> commentList = (List<Comment>) result;
+        commentList = (List<Comment>) result;
         if(null==commentList||commentList.size()<=0){
             comment_refreshLayout.setEnableLoadMore(false);//没有数据了，禁止上拉
             data_error.setVisibility(View.VISIBLE);
             return;
         }
-        setCommentAdapter(commentList);
+        sortList(commentList);
+        setCommentAdapter();
     }
-
+    /**
+     * 时间排序来显示
+     * @param worksList
+     */
+    private void sortList(List<Comment> worksList) {
+        Comparator<Comment> itemComparator = new Comparator<Comment>() {
+            public int compare(Comment info1, Comment info2){
+                Date data1 = TimeUtils.stringToDate(info1.getCommentTime(),"yyyy-MM-dd HH:mm:ss");
+                Date data2 = TimeUtils.stringToDate(info2.getCommentTime(),"yyyy-MM-dd HH:mm:ss");
+                return data2.compareTo(data1);
+            }
+        };
+        Collections.sort(worksList, itemComparator);
+    }
     /**
      * 绑定适配器
-     * @param commentList
+     * @param
      */
-    private void setCommentAdapter(List<Comment> commentList) {
+    private void setCommentAdapter() {
         adapter = new BaseRecyclerAdapter<Comment>(mContext,commentList,R.layout.details_works_comment_item_layout) {
             @Override
             public void convert(BaseRecyclerHolder baseRecyclerHolder, Comment comment, int position) {
@@ -130,6 +163,22 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
         comment_refreshLayout.setEnableLoadMore(commentList.size()>=num);//打开加载更多
         start = start + commentList.size();
     }
+
+    /**
+     * 刷新评论
+     * @param comment
+     */
+    public void refreshAdapter(Comment comment){
+        if(comment==null){return;}
+        if(adapter==null){
+            commentList.add(comment);
+            setCommentAdapter();
+        }else{
+            adapter.insert(comment,0);
+        }
+    }
+
+
     /**
      * 显示网络错误布局
      * @param result
@@ -137,24 +186,20 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
     @Override
     protected void showError(String result) {
         //服务器返回空数据
-        data_error.setVisibility(View.VISIBLE);
+        comment_loding.setVisibility(View.GONE);
     }
 
     /**
      * 加载更多错误回调
      * @param result
      */
-    @Override
-    protected void showLoadError(String result) {
-        comment_refreshLayout.finishLoadMore(false);//数据加载失败
-        comment_refreshLayout.setEnableLoadMore(false);//关闭加载更多
-    }
+
 
     /**
      * 加载更多回调
      * @param result
      */
-    @Override
+   /* @Override
     protected void setLoadData(Object result) {
         List<Comment> commentList = (List<Comment>) result;
         if (null == commentList || commentList.size() <= 0) {
@@ -166,7 +211,7 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
         start = start + commentList.size();
         comment_refreshLayout.finishLoadMore(true);//数据加载成功
         comment_refreshLayout.setEnableLoadMore(commentList.size()>=num);//打开加载更多
-    }
+    }*/
 
 
     @Override

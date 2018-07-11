@@ -12,6 +12,9 @@ import com.bumptech.glide.Glide;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import f.base.BaseActivity;
@@ -22,6 +25,7 @@ import z.pint.R;
 import z.pint.bean.Collection;
 import z.pint.utils.DBHelper;
 import z.pint.utils.SPUtils;
+import z.pint.utils.TimeUtils;
 import z.pint.utils.ViewUtils;
 
 /**
@@ -59,10 +63,11 @@ public class CollectionActivity extends BaseActivity {
     public void initData(final Context mContext) {
         ViewUtils.setTextView(default_titleName,getResources().getString(R.string.collection_titelName),"");
         collection_recycler.setLayoutManager(ViewUtils.getLayoutManager(mContext));
-       userID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
+        userID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
         //查询数据库，得到收藏作品数据
         collections = DBHelper.selectCollectionAll(userID);
         if(null==collections||collections.size()<0){return;}
+        sortList(collections);
         adapter = new BaseRecyclerAdapter<Collection>(mContext,collections,R.layout.collection_item_layout) {
             @Override
             public void convert(BaseRecyclerHolder holder, Collection item, int position) {
@@ -85,6 +90,21 @@ public class CollectionActivity extends BaseActivity {
     public void widgetClick(View v) {
 
     }
+    /**
+     * 时间排序来显示
+     * @param collList
+     */
+    private void sortList(List<Collection> collList) {
+        Comparator<Collection> itemComparator = new Comparator<Collection>() {
+            public int compare(Collection info1, Collection info2){
+                Date data1 = TimeUtils.stringToDate(info1.getCollectionTime(),"yyyy-MM-dd HH:mm:ss");
+                Date data2 = TimeUtils.stringToDate(info2.getCollectionTime(),"yyyy-MM-dd HH:mm:ss");
+                return data2.compareTo(data1);
+            }
+        };
+        Collections.sort(collList, itemComparator);
+    }
+
 
     @Override
     public Params getParams() {

@@ -134,21 +134,13 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      * 显示错误视图
      */
     protected abstract void showError(String result);
-    /**
-     * 加载更多错误视图
-     */
-    protected abstract void showLoadError(String result);
-    /**
-     * 展示更多数据
-     */
-    protected abstract void setLoadData(Object result );
-
 
     /**
      * 获取网络数据
      * @param params
      */
     protected void getData(final Params params) {
+        if(isLoadData)return; //没有更多数据，直接返回
         if(null==params){ //未配置参数
             showError(Config.PARAMS_ERROR);
             return;
@@ -190,7 +182,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      * 获取网络数据
      * @param params
      */
-    public void loadData(final Params params) {
+    /*public void loadData(final Params params) {
         if(!isLoadData)return; //没有更多数据，直接返回
         if(null==params){ //未配置参数
             showLoadError(Config.PARAMS_ERROR);
@@ -228,6 +220,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
                 showLoadError(result);
             }
         });
-    }
+    }*/
 
 }

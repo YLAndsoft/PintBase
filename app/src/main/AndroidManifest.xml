@@ -35,7 +35,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name = "com.ysq.album.activity.AlbumActivity"
+        <activity android:name = "z.pint.activity.MyWorksActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <!--主界面-->

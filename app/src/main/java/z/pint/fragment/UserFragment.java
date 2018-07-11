@@ -19,6 +19,7 @@ import f.base.BaseFragment;
 import f.base.bean.Params;
 import z.pint.R;
 import z.pint.activity.CollectionActivity;
+import z.pint.activity.MyWorksActivity;
 import z.pint.activity.SettingActivity;
 import z.pint.activity.UserFAActivity;
 import z.pint.activity.UserInfoActivity;
@@ -27,6 +28,7 @@ import z.pint.bean.User;
 import z.pint.constant.Constant;
 import z.pint.constant.HttpConfig;
 import z.pint.utils.DBHelper;
+import z.pint.utils.EventBusUtils;
 import z.pint.utils.SPUtils;
 import z.pint.utils.ViewUtils;
 
@@ -68,6 +70,7 @@ public class UserFragment extends BaseFragment {
     @Override
     protected void initView() {
         x.view().inject(this,mContextView);
+        EventBusUtils.register(this);
         rl_user.setOnClickListener(this);
         ll_collect.setOnClickListener(this);
         ll_advise.setOnClickListener(this);
@@ -95,15 +98,19 @@ public class UserFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.POSTING,priority = 99)
     public void upUnserInfo(EventBusEvent event) {
         //Log.e("TAG", "PostThread: " + Thread.currentThread().getName());
-        if(event!=null){
-            User data = (User) event.getData();
-            if(data!=null){
-                ViewUtils.setImageUrl(mContext,user_head,data.getUserHead(),R.mipmap.default_head_image);
-                ViewUtils.setTextView(user_name,data.getUserName(),getResources().getString(R.string.defult_userName));
-                ViewUtils.setTextView(user_sign,data.getUserSign(),getResources().getString(R.string.defult_sign));
-                ViewUtils.setSex(user_sex,data.getUserSex());
+        if(event.getCode()== EventBusUtils.EventCode.A){
+            if(event!=null){
+                User data = (User) event.getData();
+                if(data!=null){
+                    ViewUtils.setImageUrl(mContext,user_head,data.getUserHead(),R.mipmap.default_head_image);
+                    ViewUtils.setTextView(user_name,data.getUserName(),getResources().getString(R.string.defult_userName));
+                    ViewUtils.setTextView(user_sign,data.getUserSign(),getResources().getString(R.string.defult_sign));
+                    ViewUtils.setSex(user_sex,data.getUserSex());
+                    userInfo=data;
+                }
             }
         }
+
     }
     @Override
     public void widgetClick(View view) {
@@ -112,7 +119,6 @@ public class UserFragment extends BaseFragment {
                 //showToast("跳转到个人信息界面");
                 Intent userinfo = new Intent(mContext,UserInfoActivity.class);
                 if(userInfo!=null){
-                    userinfo.putExtra("viewTag",Constant.VIEW_ME);
                     userinfo.putExtra("userID",userInfo.getUserID()+"");
                 }
                 startActivity(userinfo);
@@ -132,7 +138,8 @@ public class UserFragment extends BaseFragment {
                 startActivity(fans);
                 break;
             case R.id.ll_zp:
-                showToast("跳转到作品界面");
+                //showToast("跳转到作品界面");
+                startActivity(new Intent(mContext,MyWorksActivity.class));
                 break;
             case R.id.ll_collect:
                 //showToast("跳转到收藏界面");
@@ -159,7 +166,6 @@ public class UserFragment extends BaseFragment {
         return new Params(HttpConfig.getUserInfoData,map);
     }
 
-
     @Override
     protected void showError(String result) {
         if(userInfo==null){
@@ -167,12 +173,12 @@ public class UserFragment extends BaseFragment {
         }
     }
 
-    @Override
-    protected void showLoadError(String result) {
-    }
+
 
     @Override
-    protected void setLoadData(Object result) {
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtils.unregister(this);
     }
 
     @Override

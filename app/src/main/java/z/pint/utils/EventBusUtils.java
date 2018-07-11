@@ -49,11 +49,11 @@ public class EventBusUtils {
      * 通过code码区分事件类型
      */
     public static final class EventCode {
-        public static final int A = 0x111111;
-        public static final int B = 0x222222;
-        public static final int C = 0x333333;
-        public static final int D = 0x444444;
-        public static final int E = 0x555555;
+        public static final int A = 11;//已占用，修改用户信息
+        public static final int B = 22;//已占用，发布作品
+        public static final int C = 33;
+        public static final int D = 44;
+        public static final int E = 55;
         // other more
     }
 }

@@ -16,11 +16,16 @@ import java.util.List;
 import java.util.Map;
 
 import f.base.BaseActivity;
+import f.base.BaseDialog;
 import f.base.BaseRecyclerAdapter;
 import f.base.BaseRecyclerHolder;
 import f.base.bean.Params;
+import f.base.utils.GsonUtils;
 import f.base.utils.RandomUtils;
+import f.base.utils.StringUtils;
+import f.base.utils.XutilsHttp;
 import z.pint.R;
+import z.pint.bean.Attention;
 import z.pint.bean.User;
 import z.pint.constant.Constant;
 import z.pint.constant.HttpConfig;
@@ -44,8 +49,8 @@ public class UserFAActivity extends BaseActivity {
 
     private int view_tag;//显示数据的标识
     private int userID;//用户ID
-    private int start;
-    private int num;
+    private BaseDialog dialog;
+    private BaseRecyclerAdapter<Attention> attentionAdapter;
     @Override
     public void initParms(Intent intent) {
         //此属性设置与状态栏相关
@@ -79,26 +84,6 @@ public class UserFAActivity extends BaseActivity {
         }else if(view_tag== Constant.VIEW_ATTENTION){
             ViewUtils.setTextView(fansAndattention_title,getResources().getString(R.string.my_attention),"");
         }
-
-        List<User> list = new ArrayList<>();
-        for(int i=0;i<20;i++){
-            list.add(new User("测试"+i,Constant.USER_HEAD[RandomUtils.getRandom(0,Constant.USER_HEAD.length)]));
-        }
-        mRecyclerView.setLayoutManager(ViewUtils.getLayoutManager(mContext));
-        mRecyclerView.addItemDecoration(new RecyclerViewDivider(mContext,LinearLayoutManager.HORIZONTAL,1,R.color.gary5));
-        BaseRecyclerAdapter<User> adapter = new BaseRecyclerAdapter<User>(mContext,list,R.layout.fans_attention_item_layout) {
-            @Override
-            public void convert(BaseRecyclerHolder holder, User item, int position) {
-                holder.setText(R.id.fansAndAttention_userName,item.getUserName()+"");
-                ImageView view = holder.getView(R.id.fansAndAttention_userHead);
-                ViewUtils.setImageUrl(mContext,view,item.getUserHead(),R.mipmap.default_head_image);
-            }
-        };
-        //设置布局管理器
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setNestedScrollingEnabled(false);
-        mRecyclerView.setAdapter(adapter);
-
     }
 
     @Override
@@ -112,7 +97,6 @@ public class UserFAActivity extends BaseActivity {
 
     @Override
     public Params getParams() {
-        //userID=1&converAttentionID=1&actionState=0 关注
         if(userID==0){
             userID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
         }
@@ -129,6 +113,115 @@ public class UserFAActivity extends BaseActivity {
 
     @Override
     protected void setData(String result) {
-
+        if(StringUtils.isBlank(result))return;
+        BaseRecyclerAdapter adapter = null;
+        if(view_tag==Constant.VIEW_FANS){
+            List<User> gsonList = GsonUtils.getGsonList(result, User.class);
+            adapter = setFansAdapter(gsonList);
+        }else if(view_tag==Constant.VIEW_ATTENTION){
+            List<Attention> gsonList = GsonUtils.getGsonList(result, Attention.class);
+            adapter = setAttentionAdapter(gsonList);
+        }
+        mRecyclerView.setLayoutManager(ViewUtils.getLayoutManager(mContext));
+        mRecyclerView.addItemDecoration(new RecyclerViewDivider(mContext,LinearLayoutManager.HORIZONTAL,1,R.color.gary5));
+        //设置布局管理器
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setAdapter(adapter);
     }
+
+    /**
+     * 绑定关注适配器
+     * @param gsonList
+     * @return
+     */
+    private BaseRecyclerAdapter setAttentionAdapter(List<Attention> gsonList) {
+        attentionAdapter  = new BaseRecyclerAdapter<Attention>(mContext,gsonList,R.layout.fans_attention_item_layout) {
+            @Override
+            public void convert(BaseRecyclerHolder holder, final Attention item, int position) {
+                holder.setText(R.id.fansAndAttention_userName,item.getUserName()+"");
+                ImageView view = holder.getView(R.id.fansAndAttention_userHead);
+                ViewUtils.setImageUrl(mContext,view,item.getUserHead(),R.mipmap.default_head_image);
+                ImageView view1 = holder.getView(R.id.fansAndAttention_attention);
+                view1.setImageResource(R.mipmap.unfollow);
+                holder.setOnViewClick(R.id.fansAndAttention_attention,item,position, new BaseRecyclerHolder.OnViewClickListener() {
+                    @Override
+                    public void onViewClick(View view, Object object, final int position) {
+                        dialog  = new BaseDialog(mContext,
+                                BaseDialog.DIALOG_DEFAULT_STATE,
+                                "提示",
+                                "是否取消关注？",
+                                "否",
+                                "是",
+                                false,
+                                new BaseDialog.OnDialogClickListener() {
+                                    @Override
+                                    public void onLeftClick(int listenerCode) {
+                                        dialog.dismiss();
+                                    }
+                                    @Override
+                                    public void onRigthClick(String content, int listenerCode) {
+                                        dialog.dismiss();
+                                        attentionAdapter.delete(position);
+                                        //attentionAdapter.notifyItemRemoved(position);
+                                        deleteFA(view_tag,item);
+                                    }
+                        },1);
+                        dialog.show();
+                    }
+                });
+            }
+        };
+        return attentionAdapter;
+    }
+    /**
+     * 绑定粉丝适配器
+     * @param list
+     * @return
+     */
+    private BaseRecyclerAdapter setFansAdapter(List<User> list){
+        BaseRecyclerAdapter<User> adapter = new BaseRecyclerAdapter<User>(mContext,list,R.layout.fans_attention_item_layout) {
+            @Override
+            public void convert(BaseRecyclerHolder holder, User item, int position) {
+                holder.setText(R.id.fansAndAttention_userName,item.getUserName()+"");
+                ImageView view = holder.getView(R.id.fansAndAttention_userHead);
+                ViewUtils.setImageUrl(mContext,view,item.getUserHead(),R.mipmap.default_head_image);
+            }
+        };
+        return adapter;
+    }
+
+    private void deleteFA(int view_tag,Attention attention){
+        int userID = (int) SPUtils.getInstance(mContext).getParam("userID", 0);
+        if(view_tag==Constant.VIEW_FANS){
+        }else{
+            //取消关注
+            deleteAttention(HttpConfig.DELETE_STATE,attention.getConverAttentionID(),userID);
+        }
+    }
+
+    /**
+     * 取消关注
+     * @param action
+     * @param converAttentionID
+     * @param userID
+     */
+    private void deleteAttention(int action,int converAttentionID,int userID) {
+        Map<String,String> map = new HashMap<>();
+        map.put(HttpConfig.ACTION_STATE,action+"");
+        map.put(HttpConfig.CONVER_ATTENTION_ID,converAttentionID+"");
+        map.put(HttpConfig.USER_ID,userID+"");
+        XutilsHttp.xUtilsPost(HttpConfig.getAttentionData, map, new XutilsHttp.XUilsCallBack() {
+            @Override
+            public void onResponse(String result) {
+                showLog(3,"关注结果："+result);
+            }
+            @Override
+            public void onFail(String result) {
+                showLog(3,"关注结果："+result);
+            }
+        });
+    }
+
+
 }

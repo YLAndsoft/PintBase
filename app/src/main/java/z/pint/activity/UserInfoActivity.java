@@ -25,6 +25,7 @@ import f.base.BaseFragmentActivity;
 import f.base.bean.Params;
 import f.base.utils.GsonUtils;
 import f.base.utils.StringUtils;
+import f.base.utils.XutilsHttp;
 import z.pint.R;
 import z.pint.adapter.ClassifyViewPagerAdapter;
 import z.pint.bean.EventBusEvent;
@@ -71,7 +72,7 @@ public class UserInfoActivity extends BaseFragmentActivity {
     private ClassifyViewPagerAdapter classViewPagerAdapter;
     private User user;
     private String userID;//传递过来的用户ID
-    private int viewTag;
+    private int dbuserID;
     private Intent intent;
 
     @Override
@@ -81,7 +82,6 @@ public class UserInfoActivity extends BaseFragmentActivity {
         setSteepStatusBar(false);
         setSetActionBarColor(true, R.color.colorActionBar);
         this.intent = intent;
-        viewTag = intent.getIntExtra("viewTag",0);
     }
 
     @Override
@@ -93,28 +93,26 @@ public class UserInfoActivity extends BaseFragmentActivity {
     public void initView(View view) {
         x.view().inject(this,mContextView);
         EventBusUtils.register(this);
-        if(viewTag== Constant.VIEW_OTHER){
-            userID =  intent.getStringExtra("userID");
-        }else{
-            int dbuserID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
-            userID = dbuserID+"";
-        }
+        userID =  intent.getStringExtra("userID");
+        dbuserID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
     }
     @Override
     public Params getParams() {
+        if(StringUtils.isBlank(userID))return null;
         Map<String, String> map = new HashMap<>();
         map.put(HttpConfig.ACTION_STATE,HttpConfig.SELECT_STATE+"");
-        if(StringUtils.isBlank(userID)){
-            return null;
-        }else{
-            map.put(HttpConfig.USER_ID,userID+"");
-        }
+        map.put(HttpConfig.USER_ID,userID+"");
         return new Params(HttpConfig.getUserInfoData, map);
     }
     @Override
     protected void setData(String result) {
         if(StringUtils.isBlank(result)) return;
         user = GsonUtils.getGsonObject(result, User.class);
+        if(null==user){ //如果用户信息为空
+            if(userID.equals(dbuserID+"")){ //判断是否是用户自己本人
+                user = DBHelper.getUser(dbuserID); //查询数据库获得用户信息
+            }
+        }
         setView(user);
         initData(mContext );
     }
@@ -131,7 +129,7 @@ public class UserInfoActivity extends BaseFragmentActivity {
             ViewUtils.setTextView(userinfo_fans,u.getFansNumber()+"粉丝",0+"粉丝");
             ViewUtils.setSex(user_sex,u.getUserSex());
             ViewUtils.setTextView(userinfo_titile_name,u.getUserName(),"");
-            if(viewTag== Constant.VIEW_OTHER){
+            if(!userID.equals(dbuserID+"")){
                 if(u.isAttention()){
                     user_edit.setImageResource(R.mipmap.follow_1);//修改为已添加关注图标
                 }else{
@@ -156,14 +154,17 @@ public class UserInfoActivity extends BaseFragmentActivity {
     @Subscribe(threadMode = ThreadMode.POSTING,priority = 100)
     public void upUnserInfo(EventBusEvent event) {
         //Log.e("TAG", "PostThread: " + Thread.currentThread().getName());
-        if(event!=null){
-            User data = (User) event.getData();
-            if(data!=null){
-                setView(data);
-                sif.setUserInfo(data);
-                //showToast("修改成功！");
+        if(event.getCode()== EventBusUtils.EventCode.A){
+            if(event!=null){
+                User data = (User) event.getData();
+                if(data!=null){
+                    setView(data);
+                    sif.setUserInfo(data);
+                    //showToast("修改成功！");
+                }
             }
         }
+
     }
 
     @Override
@@ -177,6 +178,7 @@ public class UserInfoActivity extends BaseFragmentActivity {
         }
     }
 
+    private long attentionTime;
     @Override
     public void widgetClick(View view) {
         switch (view.getId()){
@@ -184,7 +186,7 @@ public class UserInfoActivity extends BaseFragmentActivity {
                 finish();
                 break;
             case R.id.user_edit:
-                if(viewTag== Constant.VIEW_ME) {
+                if(userID.equals(dbuserID+"")) {
                     //跳转至修改信息界面
                     if(user!=null){
                         Intent intent = new Intent(mContext, EditInfoActtivity.class);
@@ -192,18 +194,50 @@ public class UserInfoActivity extends BaseFragmentActivity {
                         startActivity(intent);
                     }
                 }else{
-                    if(user.isAttention()){
-                        user.setAttention(false);
-                        showToast("取消关注");
-                        user_edit.setImageResource(R.mipmap.follow_0);//修改为添加关注图标
+                    if ((System.currentTimeMillis() - attentionTime) > 3000) {
+                        attentionTime = System.currentTimeMillis();
+                        if(user.isAttention()){
+                            user.setAttention(false);
+                            showToast("取消关注");
+                            user_edit.setImageResource(R.mipmap.follow_0);//修改为添加关注图标
+                            //删除服务器上的关注
+                            setAttention(HttpConfig.DELETE_STATE,user.getUserID(),(int) SPUtils.getInstance(mContext).getParam("userID",0));
+                        }else{
+                            showToast("添加关注");
+                            user.setAttention(true);
+                            user_edit.setImageResource(R.mipmap.follow_1);//修改为添加关注图标
+                            //增加关注
+                            setAttention(HttpConfig.ADD_STATE,user.getUserID(),(int) SPUtils.getInstance(mContext).getParam("userID",0));
+                        }
                     }else{
-                        showToast("添加关注");
-                        user.setAttention(true);
-                        user_edit.setImageResource(R.mipmap.follow_1);//修改为添加关注图标
+                        showToast("点击不要这么快嘛~");
                     }
                 }
                 break;
         }
+    }
+
+    /**
+     * 添加/删除关注
+     * @param action
+     * @param converAttentionID
+     * @param userID
+     */
+    private void setAttention(int action,int converAttentionID,int userID) {
+        Map<String,String> map = new HashMap<>();
+        map.put(HttpConfig.ACTION_STATE,action+"");
+        map.put(HttpConfig.CONVER_ATTENTION_ID,converAttentionID+"");
+        map.put(HttpConfig.USER_ID,userID+"");
+        XutilsHttp.xUtilsPost(HttpConfig.getAttentionData, map, new XutilsHttp.XUilsCallBack() {
+            @Override
+            public void onResponse(String result) {
+                showLog(3,"关注结果："+result);
+            }
+            @Override
+            public void onFail(String result) {
+                showLog(3,"关注结果："+result);
+            }
+        });
     }
 
     @Override

@@ -97,6 +97,29 @@ public class DBManager {
         return lists;
     }
     /**
+     * 增加单个
+     * @param  data 添加的数据 User
+     * @param  clazz 增加的类型 User.class/String.class
+     * @return 返回所有对象
+     */
+    public static <T>List<T> save(@NonNull T data, @NonNull Class<T> clazz){
+        List<T> lists = null;//查询所有
+        try {
+            //db.save(app);//保存成功之后【不会】对user的主键进行赋值绑定
+            //db.saveOrUpdate(user);//保存成功之后【会】对user的主键进行赋值绑定
+            //db.saveBindingId(user);//保存成功之后【会】对user的主键进行赋值绑定,并返回保存是否成功
+            if(null!=data)db.saveBindingId(data);//对user的主键进行赋值绑定,并返回保存是否成功
+            lists = queryAll(clazz);
+        } catch (DbException e) {
+            e.printStackTrace();
+            return null;
+        }catch (Exception ex){
+            LogUtils.e("增加单个insert异常:"+ex);
+            return null;
+        }
+        return lists;
+    }
+    /**
      * 增加集合
      * @param list 增加的集合 List<User>/List<String>
      * @param  clazz 增加的数据类型 User.class/String.class

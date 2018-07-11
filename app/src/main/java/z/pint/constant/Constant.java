@@ -43,8 +43,6 @@ public class Constant {
     public static final int VIEW_ME = 2;
 
 
-
-
     /**
      * 随机用户头像
      */

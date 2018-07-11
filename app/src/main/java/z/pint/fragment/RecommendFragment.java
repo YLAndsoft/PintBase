@@ -44,7 +44,6 @@ public class RecommendFragment extends BaseFragment {
     private ImageView data_error;
 
     private ClassifyViewPagerAdapter classViewPagerAdapter;
-
     private List<WorksClassify> classifyName;//分类集合数据
     @Override
     public int bindLayout() {
@@ -83,15 +82,7 @@ public class RecommendFragment extends BaseFragment {
     protected void showError(String result) {
     }
 
-    @Override
-    protected void showLoadError(String result) {
 
-    }
-
-    @Override
-    protected void setLoadData(Object result) {
-
-    }
 
     @Override
     public void widgetClick(View view) {

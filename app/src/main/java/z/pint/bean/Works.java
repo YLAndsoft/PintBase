@@ -11,7 +11,9 @@ import java.io.Serializable;
  */
 @Table(name = "WORKS")//表名
 public class Works implements Serializable{
-    @Column(name = "worksID", isId = true, autoGen = true)
+    @Column(name = "_id", isId = true, autoGen = true)
+    private int _id;
+    @Column(name = "worksID", property = "NOT NULL")
     private int worksID;//作品ID
     @Column(name = "userID",property = "NOT NULL")
     private int userID;//用户ID
@@ -38,6 +40,15 @@ public class Works implements Serializable{
     @Column(name = "classifyID")
     private int classifyID;//
     private boolean isAttention;
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
+
     public int getWorksID() {
         return worksID;
     }

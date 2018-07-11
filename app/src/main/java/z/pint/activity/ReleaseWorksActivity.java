@@ -13,13 +13,18 @@ import android.widget.TextView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 import java.util.Date;
+import java.util.List;
+
 import f.base.BaseActivity;
 import f.base.bean.Params;
 import f.base.utils.StringUtils;
 import f.base.widget.SVP;
 import z.pint.R;
+import z.pint.bean.EventBusEvent;
 import z.pint.bean.Works;
 import z.pint.constant.Constant;
+import z.pint.utils.DBHelper;
+import z.pint.utils.EventBusUtils;
 import z.pint.utils.SPUtils;
 import z.pint.utils.TimeUtils;
 import z.pint.utils.ViewUtils;
@@ -89,7 +94,7 @@ public class ReleaseWorksActivity extends BaseActivity {
                 String tag = data.getStringExtra("tag");
                 if(StringUtils.isBlank(tag)){return;}
                 works.setWorksLabel(tag);//设置作品的标签
-                String[] split = tag.split(",");//截取标签
+                String[] split = tag.split("\\|");//截取标签
                 relsease_ll_tag.removeAllViews();//移除所有布局
                 ImageView imageView = new ImageView(mContext);//创建Imageview布局
                 imageView.setImageResource(R.mipmap.tag); //设置image资源
@@ -117,6 +122,13 @@ public class ReleaseWorksActivity extends BaseActivity {
         works.setUserName(userName);//保存发布者昵称
         works.setUserID(userID);////保存发布者用户ID
         works.setWorksImage(filePath+""); //保存发布图片
+        List<Works> workses = DBHelper.selectWorksAll();
+        if(null!=workses&&workses.size()>0){
+            //设置作品ID
+            works.setWorksID(workses.size()+1);
+        }else{
+            works.setWorksID(1);
+        }
         works.setWorksStrokes(0);//笔画数
     }
 
@@ -157,11 +169,12 @@ public class ReleaseWorksActivity extends BaseActivity {
         }
         showToast("发布成功！");
         if(SVP.isShowing(mContext))SVP.dismiss(mContext);
-        //广播通知主界面刷新数据
-        Intent intent = new Intent();
-        intent.putExtra("works",works);
-        intent.setAction(Constant.RELASER_WORKS_ACTION);
-        sendOrderedBroadcast(intent,null);
+        //保存至数据库
+        boolean b = DBHelper.saveWorks(works);
+        showLog(3,"保存发布作品结果："+b);
+        //通知主界面刷新数据
+        //通知个人信息界面更改信息
+        EventBusUtils.sendEvent(new EventBusEvent(EventBusUtils.EventCode.B,works));
         finish();
     }
 

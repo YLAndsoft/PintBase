@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import f.base.BaseFragment;
 import f.base.BaseLazyLoadFragment;
 import f.base.BaseRecyclerAdapter;
 import f.base.BaseRecyclerHolder;
@@ -35,7 +36,7 @@ import z.pint.view.RecyclerViewDivider;
  * Created by DN on 2018/7/6.
  */
 
-public class SearchUserFragment extends BaseLazyLoadFragment {
+public class SearchUserFragment extends BaseFragment {
 
     @ViewInject(value = R.id.search_refreshLayout)
     private SmartRefreshLayout search_refreshLayout;
@@ -53,8 +54,7 @@ public class SearchUserFragment extends BaseLazyLoadFragment {
 
     private String searchContent;//搜索的内容
     private int userID;
-    private int start=0;
-    private int num = 10;
+    private int start=0,num = 10;
 
     private BaseRecyclerAdapter<User> adapter;
 
@@ -69,7 +69,7 @@ public class SearchUserFragment extends BaseLazyLoadFragment {
     protected void initView() {
         x.view().inject(this,mContextView);
         isPrepared = true;//标识已经初始化完成
-        userID = (int) SPUtils.getInstance(mContext).getParam("userID", 0);
+        userID =  SPUtils.getUserID(mContext);
     }
 
     /**
@@ -77,10 +77,6 @@ public class SearchUserFragment extends BaseLazyLoadFragment {
      */
     @Override
     protected void initData() {
-        if(!isVisible || !isPrepared || mHasLoadedOnce){
-            return;
-        }
-        mHasLoadedOnce = true;//标识已经加载过
         search_recycler.setLayoutManager(ViewUtils.getLayoutManager(mContext));
         search_recycler.addItemDecoration(new RecyclerViewDivider(mContext, LinearLayoutManager.HORIZONTAL,1,R.color.gary));
         search_refreshLayout.setEnableLoadMore(false);//关闭加载更多
@@ -88,7 +84,7 @@ public class SearchUserFragment extends BaseLazyLoadFragment {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
                 Params params = getParams();
-                loadData(params);
+                getData(params);
             }
         });
     }
@@ -103,7 +99,7 @@ public class SearchUserFragment extends BaseLazyLoadFragment {
      */
     public  void submitSearch(String searchContent){
         this.searchContent = searchContent;
-        if(!isVisible){return;}//不可见，不去加载
+        search_loding.setVisibility(View.GONE);
         Params params = getParams();
         getData(params);
     }
@@ -131,14 +127,26 @@ public class SearchUserFragment extends BaseLazyLoadFragment {
      */
     @Override
     protected void setData(Object result, boolean isRefresh) {
+        search_loding.setVisibility(View.GONE);
         List<User> userList = (List<User>) result;
-        if(null==userList&&userList.size()<=0){
-            showError("worksList为空");
+        if(null==userList||userList.size()<=0){
+            search_refreshLayout.setEnableLoadMore(false);//没有数据了，禁止上拉
+            search_error.setVisibility(View.VISIBLE);
             return;
         }
-        search_loding.setVisibility(View.GONE);
+        if(adapter==null){
+            setUserAdapter(userList);
+        }else{
+            adapter.insertAll(userList);
+            search_refreshLayout.finishLoadMore(true);//数据加载成功
+        }
+        search_recycler.setVisibility(View.VISIBLE);
         search_error.setVisibility(View.GONE);
-        setUserAdapter(userList);
+        search_refreshLayout.setEnableLoadMore(userList.size()>=num);//打开加载更多
+        if(userList.size()<num){
+            isLoadData=true;//没有更多数据
+        }
+        start = start + userList.size();
     }
 
 
@@ -147,12 +155,6 @@ public class SearchUserFragment extends BaseLazyLoadFragment {
      * @param userList
      */
     private void setUserAdapter(List<User> userList) {
-        search_loding.setVisibility(View.GONE);;//关闭正在加载控件
-        if(null==userList||userList.size()<=0){
-            search_refreshLayout.setEnableLoadMore(false);//没有数据了，禁止上拉
-            search_error.setVisibility(View.VISIBLE);
-            return;
-        }
         adapter = new BaseRecyclerAdapter<User>(mContext,userList,R.layout.details_works_likes_item_layout) {
             @Override
             public void convert(BaseRecyclerHolder baseRecyclerHolder, User user, int i) {
@@ -163,19 +165,13 @@ public class SearchUserFragment extends BaseLazyLoadFragment {
             }
         };
         search_recycler.setAdapter(adapter);
-        adapter.updateAll(userList.size());
-        search_recycler.setVisibility(View.VISIBLE);
-        search_error.setVisibility(View.GONE);
-        search_refreshLayout.setEnableLoadMore(userList.size()>=num);//打开加载更多
-        setEnableLoadData(userList.size()<num);
-        start = start + userList.size();
     }
 
     /**
      * 加载更多数据回调
      * @param result
      */
-    @Override
+   /* @Override
     protected void setLoadData(Object result) {
         if(adapter==null){
             setData(result,false);
@@ -192,7 +188,7 @@ public class SearchUserFragment extends BaseLazyLoadFragment {
         start = start + user.size();
         search_refreshLayout.finishLoadMore(true);//数据加载成功
         search_refreshLayout.setEnableLoadMore(user.size()>=num);//打开加载更多
-    }
+    }*/
 
     /**
      * 错误回调
@@ -209,11 +205,11 @@ public class SearchUserFragment extends BaseLazyLoadFragment {
      * 加载更多错误数据回调
      * @param result
      */
-    @Override
+    /*@Override
     protected void showLoadError(String result) {
         search_loding.setVisibility(View.GONE);
         search_refreshLayout.finishLoadMore(false);//数据加载失败
         search_refreshLayout.setEnableLoadMore(false);//关闭加载更多
-    }
+    }*/
 
 }

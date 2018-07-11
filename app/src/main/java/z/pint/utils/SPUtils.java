@@ -53,6 +53,58 @@ public class SPUtils {
     }
 
     /**
+     * 获取用户ID
+     * @param context
+     * @return
+     */
+    public static int getUserID(Context context){
+        return (int) getInstance(context).getParam("userID",0);
+    }
+    /**
+     * 获取用户昵称
+     * @param context
+     * @return
+     */
+    public static String getUserName(Context context){
+        return (String) getInstance(context).getParam("userName","");
+    }
+    /**
+     * 获取用户头像
+     * @param context
+     * @return
+     */
+    public static String getUserHead(Context context){
+        return (String) getInstance(context).getParam("userHead","");
+    }
+
+    /**
+     * 保存用户昵称
+     * @param context
+     * @param values
+     */
+    public static void saveUserName(Context context,String values){
+        getInstance(context).setParam("userName",values);
+    }
+    /**
+     * 保存用户头像
+     * @param context
+     * @param values
+     */
+    public static void saveUserHead(Context context,String values){
+        getInstance(context).setParam("usuerHead",values);
+    }
+    /**
+     * 保存用户id
+     * @param context
+     * @param values
+     */
+    public static void saveUserID(Context context,String values){
+        getInstance(context).setParam("userID",values);
+    }
+
+
+
+    /**
      * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法
      * @param key
      * @param object

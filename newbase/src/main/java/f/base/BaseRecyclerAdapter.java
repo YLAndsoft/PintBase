@@ -137,7 +137,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRe
         try{
             if(null!=list&&list.size()>0){
                 list.remove(position);
-                //notifyDataSetChanged();
+                notifyDataSetChanged();
             }
         }catch (Exception ex){
         }
@@ -158,6 +158,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRe
         //notifyDataSetChanged();
         notifyItemRangeChanged(this.list.size(),size);
     }
+
 
 
 
