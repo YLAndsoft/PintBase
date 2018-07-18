@@ -11,6 +11,7 @@
         android:background="@color/gary5"/>
     <!--用户信息-->
     <RelativeLayout
+        android:id="@+id/my_work_userinfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
@@ -32,8 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textColor="@color/gary2"
-            android:layout_toRightOf="@+id/my_works_userHead"
-            android:text="------"/>
+            android:layout_toRightOf="@+id/my_works_userHead"/>
 
         <TextView
             android:id="@+id/worksReleaseTime"
@@ -45,8 +45,7 @@
             android:layout_below="@+id/my_works_userName"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/my_works_userHead"
-            android:text="2018-07-03 21:56:01"/>
+            android:layout_toRightOf="@+id/my_works_userHead"/>
 
     </RelativeLayout>
 
@@ -67,8 +66,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginTop="12dp"
         android:lineSpacingExtra="5dp"
-        android:textSize="15dp"
-        android:text="作品描述作品描述作品描述作品描述作品描述作品描述作品描述"/>
+        android:textSize="15dp"/>
 
     <View
         android:layout_width="match_parent"

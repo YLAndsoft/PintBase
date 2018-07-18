@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/details_rl_info"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="15dp"
@@ -23,8 +24,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="12dp"
         android:textColor="@color/gary2"
-        android:layout_toRightOf="@+id/details_likes_userHead"
-        android:text="小酒窝长睫毛"/>
+        android:layout_toRightOf="@+id/details_likes_userHead"/>
 
     <ImageView
         android:id="@+id/details_likes_attention"

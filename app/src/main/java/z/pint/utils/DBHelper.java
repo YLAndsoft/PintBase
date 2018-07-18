@@ -6,6 +6,7 @@ import java.util.List;
 import f.base.db.DBManager;
 import z.pint.bean.Collection;
 import z.pint.bean.Comment;
+import z.pint.bean.Likes;
 import z.pint.bean.User;
 import z.pint.bean.Works;
 
@@ -213,6 +214,14 @@ public class DBHelper {
         List<Works> worksList = DBManager.updateColumn(works,"worksLikeNumber",Works.class);
         return null!=worksList&&worksList.size()>0?true:false;
     }
+    /**
+     * 修改作品表里面的点赞数
+     * @param works
+     */
+    public static boolean upisLikeNumber(Works works){
+        List<Works> worksList = DBManager.updateColumn(works,"isLikes",Works.class);
+        return null!=worksList&&worksList.size()>0?true:false;
+    }
 
     /**
      * 保存评论
@@ -223,6 +232,15 @@ public class DBHelper {
         if(comment==null)return false;
         List<Comment> commentList = DBManager.save(comment, Comment.class);//保存评论
         return null!=commentList&&commentList.size()>0?true:false;
+    }
+
+    /**
+     * 查询所有评论
+     * @param
+     */
+    public static List<Comment> queryCommentAll(){
+        List<Comment> comments = DBManager.queryAll(Comment.class);
+        return null!=comments&&comments.size()>0?comments:null;
     }
 
     /**
@@ -251,8 +269,48 @@ public class DBHelper {
         return null!=worksList&&worksList.size()>0?true:false;
     }
 
-
-
+    /**
+     * 查询所有点赞
+     * @param
+     */
+    public static List<Likes> queryLikesAll(){
+        List<Likes> likes = DBManager.queryAll(Likes.class);
+        return null!=likes&&likes.size()>0?likes:null;
+    }
+    /**
+     * 根据作品ID查点赞
+     * @param worksID
+     */
+    public static List<Likes> queryLikes(String worksID){
+        List<Likes> likes = DBManager.queryClazzKeyValue(Likes.class, "worksID", worksID);
+        return null!=likes&&likes.size()>0?likes:null;
+    }
+    /**
+     * 保存点赞
+     * @param likes
+     * @return
+     */
+    public static boolean saveLikes(Likes likes){
+        if(likes==null)return false;
+        List<Likes> likeList = DBManager.save(likes, Likes.class);//保存评论
+        return null!=likeList&&likeList.size()>0?true:false;
+    }
+    /**
+     * 修改点赞表里面的用户头像
+     * @param liks
+     */
+    public static boolean updateLikesHead(Likes liks){
+        List<Likes> lik = DBManager.updateColumn(liks,"userHead",Likes.class);
+        return null!=lik&&lik.size()>0?true:false;
+    }
+    /**
+     * 修改点赞表里面的用户昵称
+     * @param lks
+     */
+    public static boolean updateLikesUserName(Likes lks){
+        List<Likes> lk = DBManager.updateColumn(lks,"userName",Likes.class);
+        return null!=lk&&lk.size()>0?true:false;
+    }
 
 
 }

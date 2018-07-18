@@ -177,7 +177,7 @@ public abstract class BaseLazyLoadFragment extends Fragment implements View.OnCl
                         object = GsonUtils.getGsonObject(result, params.getClazz());
                     }
                     if(null!=object){
-                        isLoadData = true;
+                        isLoadData = false;
                         setData(object,params.isRefresh());
                         return;
                     }

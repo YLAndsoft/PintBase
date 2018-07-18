@@ -10,7 +10,6 @@
             android:id="@+id/details_tab_title_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="详情"
             android:gravity="center"
             android:layout_marginTop="3dp"
             android:textSize="15dp"/>
@@ -18,7 +17,6 @@
             android:id="@+id/details_tab_title_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
             android:textSize="13dp"
             android:layout_marginLeft="2dp"
             android:paddingBottom="1dp"

@@ -22,8 +22,7 @@ public class UserUtils {
      */
     public static User getUser(Context mContext){
         User user = new User();
-        user.setUserSex(1);//默认性别：0：男，1：女
-
+        user.setUserSex(0);//默认性别：0：男，1：女
         user.setUserHead(Constant.USER_HEAD[RandomUtils.getRandom(0,Constant.USER_HEAD.length)]);//默认头像
         user.setUserName(mContext.getResources().getString(R.string.defult_userName));//默认昵称
         user.setUserSign(mContext.getResources().getString(R.string.defult_sign));//默认签名

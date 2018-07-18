@@ -3,10 +3,12 @@ package z.pint.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -31,6 +33,9 @@ import f.base.utils.XutilsHttp;
 import z.pint.R;
 import z.pint.bean.Likes;
 import z.pint.constant.HttpConfig;
+import z.pint.utils.DBHelper;
+import z.pint.utils.SPUtils;
+import z.pint.utils.StatisticsUtils;
 import z.pint.utils.ViewUtils;
 import z.pint.view.RecyclerViewDivider;
 
@@ -45,11 +50,10 @@ public class DetialsLaudFragment extends BaseLazyLoadFragment {
     private RecyclerView details_laud_recycler;
     @ViewInject(value = R.id.details_likes_refreshLayout)
     private SmartRefreshLayout details_likes_refreshLayout;
-    @ViewInject(value = R.id.data_error)
-    private LinearLayout data_error;
     @ViewInject(value = R.id.comment_loding)
     private ProgressBar comment_loding;
-
+    @ViewInject(value = R.id.error_likes)
+    private TextView error_likes;
     private BaseRecyclerAdapter<Likes> adapter;
     private int start=0;
     private int num=10;
@@ -59,7 +63,8 @@ public class DetialsLaudFragment extends BaseLazyLoadFragment {
     private boolean mHasLoadedOnce;
 
     private String worksID;
-
+    private int dbuserID;
+    private int userID;
     @Override
     public int bindLayout() {
         return R.layout.details_laud_fragment;
@@ -71,7 +76,10 @@ public class DetialsLaudFragment extends BaseLazyLoadFragment {
         isPrepared = true;//标识已经初始化完成
         Bundle arguments = getArguments();
         worksID = arguments.getString("worksID");
-        String works = worksID;
+        userID = arguments.getInt("userID");
+        dbuserID = SPUtils.getUserID(mContext);
+
+        ViewUtils.setTextView(error_likes,getResources().getString(R.string.error_likes));
     }
 
     @Override
@@ -82,8 +90,7 @@ public class DetialsLaudFragment extends BaseLazyLoadFragment {
         map.put(HttpConfig.NUM, num + "");
         map.put(HttpConfig.WORKS_ID, worksID + "");
         map.put(HttpConfig.ACTION_STATE, HttpConfig.SELECT_STATE + "");
-        //new Params(HttpConfig.getHomeData,map);
-        return new Params(HttpConfig.getHomeData, map,Likes.class,true);
+        return new Params(HttpConfig.getLiksData, map,Likes.class,true);
     }
 
 
@@ -104,7 +111,18 @@ public class DetialsLaudFragment extends BaseLazyLoadFragment {
                 //loadData(params);
             }
         });
-        getData(getParams());
+        if(userID==dbuserID){
+            //自己发布的作品,查询本地
+            List<Likes> likesList = DBHelper.queryLikes(worksID);
+            if(null!=likesList&&likesList.size()>0){
+                setData(likesList,false);
+            }else{
+                error_likes.setVisibility(View.VISIBLE);
+                comment_loding.setVisibility(View.GONE);//关闭正在加载控件
+            }
+        }else{
+            getData(getParams());
+        }
     }
 
     @Override
@@ -123,7 +141,7 @@ public class DetialsLaudFragment extends BaseLazyLoadFragment {
         List<Likes> likesList = (List<Likes>) result;
         if(null==likesList||likesList.size()<=0){
             details_likes_refreshLayout.setEnableLoadMore(false);//没有数据了，禁止上拉
-            data_error.setVisibility(View.VISIBLE);
+            error_likes.setVisibility(View.VISIBLE);
             return;
         }
         setLikeAdapter(likesList);
@@ -133,21 +151,47 @@ public class DetialsLaudFragment extends BaseLazyLoadFragment {
      * 绑定适配器
      * @param likesList
      */
+    private long attentionTime;
     private void setLikeAdapter(List<Likes> likesList) {
         adapter = new BaseRecyclerAdapter<Likes>(mContext,likesList,R.layout.details_works_likes_item_layout) {
             @Override
-            public void convert(BaseRecyclerHolder baseRecyclerHolder, Likes likes, int i) {
+            public void convert(BaseRecyclerHolder baseRecyclerHolder, final Likes likes, int i) {
                 ImageView details_likes_userHead = baseRecyclerHolder.getView(R.id.details_likes_userHead);
                 ViewUtils.setImageUrl(mContext,details_likes_userHead,likes.getUserHead(),R.mipmap.default_head_image);
                 baseRecyclerHolder.setText(R.id.details_likes_userName,likes.getUserName()+"");
+                final ImageView attention = baseRecyclerHolder.getView(R.id.details_likes_attention);
                 //关注图标，需做特殊处理
+                if(likes.getUserID()==dbuserID){
+                    //本人，隐藏关注按钮
+                    attention.setVisibility(View.GONE);
+                }else{
+                    ViewUtils.isAttention(likes.isAttention(),attention);
+                }
+                attention.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if ((System.currentTimeMillis() - attentionTime) > 3000) {
+                            attentionTime = System.currentTimeMillis();
+                            if(likes.isAttention()){
+                                ViewUtils.isAttention(false,attention);
+                                likes.setAttention(false);//取消关注
+                            }else{
+                                ViewUtils.isAttention(true,attention);
+                                likes.setAttention(true);//增加关注
+                            }
+                            StatisticsUtils.isAttention(mContext,likes.isAttention(),likes.getUserID());
+                        }else{
+                            showToast("点击不要这么快嘛~");
+                        }
+                    }
+                });
             }
         };
         details_laud_recycler.setAdapter(adapter);
         adapter.updateAll(likesList.size());
         details_laud_recycler.setVisibility(View.VISIBLE);
-        data_error.setVisibility(View.GONE);
-        details_likes_refreshLayout.setEnableLoadMore(likesList.size()>=num);//打开加载更多
+        error_likes.setVisibility(View.GONE);
+        details_likes_refreshLayout.setEnableLoadMore(false);//打开加载更多
         start = start + likesList.size();
     }
 
@@ -163,7 +207,7 @@ public class DetialsLaudFragment extends BaseLazyLoadFragment {
     @Override
     protected void showError(String result) {
         //服务器返回空数据
-        data_error.setVisibility(View.VISIBLE);
+        error_likes.setVisibility(View.VISIBLE);
         comment_loding.setVisibility(View.GONE);//关闭正在加载控件
     }
     /**

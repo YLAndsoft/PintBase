@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/comment_info"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/comment_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp">
@@ -32,7 +28,6 @@
                 android:id="@+id/comment_userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="小酒窝长睫毛"
                 android:textColor="@color/gary2"
                 android:textSize="15dp" />
             <TextView
@@ -40,7 +35,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="2018-06-23 13:23:17"
                 android:textColor="@color/gary1"
                 android:textSize="12dp" />
 
@@ -55,9 +49,7 @@
             android:layout_below="@+id/comment_ll_userInfo"
             android:layout_toRightOf="@+id/comment_userhead"
             android:layout_marginLeft="10dp"
-            android:textColor="@color/gary3"
-            android:text="回复内容回复内容回复内容回复内容回复内容回复内容回复内容回复内容回复内容回复内容"/>
+            android:textColor="@color/gary3"/>
 
     </RelativeLayout>
 
-    </LinearLayout>

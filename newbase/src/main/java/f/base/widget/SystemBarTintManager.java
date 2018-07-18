@@ -224,7 +224,7 @@ public class SystemBarTintManager {
      */
     @TargetApi(11)
     public void setStatusBarAlpha(float alpha) {
-        if (mStatusBarAvailable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        if (mStatusBarAvailable ) {
             mStatusBarTintView.setAlpha(alpha);
         }
     }
@@ -270,7 +270,7 @@ public class SystemBarTintManager {
      */
     @TargetApi(11)
     public void setNavigationBarAlpha(float alpha) {
-        if (mNavBarAvailable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        if (mNavBarAvailable ) {
             mNavBarTintView.setAlpha(alpha);
         }
     }
@@ -370,11 +370,9 @@ public class SystemBarTintManager {
         @TargetApi(14)
         private int getActionBarHeight(Context context) {
             int result = 0;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 TypedValue tv = new TypedValue();
                 context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
                 result = TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
-            }
             return result;
         }
 
@@ -382,7 +380,6 @@ public class SystemBarTintManager {
         private int getNavigationBarHeight(Context context) {
             Resources res = context.getResources();
             int result = 0;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 if (hasNavBar(context)) {
                     String key;
                     if (mInPortrait) {
@@ -392,7 +389,6 @@ public class SystemBarTintManager {
                     }
                     return getInternalDimensionSize(res, key);
                 }
-            }
             return result;
         }
 
@@ -400,11 +396,9 @@ public class SystemBarTintManager {
         private int getNavigationBarWidth(Context context) {
             Resources res = context.getResources();
             int result = 0;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 if (hasNavBar(context)) {
                     return getInternalDimensionSize(res, NAV_BAR_WIDTH_RES_NAME);
                 }
-            }
             return result;
         }
 
@@ -438,12 +432,12 @@ public class SystemBarTintManager {
         @SuppressLint("NewApi")
         private float getSmallestWidthDp(Activity activity) {
             DisplayMetrics metrics = new DisplayMetrics();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+           // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 activity.getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
-            } else {
+            /*} else {
                 // TODO this is not correct, but we don't really care pre-kitkat
                 activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            }
+            }*/
             float widthDp = metrics.widthPixels / metrics.density;
             float heightDp = metrics.heightPixels / metrics.density;
             return Math.min(widthDp, heightDp);

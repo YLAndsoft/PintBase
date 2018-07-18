@@ -133,27 +133,26 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     /**
      * 显示错误视图
      */
-    protected abstract void showError(String result);
+    protected abstract void showError(String result,boolean isRefresh);
 
     /**
      * 获取网络数据
      * @param params
      */
     protected void getData(final Params params) {
-        if(isLoadData)return; //没有更多数据，直接返回
         if(null==params){ //未配置参数
-            showError(Config.PARAMS_ERROR);
+            showError(Config.PARAMS_ERROR,false);
             return;
         }
         if(!NetworkUtils.isConnected(mContext)){
-            showError(Config.NETWORK_ERROR);
+            showError(Config.NETWORK_ERROR,params.isRefresh());
             return;
         }//网络未连接
         XutilsHttp.xUtilsPost(params.getURL(), params.getMap(), new XutilsHttp.XUilsCallBack() {
             @Override
             public void onResponse(String result) {
                 if(StringUtils.isBlank(result)){
-                    showError(result);
+                    showError(result,params.isRefresh());
                     return;
                 }
                 if(params.getClazz()!=null){ //判断要解析的bean类是否存在
@@ -167,14 +166,14 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
                         setData(object,params.isRefresh());
                         return;
                     }
-                    showError(result);
+                    showError(result,params.isRefresh());
                 }else{ //不存在，让用户自己去解析
                     setData(result,params.isRefresh());
                 }
             }
             @Override
             public void onFail(String result) {
-                showError(result);
+                showError(result,params.isRefresh());
             }
         });
     }

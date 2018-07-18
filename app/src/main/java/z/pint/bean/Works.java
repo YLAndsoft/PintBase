@@ -36,10 +36,10 @@ public class Works implements Serializable{
     @Column(name = "worksStrokes")
     private int worksStrokes;//作品笔画
     @Column(name = "isLikes")
-    private boolean isLikes;//是否已点赞
+    private boolean likes;//是否已点赞
     @Column(name = "classifyID")
     private int classifyID;//
-    private boolean isAttention;
+    private boolean attention;
 
     public int get_id() {
         return _id;
@@ -138,19 +138,19 @@ public class Works implements Serializable{
     }
 
     public boolean isLikes() {
-        return isLikes;
+        return likes;
     }
 
     public void setLikes(boolean likes) {
-        isLikes = likes;
+        this.likes = likes;
     }
 
     public boolean isAttention() {
-        return isAttention;
+        return attention;
     }
 
     public void setAttention(boolean attention) {
-        isAttention = attention;
+        this.attention = attention;
     }
 
     public int getClassifyID() {

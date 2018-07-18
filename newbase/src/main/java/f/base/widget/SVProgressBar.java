@@ -54,6 +54,8 @@ public class SVProgressBar extends View {
      */
     private int style;
 
+    private RectF oval=null;
+
     public static final int STROKE = 0;
     public static final int FILL = 1;
 
@@ -108,8 +110,10 @@ public class SVProgressBar extends View {
         // 设置进度是实心还是空心
         paint.setStrokeWidth(roundWidth); // 设置圆环的宽度
         paint.setColor(roundProgressColor); // 设置进度的颜色
-        RectF oval = new RectF(centre - radius, centre - radius, centre+ radius, centre + radius); // 用于定义的圆弧的形状和大小的界限
 
+        if(oval==null){
+            oval = new RectF(centre - radius, centre - radius, centre+ radius, centre + radius); // 用于定义的圆弧的形状和大小的界限
+        }
         switch (style) {
             case STROKE: {
                 paint.setStyle(Paint.Style.STROKE);

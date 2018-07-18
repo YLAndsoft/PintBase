@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -50,10 +52,11 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
     private RecyclerView details_comment_recycler;
     @ViewInject(value = R.id.comment_refreshLayout)
     private SmartRefreshLayout comment_refreshLayout;
-    @ViewInject(value = R.id.data_error)
-    private LinearLayout data_error;
     @ViewInject(value = R.id.comment_loding)
     private ProgressBar comment_loding;
+
+    @ViewInject(value = R.id.error_comment)
+    private TextView error_comment;
 
     private BaseRecyclerAdapter<Comment> adapter;
     private ButtonPopupWindow buttonPopupWindow;
@@ -61,6 +64,7 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
     private int num = 10;
     private Works works;
     private int dbUserID;
+    private boolean isLoadData;//是否已经加载过数据
     private List<Comment> commentList = new ArrayList<>();
 
     @Override
@@ -98,6 +102,7 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
 
     @Override
     protected void initData() {
+        ViewUtils.setTextView(error_comment,getResources().getString(R.string.error_comment));
         //List<Comment> commentList = DataUtils.getCommentData();//假数据
         details_comment_recycler.setLayoutManager(ViewUtils.getLayoutManager(mContext));
         details_comment_recycler.addItemDecoration(new RecyclerViewDivider(mContext,LinearLayoutManager.HORIZONTAL,1,R.color.gary));
@@ -120,9 +125,10 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
         commentList = (List<Comment>) result;
         if(null==commentList||commentList.size()<=0){
             comment_refreshLayout.setEnableLoadMore(false);//没有数据了，禁止上拉
-            data_error.setVisibility(View.VISIBLE);
+            error_comment.setVisibility(View.VISIBLE);
             return;
         }
+        isLoadData=true;
         sortList(commentList);
         setCommentAdapter();
     }
@@ -159,7 +165,7 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
         details_comment_recycler.setAdapter(adapter);
         adapter.updateAll(commentList.size());
         details_comment_recycler.setVisibility(View.VISIBLE);
-        data_error.setVisibility(View.GONE);
+        error_comment.setVisibility(View.GONE);
         comment_refreshLayout.setEnableLoadMore(commentList.size()>=num);//打开加载更多
         start = start + commentList.size();
     }
@@ -184,9 +190,12 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
      * @param result
      */
     @Override
-    protected void showError(String result) {
+    protected void showError(String result,boolean isRefresh) {
         //服务器返回空数据
         comment_loding.setVisibility(View.GONE);
+        if(!isLoadData){
+            error_comment.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -197,7 +206,7 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
 
     /**
      * 加载更多回调
-     * @param result
+     * @param
      */
    /* @Override
     protected void setLoadData(Object result) {

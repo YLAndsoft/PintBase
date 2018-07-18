@@ -29,9 +29,9 @@ public class HttpConfig {
     public static final String getWorksAllData = URL_Web+"/getWorksAllData";//根据ID获取所有作品
     public static final String getSearchData = URL_Web+"/getSearchData";//搜索接口
     public static final String getWorksDetailsData = URL_Web+"/getWorksDetailsData";//作品详情接口
+    public static final String getMessageAll = URL_Web+"/getMessageAll";//获取消息接口
+    public static final String addMessage = URL_Web+"/addMessage";//获取消息接口
 
-
-    //
     /**
      * 访问网络所需的参数名称
      */
@@ -48,8 +48,8 @@ public class HttpConfig {
     public static final String ACTION_STATE = "actionState";//动作状态0-查询 1-添加 /*2-删除 3-修改*/
     public static final String SEARCH_CONTENT ="searchContent";
     public static final String COMMENT_CONTENT ="commentContent";
-
-
+    public static final String NOTIFY_USER_ID ="notifyUserID";
+    public static final String DB_USER_ID ="dbUserID";
 
     public static final int SELECT_STATE = 0;//查询
     public static final int ADD_STATE = 1;//增加

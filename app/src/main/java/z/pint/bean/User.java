@@ -34,7 +34,7 @@ public class User implements Serializable{
     @Column(name = "fansNumber")
     private int fansNumber;//粉丝数
     @Column(name = "isAttention")
-    private boolean isAttention;//是否已关注
+    private boolean attention;//是否已关注
     @Column(name = "imei")
     private String imei;//imei手机标识
 
@@ -108,6 +108,9 @@ public class User implements Serializable{
     }
 
     public void setUserAddress(String userAddress) {
+        if(listener!=null){
+            listener.onSuccess(userAddress);
+        }
         this.userAddress = userAddress;
     }
 
@@ -146,14 +149,14 @@ public class User implements Serializable{
         this.fansNumber = fansNumber;
     }
 
+
     public boolean isAttention() {
-        return isAttention;
+        return attention;
     }
 
     public void setAttention(boolean attention) {
-        isAttention = attention;
+        this.attention = attention;
     }
-
 
     public void setUpdateValueListener(OnUpdateValueListener listener){
         this.listener  =listener;

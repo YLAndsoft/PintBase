@@ -15,11 +15,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:maxLines="2"
-        android:ellipsize="end"
-        android:text="这里是描述这里是描述"/>
+        android:ellipsize="end"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
         android:layout_marginTop="8dp">
         <z.pint.view.CuttingImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -39,8 +39,10 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/recommend_item_userhead"
-            android:text="小酒窝长睫毛"/>
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:maxEms="4"
+            android:layout_toRightOf="@+id/recommend_item_userhead"/>
 
         <ImageView
             android:id="@+id/recommend_item_likes"

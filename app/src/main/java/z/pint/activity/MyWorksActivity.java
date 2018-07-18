@@ -64,14 +64,15 @@ public class MyWorksActivity extends BaseActivity {
 
     @Override
     public void initData(final Context mContext) {
-        default_titleName.setText("作品列表");
+        default_titleName.setText(getResources().getString(R.string.works_list));
+
         my_works_recycler.setLayoutManager(ViewUtils.getLayoutManager(mContext));
         List<Works> worksList = DBHelper.selectWorksAll();
         if(null==worksList||worksList.size()<=0){return;}
         sortList(worksList);
         adapter = new BaseRecyclerAdapter<Works>(mContext,worksList,R.layout.my_works_item_layout) {
             @Override
-            public void convert(BaseRecyclerHolder holder, Works item, int position) {
+            public void convert(BaseRecyclerHolder holder, final Works item, int position) {
                 holder.setText(R.id.my_works_userName,item.getUserName()+"");
                 ImageView home_item_works_img = holder.getView(R.id.my_works_img);
                 Glide.with(mContext).load(item.getWorksImage()).placeholder(R.mipmap.img_placeholder).thumbnail(0.1f).into(home_item_works_img);
@@ -82,6 +83,23 @@ public class MyWorksActivity extends BaseActivity {
                 holder.setText(R.id.my_des,item.getWorksDescribe());
                 holder.setText(R.id.my_commentNumber,item.getWorksCommentNumber()+"");
                 holder.setText(R.id.my_likesNumber,item.getWorksLikeNumber()+"");
+                holder.setOnViewClick(R.id.my_work_userinfo, item, position, new BaseRecyclerHolder.OnViewClickListener() {
+                    @Override
+                    public void onViewClick(View view, Object object, int position) {
+                        Intent userinfo = new Intent(mContext, UserInfoActivity.class);
+                        userinfo.putExtra("userID",item.getUserID()+"");
+                        startActivity(userinfo);
+                    }
+                });
+                holder.setOnViewClick(R.id.my_works_img, item, position, new BaseRecyclerHolder.OnViewClickListener() {
+                    @Override
+                    public void onViewClick(View view, Object object, int position) {
+                        Intent intent = new Intent(mContext, WorksDetailsActivity.class);
+                        intent.putExtra("works",(Works)object);
+                        intent.putExtra("position",position);
+                        startActivity(intent);
+                    }
+                });
             }
         };
         my_works_recycler.setAdapter(adapter);

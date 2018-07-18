@@ -97,7 +97,7 @@ public class UserWorksFragment extends BaseFragment {
     }
 
     @Override
-    protected void showError(String result) {
+    protected void showError(String result,boolean isRefresh) {
         userWoorks_loding.setVisibility(View.GONE);
     }
 

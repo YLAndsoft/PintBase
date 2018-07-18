@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import z.pint.bean.Message;
 import z.pint.bean.Works;
 
 /**
@@ -15,7 +16,7 @@ import z.pint.bean.Works;
 public class SortUtils {
 
     /**
-     * 对作品时间排序来显示
+     * 对作品时间排序来显示-降序
      * @param worksList
      */
     public static  void sortList(List<Works> worksList) {
@@ -27,5 +28,20 @@ public class SortUtils {
             }
         };
         Collections.sort(worksList, itemComparator);
+    }
+
+    /**
+     * 对消息时间排序-降序
+     * @param msgList
+     */
+    public static  void sortMessageList(List<Message> msgList) {
+        Comparator<Message> itemComparator = new Comparator<Message>() {
+            public int compare(Message info1, Message info2){
+                Date data1 = TimeUtils.stringToDate(info1.getMessageTime(),"yyyy-MM-dd HH:mm:ss");
+                Date data2 = TimeUtils.stringToDate(info2.getMessageTime(),"yyyy-MM-dd HH:mm:ss");
+                return data2.compareTo(data1);
+            }
+        };
+        Collections.sort(msgList, itemComparator);
     }
 }

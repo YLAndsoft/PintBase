@@ -48,7 +48,7 @@ public class PersonalFragment extends BaseFragment{
     protected void setData(Object object,boolean isRefresh) {
     }
     @Override
-    protected void showError(String result) {
+    protected void showError(String result,boolean isRefresh) {
     }
 
 

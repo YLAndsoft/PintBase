@@ -79,18 +79,15 @@ public class RecommendFragment extends BaseFragment {
     protected void setData(Object result,boolean isRefresh) {
     }
     @Override
-    protected void showError(String result) {
+    protected void showError(String result,boolean isRefresh) {
     }
-
-
 
     @Override
     public void widgetClick(View view) {
         switch (view.getId()){
             case R.id.new_search:
-                showToast("点击了搜索");
+                //showToast("点击了搜索");
                 startActivity(new Intent(mContext,SearchActivity.class));
-
                 break;
             case R.id.data_error:
                 retryData(getParams());

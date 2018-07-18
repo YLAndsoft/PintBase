@@ -67,7 +67,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:text="————"
                                 android:textColor="@color/gary2"
                                 android:textSize="15dp" />
 
@@ -94,7 +93,6 @@
                                 android:id="@+id/userinfo_attention"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="--关注"
                                 android:textColor="@color/gary2" />
 
                             <TextView
@@ -103,7 +101,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_toRightOf="@+id/userinfo_attention"
-                                android:text="--粉丝"
                                 android:textColor="@color/gary2" />
                         </RelativeLayout>
 
@@ -150,7 +147,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="---"
                             android:textColor="@color/gary3"
                             android:textSize="17dp" />
                     </RelativeLayout>

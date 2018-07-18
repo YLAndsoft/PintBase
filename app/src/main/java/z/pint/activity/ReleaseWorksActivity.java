@@ -44,7 +44,10 @@ public class ReleaseWorksActivity extends BaseActivity {
     private TextView des_length;
     @ViewInject(value = R.id.relsease_ll_tag)
     private LinearLayout relsease_ll_tag;
-
+    @ViewInject(value = R.id.release_title)
+    private TextView release_title;
+    @ViewInject(value = R.id.relsease_tag)
+    private TextView relsease_tag;
     private String filePath;
     private Works works;//待发布的作品
     private static final int TAG_CAODE = 1;//标签选择回调码
@@ -114,10 +117,14 @@ public class ReleaseWorksActivity extends BaseActivity {
     @Override
     public void initData(Context mContext) {
         ViewUtils.setImageUrl(mContext,release_img,filePath,R.mipmap.data_error);
+        ViewUtils.setTextView(release_title,getResources().getString(R.string.release_title));
+        release_des.setHint(getResources().getString(R.string.release_des));
+        ViewUtils.setTextView(des_length,getResources().getString(R.string.des_length));
+        ViewUtils.setTextView(relsease_tag,getResources().getString(R.string.relsease_tag));
         works.setWorksReleaseTime(TimeUtils.dateToString(new Date(),"yyyy-MM-dd HH:mm:ss"));//保存发布时间
-        String userHead = (String) SPUtils.getInstance(mContext).getParam("userHead", "");
-        String userName = (String) SPUtils.getInstance(mContext).getParam("userName", "");
-        int userID = (int) SPUtils.getInstance(mContext).getParam("userID", 0);
+        String userName = SPUtils.getUserName(mContext);
+        String userHead = SPUtils.getUserHead(mContext);
+        int userID = SPUtils.getUserID(mContext);
         works.setUserHead(userHead);//保存发布者头像
         works.setUserName(userName);//保存发布者昵称
         works.setUserID(userID);////保存发布者用户ID

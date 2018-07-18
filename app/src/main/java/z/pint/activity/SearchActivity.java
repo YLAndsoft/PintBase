@@ -83,23 +83,6 @@ public class SearchActivity extends BaseFragmentActivity {
                 return false;
             }
         });
-        search_edit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
     }
 
     private void search(String content) {
@@ -109,9 +92,10 @@ public class SearchActivity extends BaseFragmentActivity {
         }
         search_pager.setVisibility(View.VISIBLE);
         search_tabs.setVisibility(View.VISIBLE);
+        hideSoftInput();
         swf.submitSearch(content);
         suf.submitSearch(content);
-        showToast("搜索的内容为:"+content);
+        //showToast("搜索的内容为:"+content);
     }
 
     @Override
@@ -121,8 +105,6 @@ public class SearchActivity extends BaseFragmentActivity {
         search_pager.setOffscreenPageLimit(getTabName().size());//依据传过来的tab页的个数来设置缓存的页数
         //tabs.setFollowTabColor(true);//设置标题是否跟随
         search_tabs.setViewPager(search_pager);
-       // search_pager.setVisibility(View.GONE);
-       // search_tabs.setVisibility(View.GONE);
     }
 
     @Override

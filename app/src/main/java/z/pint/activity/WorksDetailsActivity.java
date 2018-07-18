@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
@@ -87,6 +88,14 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
     }
     @Override
     public Params getParams() {
+        if(dbUserID==works.getUserID()) {
+            Works works = DBHelper.queryWorkID(this.works.getWorksID());
+            if(works!=null){
+                this.works= works;
+            }
+            setData(null);
+            return null;
+        }
         Map<String,String> map  = new HashMap<>();
         map.put(HttpConfig.WORKS_ID,works.getWorksID()+"");
         map.put(HttpConfig.USER_ID,dbUserID+"");
@@ -105,6 +114,7 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
             initPager(works);
             return;
         }
+        this.works = gsonObject;
         setView(gsonObject);
         initPager(gsonObject);
     }
@@ -122,7 +132,12 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
 
     @Override
     public void initData(Context context) {
-
+        ViewUtils.setTextView(details_title,getResources().getString(R.string.details_title));
+        ViewUtils.setTextView(details_worksStrokes,getResources().getString(R.string.details_worksStrokes));
+        ViewUtils.setTextView(details_userName,getResources().getString(R.string.error_name));
+        ViewUtils.setTextView(details_worksTims,getResources().getString(R.string.error_time));
+        ViewUtils.setTextView(details_comment,getResources().getString(R.string.details_comment));
+        ViewUtils.setTextView(likesTxt,getResources().getString(R.string.likesTxt));
     }
 
     private void setView(Works works) {
@@ -136,10 +151,10 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
             Glide.with(mContext).load(works.getWorksImage()+"").placeholder(R.mipmap.img_placeholder).error(R.mipmap.bg_man).thumbnail(0.1f).into(details_works_imag);
         }
         ViewUtils.setImageUrl(mContext,details_userHead,works.getUserHead()+"",R.mipmap.default_head_image);
-        ViewUtils.setTextView(details_dex,works.getWorksDescribe(),"");
-        ViewUtils.setTextView(details_worksStrokes,works.getWorksStrokes()+"笔","0笔");
-        ViewUtils.setTextView(details_userName,works.getUserName(),"");
-        ViewUtils.setTextView(details_worksTims,works.getWorksReleaseTime(),"");
+        ViewUtils.setTextView(details_dex,works.getWorksDescribe());
+        ViewUtils.setTextView(details_worksStrokes,works.getWorksStrokes()+"笔");
+        ViewUtils.setTextView(details_userName,works.getUserName());
+        ViewUtils.setTextView(details_worksTims,works.getWorksReleaseTime());
         //设置标签
         ViewUtils.setLabel(works.getWorksLabel(),details_label1,details_label2,details_label3);
         if(works.getUserID()!=dbUserID){
@@ -147,6 +162,8 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
         }else{
             //是自己发布的作品，隐藏关注按钮
             details_attention.setVisibility(View.GONE);
+            //隐藏收藏按钮
+            details_Collection.setVisibility(View.GONE);
         }
         ViewUtils.isLikes(works.isLikes(),details_toLikes);//是否点赞
         likesTxt.setTextColor(works.isLikes()?getResources().getColor(R.color.details_bg_label_color):getResources().getColor(R.color.gary2));
@@ -162,7 +179,7 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
         details_works_tabs.setViewPager(details_works_pager,works.getWorksLikeNumber(),works.getWorksCommentNumber());
     }
 
-    private long collectionTime,attentionTime,likeTime;
+    private long collectionTime,attentionTime;
     @Override
     public void widgetClick(View view) {
         switch (view.getId()){
@@ -192,8 +209,13 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
                 //showToast("点击关注");
                 if ((System.currentTimeMillis() - attentionTime) > 3000) {
                     attentionTime = System.currentTimeMillis();
-                    boolean isAttention = ViewUtils.isAttention(!works.isAttention(), details_attention);
-                    works.setAttention(isAttention);
+                    if(works.isAttention()){
+                        ViewUtils.isAttention(false, details_attention);
+                        works.setAttention(false);//取消关注
+                    }else{
+                        ViewUtils.isAttention(true, details_attention);
+                        works.setAttention(true);//增加关注
+                    }
                     StatisticsUtils.isAttention(mContext,works.isAttention(),works);
                 }else{
                     showToast("点击不要这么快嘛~");
@@ -220,17 +242,25 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
                 break;
             case R.id.details_ll_likes:
                 //showToast("点赞");
-                if ((System.currentTimeMillis() - likeTime) > 3000) {
-                    likeTime = System.currentTimeMillis();
-                    boolean likes = ViewUtils.isLikes(!works.isLikes(), details_toLikes);
-                    likesTxt.setTextColor(likes?getResources().getColor(R.color.details_bg_label_color):getResources().getColor(R.color.gary2));
+                if(!works.isLikes()){
+                    boolean likes = ViewUtils.isLikes(true, details_toLikes);
+                    likesTxt.setTextColor(likes? ContextCompat.getColor(mContext,R.color.details_bg_label_color):ContextCompat.getColor(mContext,R.color.gary2));
                     int likesNumber = ViewUtils.setLikesNumber(!works.isLikes(), null, works.getWorksLikeNumber());
                     works.setLikes(likes);
                     works.setWorksLikeNumber(likesNumber);
-                    details_works_tabs.notifyNumberData(works.getWorksCommentNumber(),works.getWorksLikeNumber());
-                    StatisticsUtils.isLikes(mContext,works.isLikes(),works);//作品增加/取消点赞
+                   // Works works1 = DBHelper.queryWorkID(works.getWorksID());
+                    //works1.setWorksLikeNumber(works1.getWorksLikeNumber()+1);
+                    if(dbUserID==works.getUserID()){
+                        //添加点赞
+                        StatisticsUtils.addLikes(works);
+                    }else{
+                        StatisticsUtils.isLikes(mContext,true,works);//增加点赞
+                    }
+                    details_works_tabs.setViewPager(details_works_pager,works.getWorksLikeNumber(),works.getWorksCommentNumber());
+                    //通知主界面更新点赞数
+                    EventBusUtils.sendEvent(new EventBusEvent(EventBusUtils.EventCode.C,position,works));
                 }else{
-                    showToast("点击不要这么快嘛~");
+                    //showToast("你已经点过赞了");
                 }
                 break;
             case R.id.details_ll_userInfo:
@@ -248,7 +278,7 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
      */
     private void addComment(String content) {
         Comment comment = createComment(content);
-        if(works.getUserID()==dbUserID){//本地用户，评论保存在本地
+        if(works.getUserID()==dbUserID){ //本地用户，评论保存在本地
             boolean b = DBHelper.saveComment(comment);
             showLog(3,"保存本地评论结果："+b);
             //获取作品
@@ -286,48 +316,6 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
         TimeUtils.dateToString(new Date(),"yyyy-MM-dd HH:mm:ss"),
                 content);
     }
-    /**
-     * 点击软键盘之外的空白处，隐藏软件盘
-     * @param ev
-     * @return
-     */
-    /*@Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (isShouldHideKeyboard(v, ev)) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }else{ //也有可能是ImageView发送按钮
-
-            }
-            return super.dispatchTouchEvent(ev);
-        }
-        // 必不可少，否则所有的组件都不会有TouchEvent了
-        if (getWindow().superDispatchTouchEvent(ev)) return true;
-        return onTouchEvent(ev);
-    }*/
-    /**
-     * Return whether touch the view.判断点击是否是EditText区域
-     * @param v
-     * @param event
-     * @return
-     */
-    private boolean isShouldHideKeyboard(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {
-            int[] l = {0, 0};
-            v.getLocationInWindow(l);
-            int left = l[0],
-                    top = l[1],
-                    bottom = top + v.getHeight(),
-                    right = left + v.getWidth();
-            return !(event.getX() > left && event.getX() < right&& event.getY() > top && event.getY() < bottom);
-        }
-        return false;
-    }
-
 
     private Fragment getDetailsCommentFragment(){
         if(dcf==null)dcf = new DetailsCommentFragment();
@@ -340,6 +328,7 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
         if(dlf==null)dlf= new DetialsLaudFragment();
         Bundle b = new Bundle();
         b.putString("worksID",works.getWorksID()+"");
+        b.putInt("userID",works.getUserID());
         dlf.setArguments(b);
         return dlf;
     }
@@ -404,5 +393,9 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
     private EditText edit_comment;//评论编辑框
     @ViewInject(value = R.id.send_comment)
     private ImageView send_comment;//发送评论
+    @ViewInject(value = R.id.details_title)
+    private TextView details_title;
+    @ViewInject(value = R.id.details_comment)
+    private TextView details_comment;
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import z.pint.bean.Comment;
 import z.pint.bean.Likes;
+import z.pint.bean.Message;
 import z.pint.bean.Works;
 
 /**
@@ -47,4 +48,21 @@ public class DataUtils {
         }
         return worksList;
     }
+
+    /**
+     * 得到消息假数据
+     * @return
+     */
+    public static List<Message> getMessageData() {
+        List<Message> msgs = new ArrayList<>();
+        msgs.add(new Message(1));
+        msgs.add(new Message(2));
+        msgs.add(new Message(1));
+        msgs.add(new Message(2));
+        msgs.add(new Message(1));
+        msgs.add(new Message(2));
+        msgs.add(new Message(1));
+        return msgs;
+    }
+
 }

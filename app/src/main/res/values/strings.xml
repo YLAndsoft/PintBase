@@ -7,6 +7,19 @@
     <string name="defult_address">火星</string>
     <string name="defult_sign">还没有签名</string>
 
+    <!--MessageFragment-->
+    <string name="message_title">消息</string>
+    <!--UserFragment-->
+    <string name="user_attentionTile">关注</string>
+    <string name="user_fansTitle">粉丝</string>
+    <string name="user_worksTitle">作品</string>
+    <string name="user_collectionTitle">收藏</string>
+    <string name="user_help_Title">帮助反馈</string>
+    <string name="user_clearCacheTitle">清理缓存</string>
+    <string name="user_settingTilte">设置</string>
+    <string name="user_chatTitle">联系我们</string>
+
+    <!--SelectTagActivity-->
     <string name="defult_tag1">原创</string>
     <string name="defult_tag2">部分参考</string>
     <string name="defult_tag3">二创</string>
@@ -15,6 +28,13 @@
     <string name="defult_tag6">图片</string>
     <string name="defult_tag7">手绘</string>
 
+    <!--UserInfoActivity-->
+    <string name="error_title_name">---</string>
+    <string name="error_attention">--关注</string>
+    <string name="error_fans">--粉丝</string>
+    <string name="error_name">————</string>
+    <string name="error_time">--------</string>
+
     <string name="man">男</string>
     <string name="woman">女</string>
     <string name="ID">ID:</string>
@@ -22,22 +42,25 @@
     <string name="ADDRESS">所在地:</string>
     <string name="REGISTRTIME">注册时间:</string>
 
+    <!--EditInfoActivity-->
     <string name="edit_info_nameTitle">编辑昵称</string>
     <string name="edit_info_sexTitle">修改性别</string>
+    <string name="edit_info_addressTitle">修改地区</string>
     <string name="edit_info_signTitle">编辑签名</string>
     <string name="userinfo_tab_name1">个人</string>
     <string name="userinfo_tab_name2">作品</string>
 
+    <!--SearchActivity-->
     <string name="search_tabName1">作品</string>
     <string name="search_tabName2">用户</string>
 
+    <!--WorkDetailsActivity-->
     <string name="details_tabName1">评论</string>
     <string name="details_tabName2">赞</string>
-
     <string name="details_comment_tabName1">回复评论</string>
     <string name="details_comment_tabName2">复制评论</string>
     <string name="details_comment_tabName3">取消</string>
-
+    <!--UserFAActivity-->
     <string name="my_fans">我的粉丝</string>
     <string name="my_attention">我的关注</string>
     <!--SettingsActivity-->
@@ -47,10 +70,10 @@
     <string name="setting_about">关于</string>
     <string name="setting_titelName">设置</string>
     <string name="developerQQ">2964966804</string>
+    <string name="helper">帮助反馈</string>
 
     <!--CollectionActivity-->
     <string name="collection_titelName">收藏</string>
-
     <!--EditInfoActivity-->
     <string name="tv_userSign">签名</string>
     <string name="tv_userAddress">地区</string>
@@ -59,6 +82,40 @@
     <string name="tv_userHead">头像</string>
     <string name="userInfo">我的资料</string>
     <string name="edit_submit">保存</string>
+    <!--HelperActivity-->
+    <string name="help_classifyTitie">分类标签标题</string>
+    <string name="function_advise">功能建议</string>
+    <string name="function_question">性能问题</string>
+    <string name="help_content">具体内容</string>
+    <string name="edit_content">我们如何改进?(500字)</string>
+    <string name="help_contact">联系方式</string>
+    <string name="edit_contact">方便的话,请留下您的QQ，微信或者邮箱</string>
+    <string name="help_commit">提交</string>
+    <!--MyWorksActivity-->
+    <string name="works_list">作品列表</string>
+    <!--ReleaseWorksActivity-->
+    <string name="release_title">发布</string>
+    <string name="release_des">添加作品说明</string>
+    <string name="relsease_tag">标签  (必选)</string>
+    <string name="des_length">1000/1000</string>
+    <!--SelectTagActivity-->
+    <string name="classify_label">分类标签</string>
+    <string name="select_label_title">选择标签</string>
+    <string name="submit_tag">完成</string>
+    <string name="custom_label">自定义标签</string>
+    <string name="create_des">点击新建标签，多个标签用“,”或者空格分开</string>
+
+    <!--WorkDetailsActivity-->
+    <string name="details_title">作品详情</string>
+    <string name="details_Collection">收藏</string>
+    <string name="details_dex">描述</string>
+    <string name="details_worksStrokes">0笔</string>
+    <string name="details_comment">评论</string>
+    <string name="likesTxt">赞</string>
+    <string name="error_comment">暂无任何评论</string>
+    <string name="error_likes">暂无任何点赞</string>
+
+
 
 
 </resources>

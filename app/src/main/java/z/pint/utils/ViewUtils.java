@@ -65,26 +65,26 @@ public class ViewUtils {
      * 设置文本
      * @param view
      * @param result
-     * @param defaultResult
+     * @param
      */
-    public static void setTextView(View view,String result,String defaultResult){
-        if(view instanceof TextView){
+    public static void setTextView(View view,String result){
+        if(view instanceof EditText){
             if(!StringUtils.isBlank(result+"")){
-                ((TextView) view).setText(result);
+                ((EditText) view).setHint(result);
             }else{
-                ((TextView) view).setText(defaultResult+"");
-            }
-        }else if(view instanceof EditText){
-            if(!StringUtils.isBlank(result)){
-                ((EditText) view).setHint(result+"");
-            }else{
-                ((EditText) view).setHint(defaultResult+"");
+                ((EditText) view).setHint("");
             }
         }else if(view instanceof Button){
             if(!StringUtils.isBlank(result)){
                 ((Button) view).setText(result+"");
             }else{
-                ((Button) view).setText(defaultResult+"");
+                ((Button) view).setText("");
+            }
+        }else if(view instanceof TextView){
+            if(!StringUtils.isBlank(result)){
+                ((TextView) view).setText(result+"");
+            }else{
+                ((TextView) view).setText("");
             }
         }
     }
@@ -129,19 +129,19 @@ public class ViewUtils {
         if(null==split||split.length<=0){return;}
         switch (split.length){
             case 1:
-                setTextView(label1,"# "+split[0],"# 原创");
+                setTextView(label1,"# "+split[0]);
                 label1.setVisibility(View.VISIBLE);
                 break;
             case 2:
-                setTextView(label1,"# "+split[0],"");
-                setTextView(label2,"# "+split[1],"");
+                setTextView(label1,"# "+split[0]);
+                setTextView(label2,"# "+split[1]);
                 label1.setVisibility(View.VISIBLE);
                 label2.setVisibility(View.VISIBLE);
                 break;
             case 3:
-                setTextView(label1,"# "+split[0],"");
-                setTextView(label2,"# "+split[1],"");
-                setTextView(label3,"# "+split[2],"");
+                setTextView(label1,"# "+split[0]);
+                setTextView(label2,"# "+split[1]);
+                setTextView(label3,"# "+split[2]);
                 label1.setVisibility(View.VISIBLE);
                 label2.setVisibility(View.VISIBLE);
                 label3.setVisibility(View.VISIBLE);
@@ -161,13 +161,12 @@ public class ViewUtils {
      * @param isAttention
      * @param imageview
      */
-    public static boolean isAttention(boolean isAttention,ImageView imageview){
+    public static void isAttention(boolean isAttention,ImageView imageview){
         if(isAttention){
             imageview.setImageResource(R.mipmap.unfollow);
-            return isAttention;
+            return;
         }
         imageview.setImageResource(R.mipmap.follow);
-        return isAttention;
     }
 
     /**

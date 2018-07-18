@@ -9,24 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="@color/gary5"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:src="@mipmap/collect_date_hint"/>
         <TextView
             android:id="@+id/collection_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
-            android:text="收藏于2018-07-04 16:10:28"/>
-    </LinearLayout>
+            android:gravity="center_vertical"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:drawableLeft="@mipmap/collect_date_hint"
+            android:textSize="12dp"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -54,8 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textColor="@color/gary2"
-            android:layout_toRightOf="@+id/collection_works_userHead"
-            android:text="------"/>
+            android:layout_toRightOf="@+id/collection_works_userHead"/>
 
         <TextView
             android:id="@+id/worksReleaseTime"
@@ -67,8 +59,7 @@
             android:layout_below="@+id/collection_works_userName"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/collection_works_userHead"
-            android:text="2018-07-03 21:56:01"/>
+            android:layout_toRightOf="@+id/collection_works_userHead"/>
 
     </RelativeLayout>
 
@@ -89,8 +80,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginTop="12dp"
         android:lineSpacingExtra="5dp"
-        android:textSize="15dp"
-        android:text="作品描述作品描述作品描述作品描述作品描述作品描述作品描述"/>
+        android:textSize="15dp"/>
 
     <View
         android:layout_width="match_parent"

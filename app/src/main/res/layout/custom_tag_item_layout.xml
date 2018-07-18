@@ -10,6 +10,5 @@
         android:layout_height="wrap_content"
         android:padding="7dp"
         android:layout_marginLeft="5dp"
-        android:background="@drawable/custom_tag_bg"
-        android:text="#"/>
+        android:background="@drawable/custom_tag_bg"/>
 </LinearLayout>

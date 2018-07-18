@@ -15,15 +15,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:textSize="16dp"
-            android:text="ID:"/>
+            android:textSize="16dp"/>
         <TextView
             android:id="@+id/personal_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16dp"
-            android:layout_marginLeft="7dp"
-            android:text="123456"/>
+            android:layout_marginLeft="7dp"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"

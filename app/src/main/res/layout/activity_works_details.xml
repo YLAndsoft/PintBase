@@ -40,20 +40,20 @@
                             android:src="@mipmap/detail_back"
                             android:layout_centerVertical="true"/>
                         <TextView
+                            android:id="@+id/details_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:textSize="16dp"
-                            android:textColor="@color/black"
-                            android:text="作品详情"/>
+                            android:textColor="@color/black"/>
                         <TextView
                             android:id="@+id/details_Collection"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="收藏"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:padding="5dp"
+                            android:textColor="@color/gary2"
                             android:layout_marginRight="12dp"/>
                     </RelativeLayout>
                 </android.support.v7.widget.Toolbar>
@@ -107,10 +107,10 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/comment_count"/>
             <TextView
+                android:id="@+id/details_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="评论"/>
+                android:layout_marginLeft="5dp"/>
         </LinearLayout>
         <View
             android:layout_width="1dp"
@@ -134,8 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:textColor="@color/gary2"
-                android:text="赞"/>
+                android:textColor="@color/gary2"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -149,7 +148,7 @@
         android:background="@color/gary5">
         <EditText
             android:id="@+id/edit_comment"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:paddingLeft="5dp"

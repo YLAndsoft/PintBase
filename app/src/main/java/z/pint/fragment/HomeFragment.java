@@ -57,6 +57,8 @@ public class HomeFragment extends BaseFragment implements BaseRecyclerHolder.OnV
     private ProgressBar home_loding;
     @ViewInject(value = R.id.home_error)
     private ImageView home_error;
+    @ViewInject(value = R.id.home_title)
+    private TextView home_title;
 
     private int start=0,num=10;
     private int userID;//用户ID
@@ -87,6 +89,7 @@ public class HomeFragment extends BaseFragment implements BaseRecyclerHolder.OnV
         EventBusUtils.register(this);
         //获取登录用户ID
         userID = SPUtils.getUserID(mContext);
+        ViewUtils.setTextView(home_title,getResources().getString(R.string.app_name));
     }
 
     /**
@@ -102,6 +105,7 @@ public class HomeFragment extends BaseFragment implements BaseRecyclerHolder.OnV
         home_refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
+                start=0;
                 Params params = getParams();
                 params.setRefresh(true);//刷新操作
                 getData(params);
@@ -122,6 +126,7 @@ public class HomeFragment extends BaseFragment implements BaseRecyclerHolder.OnV
         if(null!=dbWorks&&dbWorks.size()>0){
             worksList.addAll(dbWorks);//添加自己发布的作品
         }
+        home_error.setOnClickListener(this);
     }
 
     /**
@@ -179,10 +184,6 @@ public class HomeFragment extends BaseFragment implements BaseRecyclerHolder.OnV
             SPUtils.getInstance(mContext).setList("classifyName",worksClassifies);
         }
         if(null!=works&&works.size()>0){
-            if(works.size()<num){ //数据小于num,表示没有更多数据
-                isLoadData=true;//没有更多数据
-                home_refreshLayout.setEnableLoadMore(false);//关闭加载更多
-            }
             start = start + works.size();
             //添加数据
             worksList.addAll(works);
@@ -194,7 +195,7 @@ public class HomeFragment extends BaseFragment implements BaseRecyclerHolder.OnV
                 home_refreshLayout.finishLoadMore(true);//数据加载成功或者失败
             }
             isLoad=true;//标识数据已经加载过
-            home_refreshLayout.setEnableLoadMore(true);//打开加载更多
+            home_refreshLayout.setEnableLoadMore(works.size()>=num);//打开加载更多
             home_refreshLayout.setEnableRefresh(true);//打开刷新
             home_error.setVisibility(View.GONE);
             home_recycler.setVisibility(View.VISIBLE);
@@ -273,16 +274,12 @@ public class HomeFragment extends BaseFragment implements BaseRecyclerHolder.OnV
                     worksList.clear();
                     worksList.addAll(works);
                 }
-                if(works.size()<num){ //数据小于num,表示没有更多数据
-                    isLoadData=true;//没有更多数据
-                    home_refreshLayout.setEnableLoadMore(false);//关闭加载更多
-                }
                 SortUtils.sortList(works);//对作品进行排序
                 if(homeAdapter==null)bindAdapter(works);//绑定适配器
                 homeAdapter.refreshAll(works);
                 start = start + works.size();
                 isLoad=true;//标识数据已经加载过
-                home_refreshLayout.setEnableLoadMore(true);//打开加载更多
+                home_refreshLayout.setEnableLoadMore(works.size()>=num);//打开加载更多
                 home_refreshLayout.setEnableRefresh(true);//打开刷新
                 home_refreshLayout.finishRefresh(true);//刷新成功
                 home_error.setVisibility(View.GONE);
@@ -291,7 +288,7 @@ public class HomeFragment extends BaseFragment implements BaseRecyclerHolder.OnV
                 if(!isLoad){ //没加载过数据的情况
                     home_error.setVisibility(View.VISIBLE);
                 }
-                home_refreshLayout.finishRefresh(false);//刷新失败
+                home_refreshLayout.finishRefresh(true);//刷新失败
                 home_refreshLayout.setEnableLoadMore(false);//关闭加载更多
             }
         }else{
@@ -307,11 +304,15 @@ public class HomeFragment extends BaseFragment implements BaseRecyclerHolder.OnV
      * @param result
      */
     @Override
-    protected void showError(String result) {
+    protected void showError(String result,boolean isRefresh) {
         showLog(3,result);
         if(!isLoad){ //没加载过数据的情况
             home_error.setVisibility(View.VISIBLE);
         }
+        if(isRefresh){
+            home_refreshLayout.finishRefresh(false);//数据刷新失败
+        }
+        home_loding.setVisibility(View.GONE);//关闭正在加载
     }
 
     /**
@@ -371,6 +372,7 @@ public class HomeFragment extends BaseFragment implements BaseRecyclerHolder.OnV
                     BaseRecyclerHolder holder  = (BaseRecyclerHolder) home_recycler.getChildViewHolder(childAt);
                     Works works = (Works) event.getData();
                     holder.setText(R.id.home_item_commentNumber,works.getWorksCommentNumber()+"");
+                    holder.setText(R.id.home_item_likesNumber,works.getWorksLikeNumber()+"");
                 }
             }
         }

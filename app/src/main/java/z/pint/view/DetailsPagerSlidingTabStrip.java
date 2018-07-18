@@ -301,13 +301,8 @@ public class DetailsPagerSlidingTabStrip extends HorizontalScrollView {
                 // is made manually if we are on a
                 // pre-ICS-build
                 if (textAllCaps) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                        txt.setAllCaps(true);
-                        num.setAllCaps(true);
-                    } else {
                         txt.setText(txt.getText().toString() .toUpperCase(locale));
                         num.setText(txt.getText().toString() .toUpperCase(locale));
-                    }
                 }
                 if (i == selectedPosition) {
                     txt.setTextColor(selectedTabTextColor);
@@ -338,13 +333,8 @@ public class DetailsPagerSlidingTabStrip extends HorizontalScrollView {
                 // is made manually if we are on a
                 // pre-ICS-build
                 if (textAllCaps) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                        txt.setAllCaps(true);
-                        num.setAllCaps(true);
-                    } else {
                         txt.setText(txt.getText().toString() .toUpperCase(locale));
                         num.setText(txt.getText().toString() .toUpperCase(locale));
-                    }
                 }
                 if (i == selectedPosition) {
                     txt.setTextColor(selectedTabTextColor);

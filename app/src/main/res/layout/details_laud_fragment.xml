@@ -36,25 +36,16 @@
                         android:visibility="invisible"
                         android:nestedScrollingEnabled="false"
                         />
-                    <LinearLayout
-                        android:id="@+id/data_error"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:layout_centerHorizontal="true">
-                         <ImageView
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:src="@mipmap/data_error"
-                             android:layout_marginTop="50dp"/>
+
+
                          <TextView
+                             android:id="@+id/error_likes"
                              android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
-                             android:layout_marginTop="5dp"
-                             android:text="暂无任何点赞"/>
-                    </LinearLayout>
+                             android:drawableTop="@mipmap/data_error"
+                             android:layout_centerHorizontal="true"
+                             android:visibility="gone"
+                             android:layout_marginTop="100dp"/>
                     <ProgressBar
                         android:id="@+id/comment_loding"
                         android:layout_width="wrap_content"

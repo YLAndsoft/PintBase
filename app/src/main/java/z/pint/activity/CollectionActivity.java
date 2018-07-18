@@ -61,7 +61,7 @@ public class CollectionActivity extends BaseActivity {
 
     @Override
     public void initData(final Context mContext) {
-        ViewUtils.setTextView(default_titleName,getResources().getString(R.string.collection_titelName),"");
+        ViewUtils.setTextView(default_titleName,getResources().getString(R.string.collection_titelName));
         collection_recycler.setLayoutManager(ViewUtils.getLayoutManager(mContext));
         userID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
         //查询数据库，得到收藏作品数据

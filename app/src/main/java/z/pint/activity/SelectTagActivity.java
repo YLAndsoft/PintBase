@@ -41,6 +41,12 @@ public class SelectTagActivity extends BaseActivity {
     private TextView submit_tag;
     @ViewInject(value = R.id.custom_tag)
     private LinearLayout custom_tag;
+    @ViewInject(value = R.id.select_label_title)
+    private TextView select_label_title;
+    @ViewInject(value = R.id.classify_label)
+    private TextView classify_label;
+    @ViewInject(value = R.id.custom_label)
+    private TextView custom_label;
 
     private String tag = "";
     private String tmpTag = "";
@@ -59,8 +65,12 @@ public class SelectTagActivity extends BaseActivity {
     @Override
     public void initView(View view) {
         x.view().inject(this);
+        ViewUtils.setTextView(select_label_title,getResources().getString(R.string.select_label_title));
+        ViewUtils.setTextView(submit_tag,getResources().getString(R.string.submit_tag));
+        ViewUtils.setTextView(classify_label,getResources().getString(R.string.classify_label));
+        ViewUtils.setTextView(custom_label,getResources().getString(R.string.custom_label));
+        ViewUtils.setTextView(create_des,getResources().getString(R.string.create_des));
     }
-
 
     @Override
     public void initListener() {

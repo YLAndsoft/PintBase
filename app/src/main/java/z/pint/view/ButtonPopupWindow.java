@@ -55,9 +55,9 @@ public class ButtonPopupWindow extends PopupWindow implements View.OnClickListen
         TextView txt0 = view.findViewById(R.id.txt0);
         TextView txt1 = view.findViewById(R.id.txt1);
         TextView pw_cancel = view.findViewById(R.id.pw_cancel);
-        ViewUtils.setTextView(txt0,tabName[0],"拍照");
-        ViewUtils.setTextView(txt1,tabName[1],"相册");
-        ViewUtils.setTextView(pw_cancel,tabName[2],"取消");
+        ViewUtils.setTextView(txt0,tabName[0]);
+        ViewUtils.setTextView(txt1,tabName[1]);
+        ViewUtils.setTextView(pw_cancel,tabName[2]);
         txt0.setOnClickListener(this);
         txt1.setOnClickListener(this);
         pw_cancel.setOnClickListener(this);

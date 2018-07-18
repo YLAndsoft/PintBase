@@ -47,7 +47,7 @@ public class SPUtils {
     //单例模式
     public static SPUtils getInstance(Context context) {
         if (spu ==null){
-            spu =new SPUtils(context.getApplicationContext());
+            spu =new SPUtils(context);
         }
         return  spu;
     }

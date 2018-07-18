@@ -14,7 +14,7 @@
         app:srlPrimaryColor="#444444"
         app:srlAccentColor="@android:color/white"
         app:srlEnableRefresh="false"
-        app:srlEnableLoadMore="true"
+        app:srlEnableLoadMore="false"
         app:srlEnablePreviewInEditMode="true">
         <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
         <!--srlEnablePreviewInEditMode 可以开启和关闭预览功能-->
@@ -38,25 +38,17 @@
                     android:visibility="invisible"
                     android:nestedScrollingEnabled="false"
                     />
-                <LinearLayout
-                    android:id="@+id/data_error"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    android:layout_centerHorizontal="true">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/data_error"
-                        android:layout_marginTop="50dp"/>
+
                     <TextView
+                        android:id="@+id/error_comment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="暂无任何评论"/>
-                </LinearLayout>
+                        android:text="暂无任何评论"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:layout_centerHorizontal="true"
+                        android:drawableTop="@mipmap/data_error"
+                        android:layout_marginTop="100dp"/>
 
                 <ProgressBar
                     android:id="@+id/comment_loding"

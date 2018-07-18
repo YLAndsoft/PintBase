@@ -9,39 +9,42 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/top_back"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:onClick="toBack"
-            android:layout_centerVertical="true"/>
+            android:src="@mipmap/top_back" />
+
         <TextView
+            android:id="@+id/select_label_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="16dp"
             android:layout_centerInParent="true"
-            android:text="选择标签"/>
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
         <TextView
             android:id="@+id/submit_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="完成"
-            android:padding="5dp"
-            android:textColor="@color/black"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:layout_centerVertical="true"/>
+            android:padding="5dp"
+            android:textColor="@color/black" />
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gary5"/>
     <TextView
+        android:id="@+id/classify_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="分类标签"
         android:layout_marginTop="12dp"
         android:layout_marginLeft="12dp"
         android:textColor="@color/black"/>
@@ -60,12 +63,12 @@
         android:background="@color/gary5"/>
 
     <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="自定义标签"
-    android:layout_marginTop="12dp"
-    android:layout_marginLeft="12dp"
-    android:textColor="@color/black"/>
+        android:id="@+id/custom_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:textColor="@color/black"/>
 
     <LinearLayout
         android:id="@+id/custom_tag"
@@ -78,7 +81,6 @@
         android:id="@+id/create_des"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="点击新建标签，多个标签用“,”或者空格分开"
         android:layout_marginTop="12dp"
         android:layout_marginLeft="12dp"
         android:paddingBottom="5dp"

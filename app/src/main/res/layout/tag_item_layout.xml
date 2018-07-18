@@ -10,6 +10,5 @@
         android:textColor="@color/white"
         android:padding="7dp"
         android:layout_marginLeft="10dp"
-        android:background="@color/gary2"
-        android:text="原创"/>
+        android:background="@color/gary2"/>
 </LinearLayout>

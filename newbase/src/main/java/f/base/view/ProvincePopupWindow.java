@@ -2,7 +2,10 @@ package f.base.view;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.Gravity;
@@ -69,6 +72,7 @@ public class ProvincePopupWindow extends PopupWindow implements View.OnClickList
         initData();//初始化数据
 
     }
+
 
     private void initView() {
         View pView = LayoutInflater.from(mContext).inflate(R.layout.address_layout,null);
@@ -221,8 +225,16 @@ public class ProvincePopupWindow extends PopupWindow implements View.OnClickList
     }
 
     public void showPopupWindow(View view,int orientation,int pX,int pY){
-        this.showAtLocation(view, orientation, pX, pY);
+        //this.showAtLocation(view, orientation, pX, pY);
+        showAtLocation(view, orientation, pX,pY );
+        //showAsDropDown(view);
+        /*if (Build.VERSION.SDK_INT < 24){
+            showAsDropDown(view, 0, 0);
+        } else{
+            showAtLocation(view, orientation, pX, view.getHeight() + getStatusBarHeight());
+        }*/
     }
+
 
     @Override
     public void onClick(View view) {

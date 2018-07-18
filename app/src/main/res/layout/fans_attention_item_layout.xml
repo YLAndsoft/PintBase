@@ -23,8 +23,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:textColor="@color/gary2"
-            android:layout_toRightOf="@+id/fansAndAttention_userHead"
-            android:text="小酒窝长睫毛"/>
+            android:layout_toRightOf="@+id/fansAndAttention_userHead"/>
 
         <ImageView
             android:id="@+id/fansAndAttention_attention"

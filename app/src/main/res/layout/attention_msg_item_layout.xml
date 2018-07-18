@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/gary1" />
+
+        <ImageView
+            android:id="@+id/message_at_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="14dp"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/default_head_image"/>
+
+        <TextView
+            android:id="@+id/message_at_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/message_at_icon"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/gary3"
+            android:textSize="8sp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="14dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/message_item_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_msg_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <z.pint.view.CuttingImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/message_at_userHead"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/default_head_image"
+                app:border_width="0dp"
+                app:border_color="@color/transparent" />
+
+            <TextView
+                android:id="@+id/message_at_useName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gary3"
+                android:layout_marginLeft="10dp"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/message_at_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/gary3"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/ll_msg_user"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -31,18 +31,11 @@
                 android:layout_height="match_parent"
                 android:visibility="gone"
                 android:background="@color/white"/>
-            <ProgressBar
-                android:id="@+id/search_loding"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                />
             <ImageView
                 android:id="@+id/search_error"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:visibility="gone"
                 android:src="@mipmap/no_searchuser"/>
         </RelativeLayout>
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter

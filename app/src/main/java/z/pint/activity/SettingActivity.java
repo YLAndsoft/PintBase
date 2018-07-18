@@ -64,7 +64,7 @@ public class SettingActivity extends BaseActivity implements BaseRecyclerHolder.
     }
     @Override
     public void initData(Context mContext) {
-        ViewUtils.setTextView(default_titleName,getResources().getString(R.string.setting_titelName),"");
+        ViewUtils.setTextView(default_titleName,getResources().getString(R.string.setting_titelName));
         settings_recycler.setLayoutManager(ViewUtils.getLayoutManager(mContext));
         settings_recycler.addItemDecoration(new RecyclerViewDivider(mContext, LinearLayoutManager.HORIZONTAL,1,R.color.gary5));
         BaseRecyclerAdapter<String> adapter = new BaseRecyclerAdapter<String>(mContext,getStrings(),R.layout.settings_item_layout) {
@@ -95,7 +95,7 @@ public class SettingActivity extends BaseActivity implements BaseRecyclerHolder.
         list.add(getResources().getString(R.string.settings_userInfo));
         list.add(getResources().getString(R.string.settings_clearCache));
         list.add(getResources().getString(R.string.settings_developer));
-        list.add(getResources().getString(R.string.setting_about));
+        //list.add(getResources().getString(R.string.setting_about));
         return list;
     }
 
@@ -130,7 +130,7 @@ public class SettingActivity extends BaseActivity implements BaseRecyclerHolder.
                 }
                 break;
             case 3:
-                showToast("关于");
+                //showToast("关于");
                 break;
         }
     }

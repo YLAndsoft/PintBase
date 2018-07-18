@@ -80,9 +80,9 @@ public class UserFAActivity extends BaseActivity {
     @Override
     public void initData(final Context mContext) {
         if(view_tag== Constant.VIEW_FANS){
-            ViewUtils.setTextView(fansAndattention_title,getResources().getString(R.string.my_fans),"");
+            ViewUtils.setTextView(fansAndattention_title,getResources().getString(R.string.my_fans));
         }else if(view_tag== Constant.VIEW_ATTENTION){
-            ViewUtils.setTextView(fansAndattention_title,getResources().getString(R.string.my_attention),"");
+            ViewUtils.setTextView(fansAndattention_title,getResources().getString(R.string.my_attention));
         }
     }
 
@@ -195,7 +195,7 @@ public class UserFAActivity extends BaseActivity {
         int userID = (int) SPUtils.getInstance(mContext).getParam("userID", 0);
         if(view_tag==Constant.VIEW_FANS){
         }else{
-            //取消关注
+            //取消粉丝
             deleteAttention(HttpConfig.DELETE_STATE,attention.getConverAttentionID(),userID);
         }
     }

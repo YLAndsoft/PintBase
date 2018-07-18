@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,7 @@ import z.pint.view.RecyclerViewDivider;
 import z.pint.view.RecyclerViewItemDecoration;
 
 /**
+ * 推荐页item界面
  * Created by DN on 2018/6/19.
  */
 
@@ -61,6 +63,7 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
     private boolean isPrepared;
     /** 是否已被加载过一次，第二次就不再去请求数据了 */
     private boolean mHasLoadedOnce;
+    private List<Works> worksList = new ArrayList<>();
 
     @Override
     public int bindLayout() {
@@ -79,41 +82,17 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
         map.put(HttpConfig.NUM, num + "");
         map.put(HttpConfig.ACTION_STATE,HttpConfig.SELECT_STATE+"");
         map.put(HttpConfig.CLASSIFY_ID, classifyID + "");
-        //new Params(HttpConfig.getRecommendItemData, map)
         return new Params(HttpConfig.getRecommendItemData, map,Works.class,true);
     }
 
     @Override
     protected void showError(String result) {
         recommend_loding.setVisibility(View.GONE);
-        data_error.setVisibility(View.VISIBLE);
+        if(!mHasLoadedOnce){
+            data_error.setVisibility(View.VISIBLE);
+        }
         recommend_refreshLayout.setEnableLoadMore(false);//关闭加载更多
     }
-
-    /*@Override
-    protected void showLoadError(String result) {
-        recommend_refreshLayout.finishLoadMore(false);//数据加载失败
-        recommend_refreshLayout.setEnableLoadMore(false);//打开加载更多
-    }
-
-    @Override
-    protected void setLoadData(Object result) {
-        if(adapter==null){
-            setData(result,false);
-            return;
-        }
-        List<Works> works = (List<Works>) result;
-        if (null == works || works.size() <= 0) {
-            recommend_refreshLayout.finishLoadMore(false);//数据加载失败
-            recommend_refreshLayout.setEnableLoadMore(false);//打开加载更多
-            return;
-        }
-        adapter.insertAll(works);
-        setEnableLoadData(works.size()<num);
-        start = start + works.size();
-        recommend_refreshLayout.finishLoadMore(true);//数据加载成功
-        recommend_refreshLayout.setEnableLoadMore(true);//打开加载更多
-    }*/
 
     @Override
     protected void initData() {
@@ -121,10 +100,8 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
             return;
         }
         mHasLoadedOnce = true;//标识已经加载过
-
         Bundle bundle = getArguments();//从activity传过来的Bundle
         classifyID = bundle.getString("classifyID");
-        isPrepared = true;//标识已经初始化完成
         //设置管理器
         recommend_recycler.setLayoutManager(ViewUtils.getStaggeredGridManager(2));
         recommend_recycler.setHasFixedSize(true);
@@ -132,13 +109,6 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
         //添加分割线
         recommend_recycler.addItemDecoration(new RecyclerViewItemDecoration(32));
         //List<Works> worksList = getListData();
-        /*recommend_recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                //layoutManager.invalidateSpanAssignments();
-            }
-        });*/
         recommend_refreshLayout.setEnableLoadMore(false);//关闭加载更多
         recommend_refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -160,24 +130,43 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
     protected void setData( Object result, boolean isRefresh) {
         recommend_loding.setVisibility(View.GONE);
         if(null==result){
-            data_error.setVisibility(View.VISIBLE);
+            if(!mHasLoadedOnce){
+                data_error.setVisibility(View.VISIBLE);
+            }
+            isLoadData=true;
             recommend_refreshLayout.setEnableLoadMore(false);//关闭加载更多
             return;
         }
-        List<Works> worksList = (List<Works>) result;
-        if(null==worksList||worksList.size()<=0){
-            data_error.setVisibility(View.VISIBLE);
+        List<Works> workses = (List<Works>) result;
+        if(null==workses||workses.size()<=0){
+            if(!mHasLoadedOnce){
+                data_error.setVisibility(View.VISIBLE);
+            }
             recommend_refreshLayout.setEnableLoadMore(false);//关闭加载更多
             return;
         }
+        worksList.addAll(workses);
+        if(adapter==null){
+            bindAdapter();
+        }else{
+            //adapter.insertAll(workses);
+            adapter.notifyDataSetChanged();
+            recommend_refreshLayout.finishLoadMore(true);//数据加载成功或者失败
+        }
+        //adapter.refreshAll(worksList);
+        //adapter.notifyDataSetChanged();
+        data_error.setVisibility(View.GONE);
+        recommend_refreshLayout.setEnableLoadMore(workses.size()>=num);//打开加载更多
+        start = start + workses.size();
+        recommend_recycler.setVisibility(View.VISIBLE);
+    }
+
+    private void bindAdapter() {
         adapter = new BaseRecyclerAdapter<Works>(mContext, worksList, R.layout.recommend_item_layout) {
             @Override
             public void convert(final BaseRecyclerHolder baseRecyclerHolder, Works works, int position) {
                 ImageView recommend_item_image = baseRecyclerHolder.getView(R.id.recommend_item_image);
-                Glide.with(mContext).load(works.getWorksImage())
-                        //.placeholder(R.mipmap.ova) //占位图
-                        .thumbnail(0.1f)
-                        .into(recommend_item_image);
+                Glide.with(mContext).load(works.getWorksImage()).thumbnail(0.1f).into(recommend_item_image);
                 ImageView recommend_item_userhead = baseRecyclerHolder.getView(R.id.recommend_item_userhead);
                 Glide.with(mContext).load(works.getUserHead()).centerCrop().into(recommend_item_userhead);
                 baseRecyclerHolder.setText(R.id.recommend_item_username, works.getUserName() + "");
@@ -194,12 +183,7 @@ public class RecommendItemFragment extends BaseLazyLoadFragment implements BaseR
             }
         };
         //绑定适配器
-        data_error.setVisibility(View.GONE);
         recommend_recycler.setAdapter(adapter);
-        adapter.updateAll(worksList.size());
-        recommend_refreshLayout.setEnableLoadMore(true);//打开加载更多
-        start = start + worksList.size();
-        recommend_recycler.setVisibility(View.VISIBLE);
     }
 
     @Override
