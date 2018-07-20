@@ -50,10 +50,7 @@ public class SearchActivity extends BaseFragmentActivity {
     private SearchUserFragment suf ;
     @Override
     public void initParms(Intent intent) {
-        setAllowFullScreen(true);
-        setScreenRoate(false);
-        setSteepStatusBar(false);
-        setSetActionBarColor(true, R.color.colorActionBar);
+        setSetActionBarColor(true, R.color.maintab_topbar_bg_color);
     }
     @Override
     public int bindLayout() {

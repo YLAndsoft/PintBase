@@ -10,7 +10,7 @@ public class HttpConfig {
     public static final  boolean isInter = false;
 
     //服务器地址
-    private static final String URL_WEB_ZS = "http://120.24.152.185/AppStore2";
+    private static final String URL_WEB_ZS = "http://120.24.152.185/paintworld";
     //本地调试地址
     private static final String URL_WEB_CS = "http://192.168.0.200:8081/paintworld";
     //百度云地址

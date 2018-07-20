@@ -5,33 +5,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import f.base.BaseFragmentActivity;
 import f.base.bean.Params;
 import f.base.utils.GsonUtils;
 import f.base.utils.StringUtils;
-import f.base.utils.XutilsHttp;
 import z.pint.R;
 import z.pint.adapter.ClassifyViewPagerAdapter;
 import z.pint.bean.EventBusEvent;
 import z.pint.bean.User;
-import z.pint.bean.Works;
-import z.pint.constant.Constant;
 import z.pint.constant.HttpConfig;
 import z.pint.fragment.PersonalFragment;
 import z.pint.fragment.UserWorksFragment;
@@ -78,10 +70,7 @@ public class UserInfoActivity extends BaseFragmentActivity {
 
     @Override
     public void initParms(Intent intent) {
-        setAllowFullScreen(true);
-        setScreenRoate(false);
-        setSteepStatusBar(false);
-        setSetActionBarColor(true, R.color.colorActionBar);
+        setSetActionBarColor(true, R.color.maintab_topbar_bg_color);
         this.intent = intent;
     }
 

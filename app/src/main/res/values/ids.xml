@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--activity_collection-->
+    <item type="id" name="collection_recycler">false</item>
+    <!--default_top_layout-->
+    <item type="id" name="default_titleName">false</item>
+    <item type="id" name="default_top_layout">false</item>
+    <!--activity_editinfo_activity-->
+    <item type="id" name="edit_rootView">false</item>
+    <item type="id" name="edit_toBack">false</item>
+    <item type="id" name="userInfo">false</item>
+    <item type="id" name="edit_submit">false</item>
+    <item type="id" name="rl_user_head">false</item>
+    <item type="id" name="tv_userHead">false</item>
+    <item type="id" name="edit_info_userHead">false</item>
+    <item type="id" name="edit_right1">false</item>
+    <item type="id" name="rl_user_name">false</item>
+    <item type="id" name="tv_userName">false</item>
+    <item type="id" name="edit_info_userName">false</item>
+    <item type="id" name="edit_right2">false</item>
+    <item type="id" name="rl_user_sex">false</item>
+    <item type="id" name="tv_userSex">false</item>
+    <item type="id" name="edit_info_userSex">false</item>
+    <item type="id" name="edit_right3">false</item>
+    <item type="id" name="rl_user_sign">false</item>
+    <item type="id" name="tv_userSign">false</item>
+    <item type="id" name="edit_info_userSign">false</item>
+    <item type="id" name="edit_right5">false</item>
+    <item type="id" name="rl_user_address">false</item>
+    <item type="id" name="tv_userAddress">false</item>
+    <item type="id" name="edit_info_userAddress">false</item>
+    <item type="id" name="edit_right4">false</item>
+    <!--activity_fans-->
+    <item type="id" name="fans_title">false</item>
+    <item type="id" name="fansAndattention_toBlack">false</item>
+    <item type="id" name="fansAndattention_title">false</item>
+    <item type="id" name="fansAndattention_recycler">false</item>
+    <!--activity_guide-->
+    <item type="id" name="guide_bg">false</item>
+    <!--activiyt_helper-->
+    <item type="id" name="help_classifyTitie">false</item>
+    <item type="id" name="function_advise">false</item>
+    <item type="id" name="function_question">false</item>
+    <item type="id" name="help_content">false</item>
+    <item type="id" name="edit_content">false</item>
+    <item type="id" name="help_contact">false</item>
+    <item type="id" name="edit_contact">false</item>
+    <item type="id" name="help_commit">false</item>
+    <!--activity_main-->
+    <item type="id" name="main_menu_table">false</item>
+    <item type="id" name="iv_menu_0">false</item>
+    <item type="id" name="iv_menu_1">false</item>
+    <item type="id" name="iv_menu_2">false</item>
+    <item type="id" name="iv_menu_3">false</item>
+    <item type="id" name="iv_menu_4">false</item>
+    <item type="id" name="fl_menu_container">false</item>
+    <item type="id" name="home_txt_line">false</item>
+    <item type="id" name="rl_menu">false</item>
+    <!--activity_my_works-->
+    <item type="id" name="my_works_recycler">false</item>
+    <!--activity_release_works-->
+    <item type="id" name="release_title">false</item>
+    <item type="id" name="release_submit">false</item>
+    <item type="id" name="release_img">false</item>
+    <item type="id" name="release_des">false</item>
+    <item type="id" name="des_length">false</item>
+    <item type="id" name="relsease_ll_tag">false</item>
+    <item type="id" name="relsease_tag">false</item>
+    <!--activity_search-->
+    <item type="id" name="search_edit">false</item>
+    <item type="id" name="submit_search">false</item>
+    <item type="id" name="search_tabs">false</item>
+    <item type="id" name="search_pager">false</item>
+    <!--activity_select_tag-->
+    <item type="id" name="select_label_title">false</item>
+    <item type="id" name="submit_tag">false</item>
+    <item type="id" name="classify_label">false</item>
+    <item type="id" name="recycler_tag">false</item>
+    <item type="id" name="custom_label">false</item>
+    <item type="id" name="custom_tag">false</item>
+    <item type="id" name="create_des">false</item>
+    <!--activity_settings-->
+    <item type="id" name="settings_recycler">false</item>
+    <!--activity_user_info-->
+    <item type="id" name="main_content">false</item>
+    <item type="id" name="userinfo_bgimage">false</item>
+    <item type="id" name="userinfo_head">false</item>
+    <item type="id" name="userinfo_nx">false</item>
+    <item type="id" name="userinfo_name">false</item>
+    <item type="id" name="user_sex">false</item>
+    <item type="id" name="userinfo_af">false</item>
+    <item type="id" name="userinfo_attention">false</item>
+    <item type="id" name="userinfo_fans">false</item>
+    <item type="id" name="user_edit">false</item>
+    <item type="id" name="userinfo_titile_toback">false</item>
+    <item type="id" name="userinfo_titile_name">false</item>
+    <item type="id" name="userinfo_tabs">false</item>
+    <item type="id" name="userinfo_pager">false</item>
+    <!--activity_white_board-->
+    <item type="id" name="whiteboard">false</item>
+    <item type="id" name="toBack">false</item>
+    <item type="id" name="send_submit">false</item>
+    <!--activity_works_details-->
+    <item type="id" name="details_back">false</item>
+    <item type="id" name="details_title">false</item>
+    <item type="id" name="details_Collection">false</item>
+    <item type="id" name="details_works_tabs">false</item>
+    <item type="id" name="details_works_pager">false</item>
+    <item type="id" name="ll_cm_like">false</item>
+    <item type="id" name="details_ll_comment">false</item>
+    <item type="id" name="details_toComment">false</item>
+    <item type="id" name="details_comment">false</item>
+    <item type="id" name="details_ll_likes">false</item>
+    <item type="id" name="details_toLikes">false</item>
+    <item type="id" name="likesTxt">false</item>
+    <item type="id" name="ll_comment">false</item>
+    <item type="id" name="edit_comment">false</item>
+    <item type="id" name="send_comment">false</item>
+    <!--attention_msg_item_layout-->
+    <item type="id" name="message_at_icon">false</item>
+    <item type="id" name="message_at_time">false</item>
+    <item type="id" name="rl_info">false</item>
+    <item type="id" name="ll_msg_user">false</item>
+    <item type="id" name="message_at_userHead">false</item>
+    <item type="id" name="message_at_useName">false</item>
+    <item type="id" name="message_at_content">false</item>
+    <!--collection_item_layout-->
+    <item type="id" name="collection_time">false</item>
+    <item type="id" name="collection_works_userHead">false</item>
+    <item type="id" name="collection_works_userName">false</item>
+    <item type="id" name="worksReleaseTime">false</item>
+    <item type="id" name="collection_works_img">false</item>
+    <item type="id" name="collection_des">false</item>
+    <item type="id" name="collection_ll_comment">false</item>
+    <item type="id" name="collection_commentNumber">false</item>
+    <item type="id" name="collection_ll_likes">false</item>
+    <item type="id" name="collection_likes_img">false</item>
+    <item type="id" name="collection_likesNumber">false</item>
+    <!--custom_tag_item_layout-->
+    <item type="id" name="custom_tag_txt">false</item>
+    <!--details_bar_layout-->
+    <item type="id" name="fl_image">false</item>
+    <item type="id" name="details_works_imag">false</item>
+    <item type="id" name="view_image">false</item>
+    <item type="id" name="details_ll_des">false</item>
+    <item type="id" name="ll_des">false</item>
+    <item type="id" name="details_dex">false</item>
+    <item type="id" name="details_worksStrokes">false</item>
+    <item type="id" name="details_ll_lebel">false</item>
+    <item type="id" name="details_label1">false</item>
+    <item type="id" name="details_label2">false</item>
+    <item type="id" name="details_label3">false</item>
+    <item type="id" name="details_ll_userInfo">false</item>
+    <item type="id" name="details_userHead">false</item>
+    <item type="id" name="details_userName">false</item>
+    <item type="id" name="details_worksTims">false</item>
+    <item type="id" name="details_attention">false</item>
+    <!--details_comment_fragment-->
+    <item type="id" name="details_comment_rootView">false</item>
+    <item type="id" name="comment_refreshLayout">false</item>
+    <item type="id" name="details_comment_recycler">false</item>
+    <item type="id" name="error_comment">false</item>
+    <item type="id" name="comment_loding">false</item>
+    <!--details_laud_fragment-->
+    <item type="id" name="details_likes_refreshLayout">false</item>
+    <item type="id" name="details_laud_recycler">false</item>
+    <item type="id" name="error_likes">false</item>
+    <!--details_tab_title_item_gift_layout-->
+    <item type="id" name="details_tab_title_name">false</item>
+    <item type="id" name="details_tab_title_number">false</item>
+    <!--details_works_comment_item_layout-->
+    <item type="id" name="comment_info">false</item>
+    <item type="id" name="comment_userhead">false</item>
+    <item type="id" name="comment_ll_userInfo">false</item>
+    <item type="id" name="comment_userName">false</item>
+    <item type="id" name="comment_tims">false</item>
+    <item type="id" name="comment_content">false</item>
+    <!--details_works_likes_item_layout-->
+    <item type="id" name="details_rl_info">false</item>
+    <item type="id" name="details_likes_userHead">false</item>
+    <item type="id" name="details_likes_userName">false</item>
+    <item type="id" name="details_likes_attention">false</item>
+    <!--fans_attention_item_layout-->
+    <item type="id" name="fansAndAttention_userHead">false</item>
+    <item type="id" name="fansAndAttention_userName">false</item>
+    <item type="id" name="fansAndAttention_attention">false</item>
+    <!--fragment_home_layout-->
+    <item type="id" name="home_title">false</item>
+    <item type="id" name="home_refreshLayout">false</item>
+    <item type="id" name="home_recycler">false</item>
+    <item type="id" name="home_loding">false</item>
+    <item type="id" name="home_error">false</item>
+    <!--fragment_message_layout-->
+    <item type="id" name="message_title">false</item>
+    <item type="id" name="msg_refreshLayout">false</item>
+    <item type="id" name="msg_recycler">false</item>
+    <item type="id" name="msg_loding">false</item>
+    <item type="id" name="msg_error">false</item>
+    <!--fragment_personal-->
+    <item type="id" name="userinfo_personalRecycler">false</item>
+    <!--fragment_recommend_item_layout-->
+    <item type="id" name="recommend_refreshLayout">false</item>
+    <item type="id" name="recommend_recycler">false</item>
+    <item type="id" name="data_error">false</item>
+    <item type="id" name="recommend_loding">false</item>
+    <!--fragment_recommend_layout-->
+    <item type="id" name="recommend_ll">false</item>
+    <item type="id" name="new_search">false</item>
+    <item type="id" name="new_search_tabs">false</item>
+    <item type="id" name="recommend_pager">false</item>
+    <!--fragment_search_user-->
+    <!--fragment_search_work-->
+    <item type="id" name="search_refreshLayout">false</item>
+    <item type="id" name="search_recycler">false</item>
+    <item type="id" name="search_error">false</item>
+    <item type="id" name="search_loding">false</item>
+    <!--fragment_user_layout-->
+    <item type="id" name="user_refreshLayout">false</item>
+    <item type="id" name="rl_user">false</item>
+    <item type="id" name="user_head">false</item>
+    <item type="id" name="user_name">false</item>
+    <item type="id" name="user_sign">false</item>
+    <item type="id" name="ll_at">false</item>
+    <item type="id" name="ll_gz">false</item>
+    <item type="id" name="user_attentionNumber">false</item>
+    <item type="id" name="user_attentionTile">false</item>
+    <item type="id" name="ll_fs">false</item>
+    <item type="id" name="user_fansNumber">false</item>
+    <item type="id" name="user_fansTitle">false</item>
+    <item type="id" name="ll_zp">false</item>
+    <item type="id" name="user_worksNumber">false</item>
+    <item type="id" name="user_worksTitle">false</item>
+    <item type="id" name="ll_collect">false</item>
+    <item type="id" name="user_collectionTitle">false</item>
+    <item type="id" name="ll_advise">false</item>
+    <item type="id" name="user_help_Title">false</item>
+    <item type="id" name="ll_chat">false</item>
+    <item type="id" name="user_chatTitle">false</item>
+    <item type="id" name="ll_clear">false</item>
+    <item type="id" name="user_clearCacheTitle">false</item>
+    <item type="id" name="ll_setting">false</item>
+    <item type="id" name="user_settingTilte">false</item>
+    <!--fragment_userinfo_works-->
+    <item type="id" name="userWorks_refreshLayout">false</item>
+    <item type="id" name="userinfo_works_recycler">false</item>
+    <item type="id" name="userWoorks_loding">false</item>
+    <!--home_recycler_item_layout-->
+    <item type="id" name="home_item_userInfo">false</item>
+    <item type="id" name="home_item_userHead">false</item>
+    <item type="id" name="home_item_userName">false</item>
+    <item type="id" name="home_item_releaseTime">false</item>
+    <item type="id" name="home_item_works_img">false</item>
+    <item type="id" name="home_item_des">false</item>
+    <item type="id" name="home_item_ll_comment">false</item>
+    <item type="id" name="home_item_commentNumber">false</item>
+    <item type="id" name="home_item_ll_likes">false</item>
+    <item type="id" name="home_item_likes_img">false</item>
+    <item type="id" name="home_item_likesNumber">false</item>
+    <!--my_works_item_layout-->
+    <item type="id" name="my_work_userinfo">false</item>
+    <item type="id" name="my_works_userHead">false</item>
+    <item type="id" name="my_works_userName">false</item>
+    <item type="id" name="my_works_img">false</item>
+    <item type="id" name="my_des">false</item>
+    <item type="id" name="my_ll_comment">false</item>
+    <item type="id" name="my_commentNumber">false</item>
+    <item type="id" name="my_ll_likes">false</item>
+    <item type="id" name="my_likes_img">false</item>
+    <item type="id" name="my_likesNumber">false</item>
+    <!--photo_popupwindow_layout-->
+    <item type="id" name="txt0">false</item>
+    <item type="id" name="txt1">false</item>
+    <item type="id" name="pw_cancel">false</item>
+    <!--recommend_item_layout-->
+    <item type="id" name="recommend_item_image">false</item>
+    <item type="id" name="recommend_item_des">false</item>
+    <item type="id" name="recommend_item_userhead">false</item>
+    <item type="id" name="recommend_item_username">false</item>
+    <item type="id" name="recommend_item_likes">false</item>
+    <!--settings_item_layout-->
+    <item type="id" name="settings_root">false</item>
+    <item type="id" name="settings_name">false</item>
+    <!--system_msg_item_layout-->
+    <item type="id" name="system_msg_icon">false</item>
+    <item type="id" name="system_msg_time">false</item>
+    <item type="id" name="system_msg_image">false</item>
+    <item type="id" name="system_msg_title">false</item>
+    <item type="id" name="system_msg_content">false</item>
+    <!--tag_item_layout-->
+    <item type="id" name="item_tag">false</item>
+    <!--userinfo_personal_item_layout-->
+    <item type="id" name="personal_txt">false</item>
+    <item type="id" name="personal_content">false</item>
+    <!--userinfo_works_item_layout-->
+    <item type="id" name="userWorks_item_userInfo">false</item>
+    <item type="id" name="userWorks_item_userHead">false</item>
+    <item type="id" name="userWorks_item_userName">false</item>
+    <item type="id" name="userWorks_item_releaseTime">false</item>
+    <item type="id" name="userWorks_item_img">false</item>
+    <item type="id" name="userWorks_item_des">false</item>
+    <item type="id" name="userWorks_ll_comment">false</item>
+    <item type="id" name="userWorks_commentNumber">false</item>
+    <item type="id" name="userWorks_ll_likes">false</item>
+    <item type="id" name="userWorks_likes_img">false</item>
+    <item type="id" name="userWorks_likesNumber">false</item>
+
+</resources>

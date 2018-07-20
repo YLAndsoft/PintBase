@@ -1,9 +1,7 @@
 package z.pint.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,24 +9,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
 import com.yinghe.whiteboardlib.Utils.TimeUtils;
 import com.yinghe.whiteboardlib.fragment.WhiteBoardFragment;
-
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
-
 import java.io.File;
-
 import f.base.BaseFragmentActivity;
 import f.base.bean.Params;
 import z.pint.R;
 import z.pint.bean.EventBusEvent;
 import z.pint.bean.Works;
-import z.pint.constant.Constant;
-import z.pint.fragment.HomeFragment;
 import z.pint.utils.EventBusUtils;
 
 /**
@@ -47,10 +39,7 @@ public class WhiteBoardActivity extends BaseFragmentActivity implements  WhiteBo
     private static  final  int SEND_CODE=1;
     @Override
     public void initParms(Intent intent) {
-        setAllowFullScreen(true);
-        setScreenRoate(false);
-        setSteepStatusBar(false);
-        setSetActionBarColor(true, R.color.colorActionBar);
+        setSetActionBarColor(true, R.color.maintab_topbar_bg_color);
     }
 
     @Override

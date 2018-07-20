@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/main_content"
+        android:id="@id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
@@ -31,7 +31,7 @@
                     android:background="@color/white">
 
                     <ImageView
-                        android:id="@+id/userinfo_bgimage"
+                        android:id="@id/userinfo_bgimage"
                         android:layout_width="match_parent"
                         android:layout_height="180dp"
                         android:scaleType="centerCrop"
@@ -43,7 +43,7 @@
 
                         <z.pint.view.CuttingImageView
                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/userinfo_head"
+                            android:id="@id/userinfo_head"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginLeft="50dp"
@@ -54,16 +54,16 @@
                             app:border_color="@color/transparent" />
 
                         <RelativeLayout
-                            android:id="@+id/userinfo_nx"
+                            android:id="@id/userinfo_nx"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/userinfo_head"
+                            android:layout_below="@id/userinfo_head"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="5dp"
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/userinfo_name"
+                                android:id="@id/userinfo_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
@@ -71,36 +71,36 @@
                                 android:textSize="15dp" />
 
                             <ImageView
-                                android:id="@+id/user_sex"
+                                android:id="@id/user_sex"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:layout_toRightOf="@+id/userinfo_name"
+                                android:layout_toRightOf="@id/userinfo_name"
                                 android:src="@mipmap/male" />
 
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:id="@+id/userinfo_af"
+                            android:id="@id/userinfo_af"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/userinfo_nx"
+                            android:layout_below="@id/userinfo_nx"
                             android:layout_centerHorizontal="true"
                             android:layout_marginBottom="20dp"
                             android:layout_marginTop="10dp">
 
                             <TextView
-                                android:id="@+id/userinfo_attention"
+                                android:id="@id/userinfo_attention"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/gary2" />
 
                             <TextView
-                                android:id="@+id/userinfo_fans"
+                                android:id="@id/userinfo_fans"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:layout_toRightOf="@+id/userinfo_attention"
+                                android:layout_toRightOf="@id/userinfo_attention"
                                 android:textColor="@color/gary2" />
                         </RelativeLayout>
 
@@ -110,12 +110,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_below="@+id/userinfo_bgimage"
+                        android:layout_below="@id/userinfo_bgimage"
                         android:layout_marginRight="30dp"
                         android:layout_marginTop="15dp">
 
                         <ImageView
-                            android:id="@+id/user_edit"
+                            android:id="@id/user_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="35dp"
@@ -135,7 +135,7 @@
                         android:background="@color/transparent">
 
                         <ImageView
-                            android:id="@+id/userinfo_titile_toback"
+                            android:id="@id/userinfo_titile_toback"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -143,7 +143,7 @@
                             android:src="@mipmap/top_back" />
 
                         <TextView
-                            android:id="@+id/userinfo_titile_name"
+                            android:id="@id/userinfo_titile_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
@@ -156,7 +156,7 @@
 
             <z.pint.view.PagerSlidingTabStrip
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/userinfo_tabs"
+                android:id="@id/userinfo_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@color/white"
@@ -174,7 +174,7 @@
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/userinfo_pager"
+            android:id="@id/userinfo_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />

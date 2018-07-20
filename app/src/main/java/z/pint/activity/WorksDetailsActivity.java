@@ -65,10 +65,7 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
     private int position;
     @Override
     public void initParms(Intent intent) {
-        setAllowFullScreen(true);
-        setScreenRoate(false);
-        setSteepStatusBar(false);
-        setSetActionBarColor(false, R.color.colorActionBar);
+        setSetActionBarColor(false, R.color.maintab_topbar_bg_color);
         //去掉状态栏
         getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,WindowManager.LayoutParams. FLAG_FULLSCREEN);
         //获取首页传递过来的作品
@@ -196,7 +193,7 @@ public class WorksDetailsActivity extends BaseFragmentActivity {
                         ViewUtils.isCollection(false,details_Collection);//是否收藏
                         showToast("取消收藏");
                     }else{
-                        int collectionUserID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
+                        int collectionUserID = SPUtils.getUserID(mContext);
                         DBHelper.saveCollection(works,collectionUserID);
                         ViewUtils.isCollection(true,details_Collection);//是否收藏
                         showToast("收藏成功");

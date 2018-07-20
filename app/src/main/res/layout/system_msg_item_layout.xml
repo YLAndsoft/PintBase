@@ -19,7 +19,7 @@
             android:background="@color/gary1" />
 
         <ImageView
-            android:id="@+id/system_msg_icon"
+            android:id="@id/system_msg_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerHorizontal="true"
@@ -27,10 +27,10 @@
             android:layout_marginTop="14dp" />
 
         <TextView
-            android:id="@+id/system_msg_time"
+            android:id="@id/system_msg_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/system_msg_icon"
+            android:layout_below="@id/system_msg_icon"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:textColor="@color/gary3"
@@ -49,14 +49,14 @@
         android:padding="15dp">
 
         <ImageView
-            android:id="@+id/system_msg_image"
+            android:id="@id/system_msg_image"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/bg_man" />
 
         <TextView
-            android:id="@+id/system_msg_title"
+            android:id="@id/system_msg_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -64,7 +64,7 @@
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/system_msg_content"
+            android:id="@id/system_msg_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

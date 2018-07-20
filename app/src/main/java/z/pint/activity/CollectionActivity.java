@@ -42,10 +42,7 @@ public class CollectionActivity extends BaseActivity {
     private BaseRecyclerAdapter<Collection> adapter;
     @Override
     public void initParms(Intent intent) {
-        setAllowFullScreen(true);
-        setScreenRoate(false);
-        setSteepStatusBar(false);
-        setSetActionBarColor(true, R.color.colorActionBar);
+        setSetActionBarColor(true, R.color.maintab_topbar_bg_color);
     }
     @Override
     public int bindLayout() {
@@ -63,7 +60,7 @@ public class CollectionActivity extends BaseActivity {
     public void initData(final Context mContext) {
         ViewUtils.setTextView(default_titleName,getResources().getString(R.string.collection_titelName));
         collection_recycler.setLayoutManager(ViewUtils.getLayoutManager(mContext));
-        userID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
+        userID = SPUtils.getUserID(mContext);
         //查询数据库，得到收藏作品数据
         collections = DBHelper.selectCollectionAll(userID);
         if(null==collections||collections.size()<0){return;}
@@ -110,8 +107,11 @@ public class CollectionActivity extends BaseActivity {
     public Params getParams() {
         return null;
     }
-
     @Override
-    protected void setData(String result) {
+    protected void onSuccess(Params params) {
     }
+    @Override
+    protected void onErrors(Params params) {
+    }
+
 }

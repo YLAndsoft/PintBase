@@ -16,14 +16,14 @@
             android:onClick="toBack"
             android:layout_centerVertical="true"/>
         <TextView
-            android:id="@+id/release_title"
+            android:id="@id/release_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="16dp"
             android:layout_centerInParent="true"/>
         <ImageView
-            android:id="@+id/release_submit"
+            android:id="@id/release_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/send"
@@ -37,7 +37,7 @@
         android:layout_height="200dp"
         android:background="@color/gary5">
         <ImageView
-            android:id="@+id/release_img"
+            android:id="@id/release_img"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
@@ -45,10 +45,10 @@
             android:layout_marginTop="10dp"
             android:padding="5dp"/>
         <EditText
-            android:id="@+id/release_des"
+            android:id="@id/release_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/release_img"
+            android:layout_toRightOf="@id/release_img"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="25dp"
             android:layout_marginTop="10dp"
@@ -56,7 +56,7 @@
             android:textSize="13dp"
             android:background="@color/transparent"/>
         <TextView
-            android:id="@+id/des_length"
+            android:id="@id/des_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -66,26 +66,37 @@
 
     </RelativeLayout>
 
-<LinearLayout
-    android:id="@+id/relsease_ll_tag"
-    android:layout_width="match_parent"
-    android:layout_height="55dp"
-    android:gravity="center_vertical"
-    android:paddingLeft="12dp"
-    android:orientation="horizontal">
-    <ImageView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@mipmap/tag"/>
-    <TextView
-        android:id="@+id/relsease_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:textColor="@color/black"
-        android:layout_marginLeft="15dp"/>
+        android:gravity="center_vertical"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/tag"/>
+        <LinearLayout
+            android:id="@id/relsease_ll_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="12dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@id/relsease_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="5dp"/>
 
-</LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 
 </LinearLayout>

@@ -53,10 +53,7 @@ public class ReleaseWorksActivity extends BaseActivity {
     private static final int TAG_CAODE = 1;//标签选择回调码
     @Override
     public void initParms(Intent intent) {
-        setAllowFullScreen(true);
-        setScreenRoate(false);
-        setSteepStatusBar(false);
-        setSetActionBarColor(true, R.color.colorActionBar);
+        setSetActionBarColor(true, R.color.maintab_topbar_bg_color);
         filePath = intent.getStringExtra("filePath");
     }
     @Override
@@ -99,12 +96,12 @@ public class ReleaseWorksActivity extends BaseActivity {
                 works.setWorksLabel(tag);//设置作品的标签
                 String[] split = tag.split("\\|");//截取标签
                 relsease_ll_tag.removeAllViews();//移除所有布局
-                ImageView imageView = new ImageView(mContext);//创建Imageview布局
-                imageView.setImageResource(R.mipmap.tag); //设置image资源
-                relsease_ll_tag.addView(imageView);//添加标签图标布局
+                //ImageView imageView = new ImageView(mContext);//创建Imageview布局
+                //imageView.setImageResource(R.mipmap.tag); //设置image资源
+                //relsease_ll_tag.addView(imageView);//添加标签图标布局
                 for(int i=0;i<split.length;i++){
                     if(StringUtils.isBlank(split[i])) return;
-                    View inflate = View.inflate(mContext, R.layout.custom_tag_item_layout, null);
+                    View inflate = View.inflate(mContext, R.layout.release_tag_item_layout, null);
                     TextView txt = inflate.findViewById(R.id.custom_tag_txt);
                     txt.setText("#  "+split[i]+"");
                     relsease_ll_tag.addView(inflate);
@@ -189,7 +186,11 @@ public class ReleaseWorksActivity extends BaseActivity {
     public Params getParams() {
         return null;
     }
+
     @Override
-    protected void setData(String result) {
+    protected void onSuccess(Params params) {
+    }
+    @Override
+    protected void onErrors(Params params) {
     }
 }

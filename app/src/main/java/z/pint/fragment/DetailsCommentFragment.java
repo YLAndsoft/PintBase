@@ -199,12 +199,6 @@ public class DetailsCommentFragment extends BaseFragment implements BaseRecycler
     }
 
     /**
-     * 加载更多错误回调
-     * @param result
-     */
-
-
-    /**
      * 加载更多回调
      * @param
      */

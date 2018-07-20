@@ -5,7 +5,7 @@
     android:paddingBottom="45dp">
      <com.scwang.smartrefresh.layout.SmartRefreshLayout
          xmlns:app="http://schemas.android.com/apk/res-auto"
-         android:id="@+id/details_likes_refreshLayout"
+         android:id="@id/details_likes_refreshLayout"
          android:layout_width="match_parent"
          android:layout_height="match_parent"
          android:background="#444444"
@@ -29,7 +29,7 @@
                    android:layout_width="match_parent"
                    android:layout_height="match_parent">
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/details_laud_recycler"
+                        android:id="@id/details_laud_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:scrollbars="none"
@@ -39,7 +39,7 @@
 
 
                          <TextView
-                             android:id="@+id/error_likes"
+                             android:id="@id/error_likes"
                              android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
                              android:drawableTop="@mipmap/data_error"
@@ -47,7 +47,7 @@
                              android:visibility="gone"
                              android:layout_marginTop="100dp"/>
                     <ProgressBar
-                        android:id="@+id/comment_loding"
+                        android:id="@id/comment_loding"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true" />

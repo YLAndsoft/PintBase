@@ -8,7 +8,7 @@
 
     <include layout="@layout/default_top_layout"/>
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_works_recycler"
+        android:id="@id/my_works_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"/>

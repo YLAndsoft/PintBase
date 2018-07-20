@@ -98,7 +98,7 @@ public class SPUtils {
      * @param context
      * @param values
      */
-    public static void saveUserID(Context context,String values){
+    public static void saveUserID(Context context,int values){
         getInstance(context).setParam("userID",values);
     }
 

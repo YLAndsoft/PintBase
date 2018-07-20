@@ -10,7 +10,7 @@
         android:layout_height="8dp"
         android:background="@color/gary4"/>
     <RelativeLayout
-        android:id="@+id/userWorks_item_userInfo"
+        android:id="@id/userWorks_item_userInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
@@ -18,7 +18,7 @@
 
         <z.pint.view.CuttingImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/userWorks_item_userHead"
+            android:id="@id/userWorks_item_userHead"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginLeft="8dp"
@@ -33,20 +33,20 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/userWorks_item_userHead"
+            android:layout_toRightOf="@id/userWorks_item_userHead"
             >
             <TextView
-                android:id="@+id/userWorks_item_userName"
+                android:id="@id/userWorks_item_userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gary3"
                 android:textSize="15dp"/>
 
             <TextView
-                android:id="@+id/userWorks_item_releaseTime"
+                android:id="@id/userWorks_item_releaseTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/userWorks_item_userName"
+                android:layout_below="@id/userWorks_item_userName"
                 android:textSize="13dp"
                 android:layout_marginTop="4dp"/>
         </RelativeLayout>
@@ -54,7 +54,7 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/userWorks_item_img"
+        android:id="@id/userWorks_item_img"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -63,7 +63,7 @@
         android:src="@mipmap/bg_man"/>
 
     <TextView
-        android:id="@+id/userWorks_item_des"
+        android:id="@id/userWorks_item_des"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/gary3"
@@ -83,7 +83,7 @@
         android:layout_height="45dp"
         android:orientation="horizontal">
         <LinearLayout
-            android:id="@+id/userWorks_ll_comment"
+            android:id="@id/userWorks_ll_comment"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/comment_count"/>
             <TextView
-                android:id="@+id/userWorks_commentNumber"
+                android:id="@id/userWorks_commentNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"/>
@@ -107,18 +107,18 @@
             android:layout_marginBottom="8dp"/>
 
         <LinearLayout
-            android:id="@+id/userWorks_ll_likes"
+            android:id="@id/userWorks_ll_likes"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_weight="1">
             <ImageView
-                android:id="@+id/userWorks_likes_img"
+                android:id="@id/userWorks_likes_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/dynamic_love"/>
             <TextView
-                android:id="@+id/userWorks_likesNumber"
+                android:id="@id/userWorks_likesNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"/>

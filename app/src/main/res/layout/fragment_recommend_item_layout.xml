@@ -7,7 +7,7 @@
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/recommend_refreshLayout"
+        android:id="@id/recommend_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#444444"
@@ -26,13 +26,13 @@
             android:layout_height="match_parent"
             android:background="@color/gary5">
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recommend_recycler"
+                android:id="@id/recommend_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone"
                 android:background="@color/white"/>
             <ImageView
-                android:id="@+id/data_error"
+                android:id="@id/data_error"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/no_comment"
@@ -40,7 +40,7 @@
                 android:visibility="gone"
                 android:layout_centerInParent="true"/>
             <ProgressBar
-                android:id="@+id/recommend_loding"
+                android:id="@id/recommend_loding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"

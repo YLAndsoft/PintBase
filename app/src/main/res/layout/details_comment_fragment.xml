@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/details_comment_rootView"
+    android:id="@id/details_comment_rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="45dp"
     android:background="@color/white">
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/comment_refreshLayout"
+        android:id="@id/comment_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#444444"
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/details_comment_recycler"
+                    android:id="@id/details_comment_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
@@ -40,10 +40,9 @@
                     />
 
                     <TextView
-                        android:id="@+id/error_comment"
+                        android:id="@id/error_comment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="暂无任何评论"
                         android:gravity="center"
                         android:visibility="gone"
                         android:layout_centerHorizontal="true"
@@ -51,7 +50,7 @@
                         android:layout_marginTop="100dp"/>
 
                 <ProgressBar
-                    android:id="@+id/comment_loding"
+                    android:id="@id/comment_loding"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true" />

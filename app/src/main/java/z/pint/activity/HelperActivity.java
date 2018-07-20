@@ -50,10 +50,7 @@ public class HelperActivity extends BaseActivity {
     private String function=FUNCTION_ADVISE;
     @Override
     public void initParms(Intent intent) {
-        setAllowFullScreen(true);
-        setScreenRoate(false);
-        setSteepStatusBar(false);
-        setSetActionBarColor(true, R.color.colorActionBar);
+        setSetActionBarColor(true, R.color.maintab_topbar_bg_color);
     }
 
     @Override
@@ -143,7 +140,11 @@ public class HelperActivity extends BaseActivity {
         return null;
     }
     @Override
-    protected void setData(String result) {
+    protected void onSuccess(Params params) {
     }
+    @Override
+    protected void onErrors(Params params) {
+    }
+
 
 }

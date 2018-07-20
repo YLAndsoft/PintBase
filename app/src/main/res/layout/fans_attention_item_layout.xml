@@ -8,7 +8,7 @@
 
         <z.pint.view.CuttingImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/fansAndAttention_userHead"
+            android:id="@id/fansAndAttention_userHead"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
@@ -17,16 +17,16 @@
             app:border_width="0dp" />
 
         <TextView
-            android:id="@+id/fansAndAttention_userName"
+            android:id="@id/fansAndAttention_userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:textColor="@color/gary2"
-            android:layout_toRightOf="@+id/fansAndAttention_userHead"/>
+            android:layout_toRightOf="@id/fansAndAttention_userHead"/>
 
         <ImageView
-            android:id="@+id/fansAndAttention_attention"
+            android:id="@id/fansAndAttention_attention"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

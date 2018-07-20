@@ -76,7 +76,7 @@ public class User implements Serializable{
 
     public void setUserName(String userName) {
         if(listener!=null){
-            listener.onSuccess(userName);
+            listener.onUpSucces(userName);
         }
         this.userName = userName;
     }
@@ -87,7 +87,7 @@ public class User implements Serializable{
 
     public void setUserSex(int userSex) {
         if(listener!=null){
-            listener.onSuccess(userSex+"");
+            listener.onUpSucces(userSex+"");
         }
         this.userSex = userSex;
     }
@@ -98,7 +98,7 @@ public class User implements Serializable{
 
     public void setUserHead(String userHead) {
         if(listener!=null){
-            listener.onSuccess(userHead);
+            listener.onUpSucces(userHead);
         }
         this.userHead = userHead;
     }
@@ -109,7 +109,7 @@ public class User implements Serializable{
 
     public void setUserAddress(String userAddress) {
         if(listener!=null){
-            listener.onSuccess(userAddress);
+            listener.onUpSucces(userAddress);
         }
         this.userAddress = userAddress;
     }
@@ -120,7 +120,7 @@ public class User implements Serializable{
 
     public void setUserSign(String userSign) {
         if(listener!=null){
-            listener.onSuccess(userSign);
+            listener.onUpSucces(userSign);
         }
         this.userSign = userSign;
     }
@@ -166,7 +166,7 @@ public class User implements Serializable{
      * 监听值发生变化的接口
      */
     public interface  OnUpdateValueListener{
-        void onSuccess(String content);
+        void onUpSucces(String content);
     }
 
 }

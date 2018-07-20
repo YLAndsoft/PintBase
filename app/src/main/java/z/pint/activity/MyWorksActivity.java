@@ -42,10 +42,7 @@ public class MyWorksActivity extends BaseActivity {
     private BaseRecyclerAdapter<Works> adapter;
     @Override
     public void initParms(Intent intent) {
-        setAllowFullScreen(true);
-        setScreenRoate(false);
-        setSteepStatusBar(false);
-        setSetActionBarColor(true, R.color.colorActionBar);
+        setSetActionBarColor(true, R.color.maintab_topbar_bg_color);
     }
 
     @Override
@@ -126,9 +123,13 @@ public class MyWorksActivity extends BaseActivity {
     public Params getParams() {
         return null;
     }
-    @Override
-    protected void setData(String result) {
 
+    @Override
+    protected void onSuccess(Params params) {
+    }
+
+    @Override
+    protected void onErrors(Params params) {
     }
 
 

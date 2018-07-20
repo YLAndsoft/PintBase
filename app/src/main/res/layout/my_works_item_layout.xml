@@ -11,7 +11,7 @@
         android:background="@color/gary5"/>
     <!--用户信息-->
     <RelativeLayout
-        android:id="@+id/my_work_userinfo"
+        android:id="@id/my_work_userinfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
@@ -19,7 +19,7 @@
         android:background="@color/white">
         <z.pint.view.CuttingImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/my_works_userHead"
+            android:id="@id/my_works_userHead"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
@@ -28,29 +28,29 @@
             app:border_width="0dp" />
 
         <TextView
-            android:id="@+id/my_works_userName"
+            android:id="@id/my_works_userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textColor="@color/gary2"
-            android:layout_toRightOf="@+id/my_works_userHead"/>
+            android:layout_toRightOf="@id/my_works_userHead"/>
 
         <TextView
-            android:id="@+id/worksReleaseTime"
+            android:id="@id/worksReleaseTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12dp"
             android:textColor="@color/gary4"
             android:layout_centerVertical="true"
-            android:layout_below="@+id/my_works_userName"
+            android:layout_below="@id/my_works_userName"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/my_works_userHead"/>
+            android:layout_toRightOf="@id/my_works_userHead"/>
 
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/my_works_img"
+        android:id="@id/my_works_img"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -58,7 +58,7 @@
         android:adjustViewBounds="true"
         android:src="@mipmap/bg_woman"/>
     <TextView
-        android:id="@+id/my_des"
+        android:id="@id/my_des"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/gary3"
@@ -78,7 +78,7 @@
         android:layout_height="45dp"
         android:orientation="horizontal">
         <LinearLayout
-            android:id="@+id/my_ll_comment"
+            android:id="@id/my_ll_comment"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/comment_count"/>
             <TextView
-                android:id="@+id/my_commentNumber"
+                android:id="@id/my_commentNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"/>
@@ -102,18 +102,18 @@
             android:layout_marginBottom="8dp"/>
 
         <LinearLayout
-            android:id="@+id/my_ll_likes"
+            android:id="@id/my_ll_likes"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_weight="1">
             <ImageView
-                android:id="@+id/my_likes_img"
+                android:id="@id/my_likes_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/dynamic_love"/>
             <TextView
-                android:id="@+id/my_likesNumber"
+                android:id="@id/my_likesNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"/>

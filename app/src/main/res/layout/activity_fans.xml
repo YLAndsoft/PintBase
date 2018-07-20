@@ -5,18 +5,18 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
     <RelativeLayout
-        android:id="@+id/fans_title"
+        android:id="@id/fans_title"
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <ImageView
-            android:id="@+id/fansAndattention_toBlack"
+            android:id="@id/fansAndattention_toBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:src="@mipmap/top_back"/>
         <TextView
-            android:id="@+id/fansAndattention_title"
+            android:id="@id/fansAndattention_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -24,8 +24,16 @@
             />
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/fansAndattention_recycler"
+        android:id="@id/fansAndattention_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:scrollbars="none"/>
+    <ImageView
+        android:id="@id/data_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:src="@mipmap/data_error"/>
 </LinearLayout>

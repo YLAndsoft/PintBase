@@ -5,7 +5,7 @@
     android:background="@color/gary">
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/user_refreshLayout"
+        android:id="@id/user_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#444444"
@@ -25,7 +25,7 @@
             android:background="@color/gary5">
             <!--头像模块-->
             <RelativeLayout
-                android:id="@+id/rl_user"
+                android:id="@id/rl_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -36,7 +36,7 @@
 
                 <z.pint.view.CuttingImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/user_head"
+                    android:id="@id/user_head"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="15dp"
@@ -49,9 +49,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/user_head">
+                    android:layout_toRightOf="@id/user_head">
                     <TextView
-                        android:id="@+id/user_name"
+                        android:id="@id/user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
@@ -61,18 +61,18 @@
                         android:textColor="@color/black"
                         android:textSize="18dp" />
                     <ImageView
-                        android:id="@+id/user_sex"
+                        android:id="@id/user_sex"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/user_name"
+                        android:layout_toRightOf="@id/user_name"
                         android:scaleType="fitCenter"
                         android:src="@mipmap/male" />
                     <TextView
-                        android:id="@+id/user_sign"
+                        android:id="@id/user_sign"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/user_name"
+                        android:layout_below="@id/user_name"
                         android:layout_marginLeft="15dp"
                         android:singleLine="true"
                         android:maxEms="10"
@@ -91,25 +91,25 @@
 
             <!--关注，粉丝，作品-->
             <LinearLayout
-                android:id="@+id/ll_at"
+                android:id="@id/ll_at"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:gravity="center_vertical"
                 android:background="@color/white"
-                android:layout_below="@+id/rl_user">
+                android:layout_below="@id/rl_user">
                 <LinearLayout
-                    android:id="@+id/ll_gz"
+                    android:id="@id/ll_gz"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1"
                     android:gravity="center_horizontal">
                     <TextView
-                        android:id="@+id/user_attentionNumber"
+                        android:id="@id/user_attentionNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:id="@+id/user_attentionTile"
+                        android:id="@id/user_attentionTile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -120,18 +120,18 @@
                     android:layout_marginBottom="15dp"
                     android:background="@color/maintab_topbar_bg_color"/>
                 <LinearLayout
-                    android:id="@+id/ll_fs"
+                    android:id="@id/ll_fs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1"
                     android:gravity="center_horizontal">
                     <TextView
-                        android:id="@+id/user_fansNumber"
+                        android:id="@id/user_fansNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:id="@+id/user_fansTitle"
+                        android:id="@id/user_fansTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -142,18 +142,18 @@
                     android:layout_marginBottom="15dp"
                     android:background="@color/maintab_topbar_bg_color"/>
                 <LinearLayout
-                    android:id="@+id/ll_zp"
+                    android:id="@id/ll_zp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1"
                     android:gravity="center_horizontal">
                     <TextView
-                        android:id="@+id/user_worksNumber"
+                        android:id="@id/user_worksNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:id="@+id/user_worksTitle"
+                        android:id="@id/user_worksTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -161,10 +161,10 @@
             </LinearLayout>
             <!--收藏-->
             <LinearLayout
-                android:id="@+id/ll_collect"
+                android:id="@id/ll_collect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_at"
+                android:layout_below="@id/ll_at"
                 android:background="@color/white"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
@@ -177,7 +177,7 @@
                     android:layout_marginLeft="15dp"
                     android:src="@mipmap/collect"/>
                 <TextView
-                    android:id="@+id/user_collectionTitle"
+                    android:id="@id/user_collectionTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -185,10 +185,10 @@
             </LinearLayout>
             <!--帮助反馈-->
             <LinearLayout
-                android:id="@+id/ll_advise"
+                android:id="@id/ll_advise"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_collect"
+                android:layout_below="@id/ll_collect"
                 android:background="@color/white"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
@@ -201,7 +201,7 @@
                     android:layout_marginLeft="15dp"
                     android:src="@mipmap/advise"/>
                 <TextView
-                    android:id="@+id/user_help_Title"
+                    android:id="@id/user_help_Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -211,10 +211,10 @@
 
             <!--联系我们-->
             <LinearLayout
-                android:id="@+id/ll_chat"
+                android:id="@id/ll_chat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_advise"
+                android:layout_below="@id/ll_advise"
                 android:background="@color/white"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
@@ -227,7 +227,7 @@
                     android:layout_marginLeft="15dp"
                     android:src="@mipmap/chat1"/>
                 <TextView
-                    android:id="@+id/user_chatTitle"
+                    android:id="@id/user_chatTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -235,10 +235,10 @@
             </LinearLayout>
             <!--清理缓存-->
             <LinearLayout
-                android:id="@+id/ll_clear"
+                android:id="@id/ll_clear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_chat"
+                android:layout_below="@id/ll_chat"
                 android:background="@color/white"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
@@ -251,7 +251,7 @@
                     android:layout_marginLeft="15dp"
                     android:src="@mipmap/clear_cache"/>
                 <TextView
-                    android:id="@+id/user_clearCacheTitle"
+                    android:id="@id/user_clearCacheTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -259,10 +259,10 @@
             </LinearLayout>
             <!--设置-->
             <LinearLayout
-                android:id="@+id/ll_setting"
+                android:id="@id/ll_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_clear"
+                android:layout_below="@id/ll_clear"
                 android:background="@color/white"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
@@ -275,7 +275,7 @@
                     android:layout_marginLeft="15dp"
                     android:src="@mipmap/setting"/>
                 <TextView
-                    android:id="@+id/user_settingTilte"
+                    android:id="@id/user_settingTilte"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"

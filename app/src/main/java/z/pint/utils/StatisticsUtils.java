@@ -91,7 +91,7 @@ public class StatisticsUtils {
      */
     private static void likesStatistics(Context mContext,Works works, int stateAction){
         if(null==works){return;}
-        int userID = (int) SPUtils.getInstance(mContext).getParam("userID", 0);
+        int userID = SPUtils.getUserID(mContext);
         Map<String,String> map = new HashMap<>();
         map.put(HttpConfig.USER_ID,userID+"");
         map.put(HttpConfig.WORKS_ID,works.getWorksID()+"");
@@ -157,7 +157,7 @@ public class StatisticsUtils {
      */
     public static void addComment(Context mContext,String worksID,String content){
         if(StringUtils.isBlank(worksID)){return;}
-        int userID = (int) SPUtils.getInstance(mContext).getParam("userID", 0);
+        int userID = SPUtils.getUserID(mContext);
         Map<String,String> map = new HashMap<>();
         map.put(HttpConfig.USER_ID,userID+"");//用户ID
         map.put(HttpConfig.WORKS_ID,worksID+"");//作品ID

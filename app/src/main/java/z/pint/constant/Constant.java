@@ -22,8 +22,6 @@ public class Constant {
     public static final String DEVELOPER = "mqqwpa://im/chat?chat_type=wpa&uin=";
     public static final String TENCENT_PAKEG = "com.tencent.mobileqq";
 
-    public static final  String RELASER_WORKS_ACTION = "relase_works_action";//发布作品Action
-
     /**
      * 显示关注数据标识
      */
@@ -32,8 +30,6 @@ public class Constant {
      * 显示粉丝数据标识
      */
     public static final int VIEW_FANS = 2;
-
-
 
     /**
      * 随机用户头像

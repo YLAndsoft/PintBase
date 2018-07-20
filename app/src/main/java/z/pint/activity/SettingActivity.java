@@ -45,10 +45,7 @@ public class SettingActivity extends BaseActivity implements BaseRecyclerHolder.
     private BaseDialog clearCacheDialog;
     @Override
     public void initParms(Intent intent) {
-        setAllowFullScreen(true);
-        setScreenRoate(false);
-        setSteepStatusBar(false);
-        setSetActionBarColor(true, R.color.colorActionBar);
+        setSetActionBarColor(true, R.color.maintab_topbar_bg_color);
         user = (User) intent.getSerializableExtra("userInfo");
     }
     @Override
@@ -85,9 +82,12 @@ public class SettingActivity extends BaseActivity implements BaseRecyclerHolder.
     public Params getParams() {
         return null;
     }
+    @Override
+    protected void onSuccess(Params params) {
+    }
 
     @Override
-    protected void setData(String result) {
+    protected void onErrors(Params params) {
     }
 
     private List<String> getStrings(){

@@ -41,7 +41,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements V
     /** 是否允许全屏 **/
     private boolean mAllowFullScreen = true;
     /** 是否禁止旋转屏幕 **/
-    private boolean isAllowScreenRoate = false;
+    private boolean isAllowScreenRoate = true;
     /** 是否设置状态栏颜色*/
     private boolean isSetActionBarColor = true;
     /** 当前Activity渲染的视图View **/
@@ -70,7 +70,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements V
             setActionBarColor(mResColor);
         }
         setContentView(mContextView);
-        if (!isAllowScreenRoate) {
+        if (isAllowScreenRoate) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
         initView(mContextView);

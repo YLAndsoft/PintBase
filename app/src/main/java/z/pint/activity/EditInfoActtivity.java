@@ -72,10 +72,7 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
 
     @Override
     public void initParms(Intent intent) {
-        setAllowFullScreen(true);
-        setScreenRoate(false);
-        setSteepStatusBar(false);
-        setSetActionBarColor(true, R.color.colorActionBar);
+        setSetActionBarColor(true, R.color.maintab_topbar_bg_color);
         user = (User) intent.getSerializableExtra("userInfo");
     }
 
@@ -244,7 +241,11 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
     }
 
     @Override
-    protected void setData(String s) {
+    protected void onSuccess(Params params) {
+    }
+
+    @Override
+    protected void onErrors(Params params) {
     }
 
     /**
@@ -508,7 +509,7 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
      * 用户属性值是否有改变的监听回调
      */
     @Override
-    public void onSuccess(String content) {
+    public void onUpSucces(String content) {
         isUpdate = true;
         edit_submit.setVisibility(View.VISIBLE);
     }

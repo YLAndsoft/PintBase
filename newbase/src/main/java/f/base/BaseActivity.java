@@ -17,8 +17,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 import f.base.bean.Params;
+import f.base.utils.GsonUtils;
 import f.base.utils.NetworkUtils;
+import f.base.utils.StringUtils;
 import f.base.utils.XutilsHttp;
 import f.base.widget.SystemBarTintManager;
 
@@ -282,19 +286,19 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     /**
      * 获取参数
      * @return
-     */
+     *//*
     public abstract Params getParams();
 
 
-    /**
+    *//**
      * 展示网络数据
-     */
+     *//*
     protected abstract void setData(String result);
 
-    /**
+    *//**
      * 获取网络数据
      * @param params
-     */
+     *//*
     private void getData(Params params) {
         if(null==params){return;}
         if(!NetworkUtils.isConnected(mContext)){return;}//网络未连接
@@ -306,6 +310,66 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
             @Override
             public void onFail(String result) {
                 setData(result);
+            }
+        });
+    }*/
+
+    /**
+     * 获取参数
+     * @return
+     */
+    public abstract Params getParams();
+
+    /**
+     * 展示网络数据
+     */
+    protected abstract void onSuccess(Params params);
+    /**
+     * 网络错误
+     */
+    protected abstract void onErrors(Params params);
+    /**
+     * 获取网络数据
+     * @param params
+     */
+    protected void getData(final Params params) {
+        if(null==params){return;}
+        if(!NetworkUtils.isConnected(mContext)){return;}//网络未连接
+        XutilsHttp.xUtilsPost(params.getURL(), params.getMap(), new XutilsHttp.XUilsCallBack() {
+            @Override
+            public void onResponse(String result) {
+                if(StringUtils.isBlank(result)){
+                    params.setObj("result为空！");
+                    onErrors(params);
+                    return;
+                }
+                if(params.getClazz()!=null){
+                    if(params.isList()){ //是否需要解析成集合数据
+                        List gsonList = GsonUtils.getGsonList(result, params.getClazz());
+                        if(gsonList!=null&&gsonList.size()>0){
+                            params.setObj(gsonList);
+                        }else{
+                            params.setObj("解析后List数据为空！");
+                            onErrors(params);
+                        }
+                    }else{
+                        Object gsonObject = GsonUtils.getGsonObject(result, params.getClazz());
+                        if(gsonObject!=null){
+                            params.setObj(gsonObject);
+                        }else{
+                            params.setObj("解析后的数据为空！");
+                            onErrors(params);
+                        }
+                    }
+                }else{
+                    params.setObj(result);
+                    onSuccess(params);
+                }
+            }
+            @Override
+            public void onFail(String result) {
+                params.setObj(result);
+                onSuccess(params);
             }
         });
     }

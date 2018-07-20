@@ -50,26 +50,26 @@ public class SelectTagActivity extends BaseActivity {
 
     private String tag = "";
     private String tmpTag = "";
-    private Map<String,Boolean> selectMap = new HashMap<>();
+    private Map<String, Boolean> selectMap = new HashMap<>();
+
     @Override
     public void initParms(Intent intent) {
-        setAllowFullScreen(true);
-        setScreenRoate(false);
-        setSteepStatusBar(false);
-        setSetActionBarColor(true, R.color.colorActionBar);
+        setSetActionBarColor(true, R.color.maintab_topbar_bg_color);
     }
+
     @Override
     public int bindLayout() {
         return R.layout.activity_select_tag;
     }
+
     @Override
     public void initView(View view) {
         x.view().inject(this);
-        ViewUtils.setTextView(select_label_title,getResources().getString(R.string.select_label_title));
-        ViewUtils.setTextView(submit_tag,getResources().getString(R.string.submit_tag));
-        ViewUtils.setTextView(classify_label,getResources().getString(R.string.classify_label));
-        ViewUtils.setTextView(custom_label,getResources().getString(R.string.custom_label));
-        ViewUtils.setTextView(create_des,getResources().getString(R.string.create_des));
+        ViewUtils.setTextView(select_label_title, getResources().getString(R.string.select_label_title));
+        ViewUtils.setTextView(submit_tag, getResources().getString(R.string.submit_tag));
+        ViewUtils.setTextView(classify_label, getResources().getString(R.string.classify_label));
+        ViewUtils.setTextView(custom_label, getResources().getString(R.string.custom_label));
+        ViewUtils.setTextView(create_des, getResources().getString(R.string.create_des));
     }
 
     @Override
@@ -80,30 +80,43 @@ public class SelectTagActivity extends BaseActivity {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
                 String[] tmp = tmpTag.split("//,");
-                if(tmp.length>3){
+                if (tmp.length > 3) {
                     create_des.setText("");
                     showToast("最多只能自定义三个标签！");
                     return;
                 }
                 String t = editable.toString();
-                if(null!=t&&!t.equals("")){
-                    boolean b1 = Pattern.compile("\\s+").matcher(t).find();
-                    boolean b2 = !t.contains(",");
-                    if(t.contains(",")){
+                if (t.trim().equals(",")) {
+                    create_des.setText("");
+                    return;
+                }
+                if (t.equals(" ")) {
+                    create_des.setText("");
+                    return;
+                }
+                if(t.length()>8){
+                    showToast("标签长度不能超过8个字符！");
+                    return;
+                }
+                boolean b1 = Pattern.compile("\\s+").matcher(t).find();
+                boolean b2 = !t.contains(",");
+                if (t.contains(",")) {
+                    addView(t);
+                    return;
+                }
+                if (Pattern.compile("\\s+").matcher(t).find()) { //判断是否有空格存在
+                    if (!t.trim().equals("")) {
                         addView(t);
-                        return;
                     }
-                    if(Pattern.compile("\\s+").matcher(t).find()){ //判断是否有空格存在
-                        addView(t);
-                        return;
-                    }
-
+                    return;
                 }
             }
         });
@@ -111,25 +124,26 @@ public class SelectTagActivity extends BaseActivity {
 
     /**
      * 动态添加布局
+     *
      * @param t
      */
-    private void addView(String t){
+    private void addView(String t) {
         //if(isAddView){return;}
-        if(custom_tag.getChildCount()<3){
-            String substring="";
-            if(t.contains(",")){
+        if (custom_tag.getChildCount() < 3) {
+            String substring = "";
+            if (t.contains(",")) {
                 substring = t.substring(0, (t.length() - 1));
-                tmpTag = tmpTag+substring+"|";
-            }else if(t.contains(" ")){
+                tmpTag = tmpTag + substring + "|";
+            } else if (t.contains(" ")) {
                 substring = t.trim();
-                tmpTag = tmpTag+substring+"|";
+                tmpTag = tmpTag + substring + "|";
             }
             View inflate = View.inflate(mContext, R.layout.custom_tag_item_layout, null);
             TextView txt = inflate.findViewById(R.id.custom_tag_txt);
-            txt.setText("#  "+substring+"");
+            txt.setText("#  " + substring + "");
             custom_tag.addView(inflate);
             create_des.setText("");
-        }else{
+        } else {
             showToast("最多只能自定义三个标签！");
         }
     }
@@ -138,28 +152,28 @@ public class SelectTagActivity extends BaseActivity {
     public void initData(Context mContext) {
         recycler_tag.setLayoutManager(ViewUtils.getHorManager(mContext));
         final List<String> tags = createTag();
-        for(int i = 0; i <tags.size();i++){
-            selectMap.put(tags.get(i),false);
+        for (int i = 0; i < tags.size(); i++) {
+            selectMap.put(tags.get(i), false);
         }
-        BaseRecyclerAdapter<String> adapter = new BaseRecyclerAdapter<String>(mContext,tags,R.layout.tag_item_layout) {
+        BaseRecyclerAdapter<String> adapter = new BaseRecyclerAdapter<String>(mContext, tags, R.layout.tag_item_layout) {
             @Override
             public void convert(BaseRecyclerHolder holder, final String item, int position) {
                 final TextView itemTag = holder.getView(R.id.item_tag);
-                itemTag.setText(item+"");
+                itemTag.setText(item + "");
                 Boolean aBoolean = selectMap.get(item);
-                if(aBoolean){
+                if (aBoolean) {
                     itemTag.setBackgroundColor(getResources().getColor(R.color.details_bg_label_color));
-                }else{
+                } else {
                     itemTag.setBackgroundColor(getResources().getColor(R.color.gary2));
                 }
                 holder.setOnViewClick(R.id.item_tag, item, position, new BaseRecyclerHolder.OnViewClickListener() {
                     @Override
                     public void onViewClick(View view, Object object, int position) {
-                        for(int i = 0; i <tags.size();i++){
-                            selectMap.put(tags.get(i),false);
+                        for (int i = 0; i < tags.size(); i++) {
+                            selectMap.put(tags.get(i), false);
                         }
-                        selectMap.put(item,true);
-                        tag = item+"|";
+                        selectMap.put(item, true);
+                        tag = item + "|";
                         notifyDataSetChanged();
                     }
                 });
@@ -170,10 +184,10 @@ public class SelectTagActivity extends BaseActivity {
 
     @Override
     public void widgetClick(View v) {
-        switch (v.getId()){
-            case  R.id.submit_tag:
-                tag = tag+tmpTag;
-                if(tag.contains("|")){
+        switch (v.getId()) {
+            case R.id.submit_tag:
+                tag = tag + tmpTag;
+                if (tag.contains("|")) {
                     tag.substring(0, (tag.length() - 1));
                 }
                 //showToast("提交的标签是>>>"+tag);
@@ -189,7 +203,7 @@ public class SelectTagActivity extends BaseActivity {
         }
     }
 
-    private List<String> createTag(){
+    private List<String> createTag() {
         List<String> list = new ArrayList<>();
         list.add(getResources().getString(R.string.defult_tag1));
         list.add(getResources().getString(R.string.defult_tag2));
@@ -202,12 +216,17 @@ public class SelectTagActivity extends BaseActivity {
     }
 
 
-
     @Override
     public Params getParams() {
         return null;
     }
+
     @Override
-    protected void setData(String result) {
+    protected void onSuccess(Params params) {
     }
+
+    @Override
+    protected void onErrors(Params params) {
+    }
+
 }

@@ -49,7 +49,7 @@ public class ViewUtils {
         return linearLayoutManager;
     }
     /**
-     * 获取水平布局管理器
+     * 获取瀑布流布局管理器
      * @return
      */
     public static RecyclerView.LayoutManager getStaggeredGridManager(int num){

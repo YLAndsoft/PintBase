@@ -17,7 +17,7 @@
             android:onClick="toBack"
             android:src="@mipmap/top_back"/>
         <EditText
-            android:id="@+id/search_edit"
+            android:id="@id/search_edit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -31,7 +31,7 @@
             android:background="@color/transparent"
             />
         <ImageView
-            android:id="@+id/submit_search"
+            android:id="@id/submit_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
@@ -39,7 +39,7 @@
     </LinearLayout>
     <z.pint.view.PagerSlidingTabStrip
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/search_tabs"
+        android:id="@id/search_tabs"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@color/white"
@@ -55,7 +55,7 @@
         app:pstsUnderlineHeight="50dp"
         app:selectedTabTextColor="@color/maintab_topbar_bg_color" />
     <android.support.v4.view.ViewPager
-        android:id="@+id/search_pager"
+        android:id="@id/search_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

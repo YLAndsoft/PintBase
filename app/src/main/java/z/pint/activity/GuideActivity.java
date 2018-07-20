@@ -94,8 +94,8 @@ public class GuideActivity extends Activity {
     public void initData(Context mContext) {
         //生成默认用户,判断是否注册过
         boolean isRegister = (boolean) SPUtils.getInstance(mContext).getParam("isRegister", false);
-        loaction();
         if(isRegister){startMain();return;}
+        loaction();
         register(UserUtils.getUser(mContext));
     }
 
@@ -120,9 +120,9 @@ public class GuideActivity extends Activity {
                 SPUtils.getInstance(mContext).setParam("isRegister",true);
                 //成功，
                 User gsonObject = GsonUtils.getGsonObject(result, User.class);
-                SPUtils.getInstance(mContext).setParam("userID",gsonObject.getUserID());
-                SPUtils.getInstance(mContext).setParam("userName",gsonObject.getUserName());
-                SPUtils.getInstance(mContext).setParam("userHead",gsonObject.getUserHead());
+                SPUtils.saveUserID(mContext,gsonObject.getUserID());
+                SPUtils.saveUserName(mContext,gsonObject.getUserName());
+                SPUtils.saveUserHead(mContext,gsonObject.getUserHead());
                 //存入数据库
                 boolean b = DBHelper.saveUser(gsonObject);
                 startMain();
@@ -133,10 +133,9 @@ public class GuideActivity extends Activity {
                 if(SVP.isShowing(mContext))SVP.dismiss(mContext);
                 //保存登录状态
                 SPUtils.getInstance(mContext).setParam("isRegister",false);
-                //保存用户ID
-                SPUtils.getInstance(mContext).setParam("userID",user.getUserID());
-                SPUtils.getInstance(mContext).setParam("userName",user.getUserName());
-                SPUtils.getInstance(mContext).setParam("userHead",user.getUserHead());
+                SPUtils.saveUserID(mContext,user.getUserID());
+                SPUtils.saveUserName(mContext,user.getUserName());
+                SPUtils.saveUserHead(mContext,user.getUserHead());
                 Log.e("STATE注册异常：",result);
                 boolean b = DBHelper.saveUser(user);
                 startMain();

@@ -66,7 +66,7 @@ public class UserWorksFragment extends BaseFragment {
     @Override
     protected void initView() {
         x.view().inject(this,mContextView);
-        dbuserID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
+        dbuserID = SPUtils.getUserID(mContext);
     }
 
     @Override

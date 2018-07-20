@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/edit_rootView"
+    android:id="@id/edit_rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -13,7 +13,7 @@
         android:background="@color/white">
 
         <ImageView
-            android:id="@+id/edit_toBack"
+            android:id="@id/edit_toBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -21,7 +21,7 @@
             android:src="@mipmap/top_back"/>
 
         <TextView
-            android:id="@+id/userInfo"
+            android:id="@id/userInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -29,7 +29,7 @@
             android:textColor="@color/gary3"/>
 
         <TextView
-            android:id="@+id/edit_submit"
+            android:id="@id/edit_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -46,14 +46,14 @@
         android:background="@color/gary">
 
         <RelativeLayout
-            android:id="@+id/rl_user_head"
+            android:id="@id/rl_user_head"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@color/white"
             android:layout_marginTop="8dp"
             >
             <TextView
-                android:id="@+id/tv_userHead"
+                android:id="@id/tv_userHead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -63,18 +63,18 @@
 
             <z.pint.view.CuttingImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/edit_info_userHead"
+                android:id="@id/edit_info_userHead"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="8dp"
-                android:layout_toLeftOf="@+id/edit_right1"
+                android:layout_toLeftOf="@id/edit_right1"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/default_head_image"
                 app:border_width="0dp"
                 app:border_color="@color/transparent"/>
 
             <ImageView
-                android:id="@+id/edit_right1"
+                android:id="@id/edit_right1"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@mipmap/refresh_head"
@@ -85,14 +85,14 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_user_name"
+            android:id="@id/rl_user_name"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@color/white"
             android:layout_marginTop="8dp"
             >
             <TextView
-                android:id="@+id/tv_userName"
+                android:id="@id/tv_userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -101,14 +101,14 @@
                 android:textSize="16dp"/>
 
             <TextView
-                android:id="@+id/edit_info_userName"
+                android:id="@id/edit_info_userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/edit_right2"
+                android:layout_toLeftOf="@id/edit_right2"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="8dp"/>
             <ImageView
-                android:id="@+id/edit_right2"
+                android:id="@id/edit_right2"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:src="@mipmap/edit_right"
@@ -119,14 +119,14 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_user_sex"
+            android:id="@id/rl_user_sex"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@color/white"
             android:layout_marginTop="1dp"
             >
             <TextView
-                android:id="@+id/tv_userSex"
+                android:id="@id/tv_userSex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -135,14 +135,14 @@
                 android:textSize="16dp"/>
 
             <TextView
-                android:id="@+id/edit_info_userSex"
+                android:id="@id/edit_info_userSex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/edit_right3"
+                android:layout_toLeftOf="@id/edit_right3"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="8dp"/>
             <ImageView
-                android:id="@+id/edit_right3"
+                android:id="@id/edit_right3"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:src="@mipmap/edit_right"
@@ -153,14 +153,14 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_user_sign"
+            android:id="@id/rl_user_sign"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@color/white"
             android:layout_marginTop="1dp"
             >
             <TextView
-                android:id="@+id/tv_userSign"
+                android:id="@id/tv_userSign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -170,14 +170,14 @@
                 android:layout_alignParentStart="true" />
 
             <TextView
-                android:id="@+id/edit_info_userSign"
+                android:id="@id/edit_info_userSign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/edit_right5"
+                android:layout_toLeftOf="@id/edit_right5"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="8dp"/>
             <ImageView
-                android:id="@+id/edit_right5"
+                android:id="@id/edit_right5"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:src="@mipmap/edit_right"
@@ -188,14 +188,14 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_user_address"
+            android:id="@id/rl_user_address"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@color/white"
             android:layout_marginTop="1dp"
             >
             <TextView
-                android:id="@+id/tv_userAddress"
+                android:id="@id/tv_userAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -204,14 +204,14 @@
                 android:textSize="16dp"/>
 
             <TextView
-                android:id="@+id/edit_info_userAddress"
+                android:id="@id/edit_info_userAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/edit_right4"
+                android:layout_toLeftOf="@id/edit_right4"
                 android:layout_marginRight="8dp"/>
             <ImageView
-                android:id="@+id/edit_right4"
+                android:id="@id/edit_right4"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:src="@mipmap/edit_right"

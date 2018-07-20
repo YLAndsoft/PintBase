@@ -46,20 +46,21 @@ public class UserFAActivity extends BaseActivity {
     private ImageView toBlack;
     @ViewInject(value = R.id.fansAndattention_title)
     private TextView fansAndattention_title;
+    @ViewInject(value = R.id.data_error)
+    private ImageView data_error;
 
     private int view_tag;//显示数据的标识
     private int userID;//用户ID
+    private int dbUserID;
     private BaseDialog dialog;
     private BaseRecyclerAdapter<Attention> attentionAdapter;
+    private BaseRecyclerAdapter adapter = null;
     @Override
     public void initParms(Intent intent) {
-        //此属性设置与状态栏相关
-        setAllowFullScreen(true);//是否允许全屏
-        setScreenRoate(false);//是否允许屏幕旋转
-        setSteepStatusBar(false);//是否设置沉浸状态栏
         setSetActionBarColor(true, R.color.maintab_topbar_bg_color);//设置状态栏主题颜色
         view_tag = intent.getIntExtra("VIEW_TAG", 0);
         userID = intent.getIntExtra("userID", 0);
+        dbUserID = SPUtils.getUserID(mContext);
     }
 
     @Override
@@ -84,6 +85,11 @@ public class UserFAActivity extends BaseActivity {
         }else if(view_tag== Constant.VIEW_ATTENTION){
             ViewUtils.setTextView(fansAndattention_title,getResources().getString(R.string.my_attention));
         }
+        mRecyclerView.setLayoutManager(ViewUtils.getLayoutManager(mContext));
+        mRecyclerView.addItemDecoration(new RecyclerViewDivider(mContext,LinearLayoutManager.HORIZONTAL,1,R.color.gary5));
+        //设置布局管理器
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setNestedScrollingEnabled(false);
     }
 
     @Override
@@ -97,37 +103,37 @@ public class UserFAActivity extends BaseActivity {
 
     @Override
     public Params getParams() {
-        if(userID==0){
-            userID = (int) SPUtils.getInstance(mContext).getParam("userID",0);
-        }
+        if(userID==0)userID=dbUserID;
         Map<String,String> map = new HashMap<>();
         map.put(HttpConfig.ACTION_STATE,HttpConfig.SELECT_STATE+"");
         map.put(HttpConfig.USER_ID,userID+"");
         if(view_tag==Constant.VIEW_FANS){
-            return new Params(HttpConfig.getFansData,map);
+            return new Params(HttpConfig.getFansData,map,User.class,true);
         }else if(view_tag==Constant.VIEW_ATTENTION){
-            return new Params(HttpConfig.getAttentionData,map);
+            return new Params(HttpConfig.getAttentionData,map,Attention.class,true);
         }
         return null;
     }
 
     @Override
-    protected void setData(String result) {
-        if(StringUtils.isBlank(result))return;
-        BaseRecyclerAdapter adapter = null;
+    protected void onSuccess(Params params) {
         if(view_tag==Constant.VIEW_FANS){
-            List<User> gsonList = GsonUtils.getGsonList(result, User.class);
+            List<User> gsonList = (List<User>) params.getObj();
             adapter = setFansAdapter(gsonList);
         }else if(view_tag==Constant.VIEW_ATTENTION){
-            List<Attention> gsonList = GsonUtils.getGsonList(result, Attention.class);
+            List<Attention> gsonList = (List<Attention>) params.getObj();
             adapter = setAttentionAdapter(gsonList);
         }
-        mRecyclerView.setLayoutManager(ViewUtils.getLayoutManager(mContext));
-        mRecyclerView.addItemDecoration(new RecyclerViewDivider(mContext,LinearLayoutManager.HORIZONTAL,1,R.color.gary5));
-        //设置布局管理器
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onErrors(Params params) {
+        showLog(3,params.getObj()+"");
+        if(!params.isLoad()&&!params.isRefresh()){
+            mRecyclerView.setVisibility(View.GONE);
+            data_error.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -192,7 +198,7 @@ public class UserFAActivity extends BaseActivity {
     }
 
     private void deleteFA(int view_tag,Attention attention){
-        int userID = (int) SPUtils.getInstance(mContext).getParam("userID", 0);
+        int userID = SPUtils.getUserID(mContext);
         if(view_tag==Constant.VIEW_FANS){
         }else{
             //取消粉丝

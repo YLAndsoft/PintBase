@@ -7,12 +7,12 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/recommend_ll"
+        android:id="@id/recommend_ll"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white">
         <ImageView
-            android:id="@+id/new_search"
+            android:id="@id/new_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -20,7 +20,7 @@
             android:src="@mipmap/new_search"/>
         <z.pint.view.PagerSlidingTabStrip
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/new_search_tabs"
+            android:id="@id/new_search_tabs"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
@@ -35,19 +35,19 @@
             app:pstsTabPaddingLeftRight="15.0dip"
             app:selectedTabTextColor="@color/maintab_topbar_bg_color"
             app:pstsUnderlineColor="@color/transparent"
-            android:layout_toRightOf="@+id/new_search"
+            android:layout_toRightOf="@id/new_search"
             android:layout_marginLeft="15dp"
             />
     </RelativeLayout>
     <android.support.v4.view.ViewPager
-        android:id="@+id/recommend_pager"
+        android:id="@id/recommend_pager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@color/white"
-        android:layout_below="@+id/recommend_ll"
+        android:layout_below="@id/recommend_ll"
         />
     <ImageView
-        android:id="@+id/data_error"
+        android:id="@id/data_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/no_comment"
