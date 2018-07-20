@@ -90,11 +90,11 @@ public class ProvincePopupWindow extends PopupWindow implements View.OnClickList
         //设置可以获取集点
         //setFocusable(true);
 
-        mProvincePicker = (WView) pView.findViewById(R.id.province);
-        mCityPicker = (WView) pView.findViewById(R.id.city);
-        mCountyPicker = (WView) pView.findViewById(R.id.county);
-        TextView picker_sure = (TextView) pView.findViewById(R.id.picker_sure);
-        TextView picker_cancel = (TextView) pView.findViewById(R.id.picker_cancel);
+        mProvincePicker =  pView.findViewById(R.id.province);
+        mCityPicker =  pView.findViewById(R.id.city);
+        mCountyPicker =  pView.findViewById(R.id.county);
+        TextView picker_sure =  pView.findViewById(R.id.picker_sure);
+        TextView picker_cancel =  pView.findViewById(R.id.picker_cancel);
 
         mProvincePicker.setOnSelectListener(new WView.OnSelectListener() {
             @Override

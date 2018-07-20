@@ -103,7 +103,7 @@ public class StatisticsUtils {
             }
             @Override
             public void onFail(String result) {
-                Log.e("Statistics点赞异常：",result.toString());
+                Log.e("Statistics点赞异常：",result);
             }
         });
     }
@@ -127,7 +127,7 @@ public class StatisticsUtils {
             }
             @Override
             public void onFail(String result) {
-                Log.e("Statistics关注异常：",result.toString());
+                Log.e("Statistics关注异常：",result);
             }
         });
         if(stateAction==HttpConfig.ADD_STATE){
@@ -170,7 +170,7 @@ public class StatisticsUtils {
             }
             @Override
             public void onFail(String result) {
-                Log.e("Statistics评论异常：",result.toString());
+                Log.e("Statistics评论异常：",result);
             }
         });
     }

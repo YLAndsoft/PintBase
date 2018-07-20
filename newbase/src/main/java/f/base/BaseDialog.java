@@ -109,7 +109,7 @@ public class BaseDialog extends Dialog implements View.OnClickListener{
         radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int checkedId) {
-                RadioButton rb = (RadioButton) findViewById(checkedId);
+                RadioButton rb =  findViewById(checkedId);
                 checkText = rb.getText().toString();
             }
         });
@@ -183,14 +183,14 @@ public class BaseDialog extends Dialog implements View.OnClickListener{
     }
 
     private void initView() {
-        left = (Button) findViewById(R.id.left);
-        right = (Button) findViewById(R.id.right);
-        title_message = (TextView)findViewById(R.id.title_message);
-        edit_content = (EditText) findViewById(R.id.edit_content);
-        message = (TextView)findViewById(R.id.message);
-        radiogroup = (RadioGroup)findViewById(R.id.radiogroup);
-        radiobutton1 = (RadioButton)findViewById(R.id.radiobutton1);
-        radiobutton2 = (RadioButton)findViewById(R.id.radiobutton2);
+        left =  findViewById(R.id.left);
+        right = findViewById(R.id.right);
+        title_message = findViewById(R.id.title_message);
+        edit_content =  findViewById(R.id.edit_content);
+        message = findViewById(R.id.message);
+        radiogroup = findViewById(R.id.radiogroup);
+        radiobutton1 = findViewById(R.id.radiobutton1);
+        radiobutton2 = findViewById(R.id.radiobutton2);
     }
 
 

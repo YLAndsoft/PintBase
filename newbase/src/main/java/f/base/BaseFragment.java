@@ -73,9 +73,9 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     protected abstract void initData();
 
 
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.mContext = activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mContext = context;
     }
 
     /** View点击 **/

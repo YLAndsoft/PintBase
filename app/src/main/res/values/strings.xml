@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">画世界</string>
-    <string name="http_name">hsj</string>
+    <string name="http_name">画世界</string>
 
     <string name="defult_userName">游客</string>
     <string name="defult_userHead">file:///android_asset/default_head_image.png</string>

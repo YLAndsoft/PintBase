@@ -26,10 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- 此处针对7.0以上版本适配 -->
+        <!-- 此处针对7.0以上版本适配 android:authorities="${applicationId}.fileprovider"-->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="z.pint.fileprovider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

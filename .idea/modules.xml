@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/PintBase.iml" filepath="$PROJECT_DIR$/PintBase.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/newbase/newbase.iml" filepath="$PROJECT_DIR$/newbase/newbase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/whiteboardlib/whiteboardlib.iml" filepath="$PROJECT_DIR$/whiteboardlib/whiteboardlib.iml" />
     </modules>
   </component>
 </project>

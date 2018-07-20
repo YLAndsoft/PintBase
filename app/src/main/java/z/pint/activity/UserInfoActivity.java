@@ -72,7 +72,7 @@ public class UserInfoActivity extends BaseFragmentActivity {
     private UserWorksFragment uwf;
     private ClassifyViewPagerAdapter classViewPagerAdapter;
     private User user;
-    private String userID;//传递过来的用户ID
+    private String userID="";//传递过来的用户ID
     private int dbuserID;
     private Intent intent;
 
@@ -191,6 +191,7 @@ public class UserInfoActivity extends BaseFragmentActivity {
                 finish();
                 break;
             case R.id.user_edit:
+                if(user==null)return;
                 if(userID.equals(dbuserID+"")) {
                     //跳转至修改信息界面
                     if(user!=null){
@@ -236,9 +237,11 @@ public class UserInfoActivity extends BaseFragmentActivity {
         if(sif==null){
             sif = new PersonalFragment();
         }
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("userInfo",user);
-        sif.setArguments(bundle);
+        if(user!=null){
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("userInfo",user);
+            sif.setArguments(bundle);
+        }
         return sif;
     }
     private Fragment getUserWorksFragment(){

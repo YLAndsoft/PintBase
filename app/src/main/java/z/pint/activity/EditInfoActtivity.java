@@ -104,7 +104,6 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
         edit_right1.setOnClickListener(this);
         rl_user_name.setOnClickListener(this);
         rl_user_sex.setOnClickListener(this);
-        user.setUpdateValueListener(this);//监听用户的属性值是否发生改变
     }
 
     @Override
@@ -117,6 +116,7 @@ public class EditInfoActtivity extends BaseActivity implements ProvincePopupWind
         ViewUtils.setTextView(tv_userHead, getResources().getString(R.string.tv_userHead));
         ViewUtils.setTextView(userInfo, getResources().getString(R.string.userInfo));
         if (user == null) return;
+        user.setUpdateValueListener(this);//监听用户的属性值是否发生改变
         ViewUtils.setImageUrl(mContext, edit_info_userHead, user.getUserHead(), R.mipmap.default_head_image);
         ViewUtils.setTextView(edit_info_userName, user.getUserName());
         ViewUtils.setTextView(edit_info_userSex, user.getUserSex() == 0 ? getResources().getString(R.string.man) : getResources().getString(R.string.woman));

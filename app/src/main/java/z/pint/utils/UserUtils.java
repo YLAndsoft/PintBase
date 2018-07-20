@@ -1,6 +1,8 @@
 package z.pint.utils;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
 
 import f.base.utils.RandomUtils;
@@ -55,11 +57,17 @@ public class UserUtils {
      */
     private static String getIMEI(Context context) {
         //是由15位数字组成的”电子串号”，其组成结构为TAC（6位数字）+FAC（两位数字）+SNR（6位数字）+SP （1位数字）
+        String imei = "";
         try{
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
-            //String random = RandomUtils.getRandom(imei, 6);
-            //return Integer.parseInt(imei);
-            return telephonyManager != null ? telephonyManager.getDeviceId(): RandomUtils.getRandomNumbers(15);
+            if(telephonyManager.getDeviceId() == null || telephonyManager.getDeviceId().equals("")) {
+                if (Build.VERSION.SDK_INT >= 23) {
+                    imei = telephonyManager.getDeviceId(0);
+                }
+            }else{
+                imei = telephonyManager.getDeviceId();
+            }
+            return imei != null && !imei.equals("")? imei: RandomUtils.getRandomNumbers(15);
         }catch (Exception ex){
             ex.printStackTrace();
             //考虑到没给权限的时候，获取IMEI失败，造成异常

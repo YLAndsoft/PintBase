@@ -75,7 +75,7 @@ public class WhiteBoardActivity extends BaseFragmentActivity implements  WhiteBo
         FragmentTransaction ts = getSupportFragmentManager().beginTransaction();
         //获取WhiteBoardFragment实例
         if(whiteBoardFragment==null){
-            whiteBoardFragment = WhiteBoardFragment.newInstance(this);
+            whiteBoardFragment = WhiteBoardFragment.newInstance();
         }
         //添加到界面中
         ts.add(R.id.whiteboard, whiteBoardFragment, "wb").commit();

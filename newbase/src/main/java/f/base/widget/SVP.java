@@ -67,7 +67,7 @@ public class SVP {
 
     protected void initViews() {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
+        decorView =  ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
         rootView = (ViewGroup) layoutInflater.inflate(R.layout.dialog_layout_svprogresshud, null, false);
         rootView.setLayoutParams(new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT

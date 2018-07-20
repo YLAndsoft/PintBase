@@ -37,10 +37,10 @@ public class SVPDefaultView extends LinearLayout {
 
     private void initViews() {
         LayoutInflater.from(getContext()).inflate(R.layout.dialog_view_svprogressdefault, this, true);
-        ivBigLoading = (ImageView) findViewById(R.id.ivBigLoading);
-        ivSmallLoading = (ImageView) findViewById(R.id.ivSmallLoading);
-        circleProgressBar = (SVProgressBar) findViewById(R.id.circleProgressBar);
-        tvMsg = (TextView) findViewById(R.id.tvMsg);
+        ivBigLoading =  findViewById(R.id.ivBigLoading);
+        ivSmallLoading =  findViewById(R.id.ivSmallLoading);
+        circleProgressBar =  findViewById(R.id.circleProgressBar);
+        tvMsg =  findViewById(R.id.tvMsg);
     }
 
     private void init() {

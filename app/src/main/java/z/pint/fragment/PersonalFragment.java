@@ -96,9 +96,9 @@ public class PersonalFragment extends BaseFragment{
         }
         List<String> list = new ArrayList<>();
         list.add(user.getUserID()+"");
-        list.add(user.getUserSign());
-        list.add(user.getUserAddress());
-        list.add(user.getRegistrTime());
+        list.add(user.getUserSign()+"");
+        list.add(user.getUserAddress()+"");
+        list.add(user.getRegistrTime()+"");
         return list;
     }
 

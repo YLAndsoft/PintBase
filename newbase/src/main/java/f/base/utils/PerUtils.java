@@ -93,17 +93,17 @@ public class PerUtils {
     public static void requestPermission(@NonNull Object context, @NonNull String per, @NonNull int requestCode) {
         if (context instanceof Activity) {
             Activity activity = (Activity) context;
-            boolean permission = isPermission(activity, (String) per);
+            boolean permission = isPermission(activity,  per);
             if (!permission) {
                 //去请求权限
-                ActivityCompat.requestPermissions(activity, new String[]{(String) per}, requestCode);
+                ActivityCompat.requestPermissions(activity, new String[]{ per}, requestCode);
             }
         } else if (context instanceof Fragment) {
             Fragment fragment = (Fragment) context;
-            boolean permission = isPermission(fragment.getActivity(), (String) per);
+            boolean permission = isPermission(fragment.getActivity(),  per);
             if (!permission) {
                 //去请求权限
-                fragment.requestPermissions(new String[]{(String) per}, requestCode);
+                fragment.requestPermissions(new String[]{ per}, requestCode);
             }
         } else {
             throw new RuntimeException("请确认参数context是Activity或者是Fragment");

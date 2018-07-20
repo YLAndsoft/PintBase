@@ -458,7 +458,7 @@ public class WView extends View {
                 float moveToSelect = moveToSelected();
                 moveToSelect = moveToSelect > 0 ? moveToSelect : moveToSelect
                         * (-1);
-                float textSize = (float) normalFont+ ((float) (selectedFont - normalFont) * (1.0f - (float) moveToSelect/ (float) unitHeight));
+                float textSize =  normalFont+ ( (selectedFont - normalFont) * (1.0f -  moveToSelect/ (float) unitHeight));
                 textPaint.setTextSize(textSize);
             } else {
                 textPaint.setColor(normalColor);

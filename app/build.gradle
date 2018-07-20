@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "z.pint"
-        minSdkVersion 19
+        minSdkVersion 17
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -29,7 +29,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     /*绘画依赖*/
-    compile 'com.yinghe:whiteboardlib:1.1.1'
+    //compile 'com.yinghe:whiteboardlib:1.1.1'
     /*主框架依赖*/
     //compile 'com.github.YLAndsoft:Base:1.0.4'
     /*相册开源*/
@@ -44,4 +44,5 @@ dependencies {
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
     compile project(':newbase')
     compile 'com.android.support:support-v13:26.0.0-alpha1'
+    compile project(':whiteboardlib')
 }

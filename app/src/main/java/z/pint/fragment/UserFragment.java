@@ -101,9 +101,7 @@ public class UserFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        if(userInfo==null){
-            userInfo = DBHelper.getUser(userID);//查询数据库
-        }
+        if(userInfo==null)userInfo = DBHelper.getUser(userID);//查询数据库
         worksList = DBHelper.selectWorksAll();
         if(null!=worksList&&worksList.size()>0){
             ViewUtils.setTextView(user_worksNumber,worksList.size()+"");

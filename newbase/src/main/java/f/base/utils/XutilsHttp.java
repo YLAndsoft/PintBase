@@ -60,7 +60,7 @@ public class XutilsHttp {
                     xCallBack.onFail(responseMsg);
                 } else {
                     // 错误
-                    xCallBack.onFail(ex.getMessage().toString());
+                    xCallBack.onFail(ex.toString());
                 }
             }
             @Override
@@ -128,7 +128,7 @@ public class XutilsHttp {
                     xCallBack.onFail(responseMsg);
                 } else {
                     // 错误
-                    xCallBack.onFail(ex.getMessage().toString());
+                    xCallBack.onFail(ex.toString());
                 }
             }
             @Override
